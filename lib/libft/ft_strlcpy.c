@@ -1,21 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/27 22:45:03 by mayeung           #+#    #+#             */
-/*   Updated: 2024/01/29 22:28:16 by mayeung          ###   ########.fr       */
+/*   Created: 2023/07/30 20:56:46 by mayeung           #+#    #+#             */
+/*   Updated: 2023/12/28 13:48:22 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <readline/readline.h>
-#include <readline/history.h>
-#include "get_next_line.h"
-#include "../lib/libft/libft.h"
-#include <fcntl.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <termios.h>
-#include <stdio.h>
+#include "libft.h"
+
+size_t	ft_strlcpy(char *dst, const char *src, size_t size)
+{
+	size_t	i;
+
+	i = 0;
+	if (dst && src)
+	{
+		while (i + 1 < size && src[i])
+		{
+			dst[i] = src[i];
+			i++;
+		}
+		if (i < size)
+			dst[i] = 0;
+	}
+	while (src && src[i])
+		i++;
+	return (i);
+}

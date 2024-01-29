@@ -1,21 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/27 22:45:03 by mayeung           #+#    #+#             */
-/*   Updated: 2024/01/29 22:28:16 by mayeung          ###   ########.fr       */
+/*   Created: 2023/07/30 20:56:20 by mayeung           #+#    #+#             */
+/*   Updated: 2023/12/28 13:23:23 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <readline/readline.h>
-#include <readline/history.h>
-#include "get_next_line.h"
-#include "../lib/libft/libft.h"
-#include <fcntl.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <termios.h>
-#include <stdio.h>
+#include "libft.h"
+
+size_t	ft_strlcat(char *dst, const char *src, size_t size)
+{
+	size_t	i;
+	size_t	j;
+
+	i = 0;
+	while (i < size && dst && dst[i])
+		i++;
+	j = 0;
+	while (i + j + 1 < size && dst && src && src[j])
+	{
+		dst[i + j] = src[j];
+		j++;
+	}
+	if (i + j < size && dst && src)
+		dst[i + j] = 0;
+	while (src && src[j])
+		j++;
+	return (i + j);
+}

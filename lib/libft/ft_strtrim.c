@@ -1,21 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/27 22:45:03 by mayeung           #+#    #+#             */
-/*   Updated: 2024/01/29 22:28:16 by mayeung          ###   ########.fr       */
+/*   Created: 2023/07/30 20:58:12 by mayeung           #+#    #+#             */
+/*   Updated: 2023/12/27 23:09:13 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <readline/readline.h>
-#include <readline/history.h>
-#include "get_next_line.h"
-#include "../lib/libft/libft.h"
-#include <fcntl.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <termios.h>
-#include <stdio.h>
+#include "libft.h"
+
+char	*ft_strtrim(char const *s1, char const *set)
+{
+	char	*res;
+	size_t	i;
+	size_t	j;
+
+	if (!s1 || !set)
+		return (NULL);
+	i = 0;
+	while (s1[i] && ft_strchr(set, s1[i]))
+		i++;
+	j = ft_strlen(s1);
+	while (j > i && ft_strchr(set, s1[j - 1]))
+		j--;
+	res = malloc(sizeof(char) * (j - i + 1));
+	if (!res)
+		return (NULL);
+	ft_strlcpy(res, &s1[i], j - i + 1);
+	return (res);
+}

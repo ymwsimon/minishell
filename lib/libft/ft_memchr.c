@@ -1,21 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/27 22:45:03 by mayeung           #+#    #+#             */
-/*   Updated: 2024/01/29 22:28:16 by mayeung          ###   ########.fr       */
+/*   Created: 2023/07/30 20:54:24 by mayeung           #+#    #+#             */
+/*   Updated: 2023/12/28 13:04:22 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <readline/readline.h>
-#include <readline/history.h>
-#include "get_next_line.h"
-#include "../lib/libft/libft.h"
-#include <fcntl.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <termios.h>
-#include <stdio.h>
+#include "libft.h"
+
+void	*ft_memchr(const void *s, int c, size_t n)
+{
+	size_t				i;
+	const unsigned char	*ss;
+
+	i = 0;
+	ss = s;
+	while (i < n)
+	{
+		if (ss[i] == (unsigned char)c)
+			return ((void *)ss + i);
+		i++;
+	}
+	return (0);
+}

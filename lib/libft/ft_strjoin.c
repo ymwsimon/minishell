@@ -1,21 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/27 22:45:03 by mayeung           #+#    #+#             */
-/*   Updated: 2024/01/29 22:28:16 by mayeung          ###   ########.fr       */
+/*   Created: 2023/07/30 20:56:17 by mayeung           #+#    #+#             */
+/*   Updated: 2023/12/29 01:11:10 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <readline/readline.h>
-#include <readline/history.h>
-#include "get_next_line.h"
-#include "../lib/libft/libft.h"
-#include <fcntl.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <termios.h>
-#include <stdio.h>
+#include "libft.h"
+
+char	*ft_strjoin(char const *s1, char const *s2)
+{
+	char		*res;
+	size_t		i;
+
+	if (!s1 && !s2)
+		return (NULL);
+	res = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+	if (res)
+	{
+		i = 0;
+		while (s1 && *s1)
+			res[i++] = *s1++;
+		while (s2 && *s2)
+			res[i++] = *s2++;
+		res[i] = 0;
+	}
+	return (res);
+}

@@ -1,21 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/27 22:45:03 by mayeung           #+#    #+#             */
-/*   Updated: 2024/01/29 22:28:16 by mayeung          ###   ########.fr       */
+/*   Created: 2023/07/30 20:58:18 by mayeung           #+#    #+#             */
+/*   Updated: 2023/12/29 16:01:37 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <readline/readline.h>
-#include <readline/history.h>
-#include "get_next_line.h"
-#include "../lib/libft/libft.h"
-#include <fcntl.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <termios.h>
-#include <stdio.h>
+#include "libft.h"
+
+char	*ft_substr(char const *s, unsigned int start, size_t len)
+{
+	char	*res;
+	size_t	i;
+	size_t	slen;
+
+	if (!s)
+		return (NULL);
+	slen = ft_strlen(s);
+	if (start >= slen)
+		len = 0;
+	if (len > slen - start)
+		len = slen - start;
+	res = malloc(len + 1);
+	i = 0;
+	while (res && i < len)
+	{
+		res[i] = s[start + i];
+		i++;
+	}
+	if (res)
+		res[i] = 0;
+	return (res);
+}

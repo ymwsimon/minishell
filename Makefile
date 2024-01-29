@@ -1,6 +1,6 @@
 NAME := minishell
 
-SRCS := main
+SRCS := main get_next_line
 
 SRCS_DIR := srcs
 
@@ -10,11 +10,24 @@ INC_DIR := includes
 
 FLAGS := -Wall -Werror -Wextra
 
-LIBS := -lreadline
+LIBFT_DIR := lib/libft
+
+LIBS := -lreadline -lft -L$(LIBFT_DIR)
 
 CC := cc
 
 all : $(NAME)
 
 $(NAME) : $(SRCS:%=$(SRCS_DIR)/%.c)
+	make -C $(LIBFT_DIR)
 	$(CC) $(FLAGS) $^ -o $(NAME) $(LIBS)
+
+clean :
+	rm -rf *.o
+
+fclean : clean
+	rm -rf $(NAME)
+
+re : clean all
+
+.PHONY : all clean fclean re
