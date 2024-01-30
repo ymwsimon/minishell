@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 20:43:35 by mayeung           #+#    #+#             */
-/*   Updated: 2024/01/29 22:24:00 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/01/30 12:49:46 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,15 +76,13 @@ char	*ft_strdup(char *str)
 	return (res);
 }
 
-char	*ft_update_result_remain(char **remain, char *buffer, int readsize)
+char	*ft_res_update_remain(char **remain, char *buf, int rs, char *new_re)
 {
 	char	*res;
-	char	*new_remain;
 
-	free(buffer);
-	if (readsize == -1 || !remain || !(*remain))
+	free(buf);
+	if (rs == -1 || !remain || !(*remain))
 		return (NULL);
-	new_remain = NULL;
 	if (!ft_strchr(*remain, '\n') || !(*(ft_strchr(*remain, '\n') + 1)))
 	{
 		res = ft_strdup(*remain);
@@ -93,14 +91,16 @@ char	*ft_update_result_remain(char **remain, char *buffer, int readsize)
 	}
 	else
 	{
-		new_remain = ft_strdup(ft_strchr(*remain, '\n') + 1);
+		new_re = ft_strdup(ft_strchr(*remain, '\n') + 1);
+		if (!new_re)
+			return (NULL);
 		*(ft_strchr(*remain, '\n') + 1) = 0;
 		res = ft_strdup(*remain);
-		if (!res || !new_remain)
-			return (free(new_remain), NULL);
+		if (!res)
+			return (free(new_re), NULL);
 	}
 	free(*remain);
-	*remain = new_remain;
+	*remain = new_re;
 	return (res);
 }
 
@@ -130,5 +130,5 @@ char	*get_next_line(int fd)
 			free(old_mem);
 		}
 	}
-	return (ft_update_result_remain(&remain, buffer, readsize));
+	return (ft_res_update_remain(&remain, buffer, readsize, NULL));
 }
