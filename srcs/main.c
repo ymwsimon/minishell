@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 01:21:42 by mayeung           #+#    #+#             */
-/*   Updated: 2024/01/29 23:09:25 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/01/31 18:17:37 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ void	import_history(void)
 	char	*trimmed_line;
 	char	*path;
 
-	path = ft_strjoin(getenv("HOME"), "/minishell_history");
+	path = ft_strjoin(getenv("HOME"), "/.minishell_cmd_history");
 	fd = open(path, O_RDONLY);
-	printf("path=%s, fd=%d\n", path, fd);
+	printf("path of the history file=%s, fd=%d\n", path, fd);
 	if (fd >= 0)
 	{
 		line = get_next_line(fd);
@@ -49,10 +49,10 @@ void	ft_write_history(char *line)
 
 	if (line && !ft_strlen(line))
 		return ;
-	path = ft_strjoin(getenv("HOME"), "/minishell_history");
+	path = ft_strjoin(getenv("HOME"), "/.minishell_cmd_history");
 	add_history(line);
 	fd = open(path, O_CREAT | O_WRONLY | O_APPEND, 0777);
-	printf("path=%s, fd=%d\n", path, fd);
+	printf("path of the history file=%s, fd=%d\n", path, fd);
 	if (fd >= 0)
 	{
 		line_with_newline = ft_strjoin(line, "\n");
@@ -65,19 +65,19 @@ void	ft_write_history(char *line)
 
 int	main(void)
 {
-	char	*line;
-	char	cwd[2000];
-	struct termios ter;
+	char			*line;
+	char			cwd[2000];
+	struct termios	ter;
 
 	tcgetattr(1, &ter);
 	//ter.c_lflag |= ECHOCTL;
 	//ter.c_lflag |= ICANON;
 	tcsetattr(1, 0, &ter);
-	printf("%s\n", getcwd(cwd, 2000));
+	printf("current working path=%s\n", getcwd(cwd, 2000));
 	import_history();
 	while (1)
 	{
-		line = readline(">>>");
+		line = readline(">>> ");
 		if (!line)
 			break ;
 		ft_write_history(line);

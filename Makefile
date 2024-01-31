@@ -8,7 +8,7 @@ OBJ_DIR := obj
 
 INC_DIR := includes
 
-FLAGS := -Wall -Werror -Wextra
+FLAGS := -Wall -Werror -Wextra -g
 
 LIBFT_DIR := lib/libft
 
