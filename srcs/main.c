@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 01:21:42 by mayeung           #+#    #+#             */
-/*   Updated: 2024/01/31 18:17:37 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/01 16:03:34 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ void	import_history(void)
 			line = get_next_line(fd);
 			trimmed_line = ft_strtrim(line, "\n");
 		}
-		line = get_next_line(fd);
-		trimmed_line = ft_strtrim(line, "\n");
+		free(line);
+		free(trimmed_line);
 		close(fd);
 	}
 	free(path);

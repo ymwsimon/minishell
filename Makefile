@@ -23,6 +23,7 @@ $(NAME) : $(SRCS:%=$(SRCS_DIR)/%.c)
 	$(CC) $(FLAGS) $^ -o $(NAME) $(LIBS)
 
 clean :
+	make -C $(LIBFT_DIR) clean
 	rm -rf *.o
 
 fclean : clean
