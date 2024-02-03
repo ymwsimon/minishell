@@ -19,7 +19,7 @@ CC := cc
 all : $(NAME)
 
 $(NAME) : $(SRCS:%=$(SRCS_DIR)/%.c)
-	make -C $(LIBFT_DIR)
+	make -C $(LIBFT_DIR) bonus
 	$(CC) $(FLAGS) $^ -o $(NAME) $(LIBS)
 
 clean :
