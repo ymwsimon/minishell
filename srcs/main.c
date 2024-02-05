@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 01:21:42 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/05 01:13:19 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/05 17:39:17 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -267,7 +267,7 @@ void	ft_exec_cmds(t_list *cmds)
 	t_list	*node;
 	char	*full_path;
 	int		r;
-	int		fd;
+	//int		fd;
 	//size_t	i;
 
 	//i = 0;
@@ -278,14 +278,14 @@ void	ft_exec_cmds(t_list *cmds)
 		cmd = node->content;
 		if (!cpid)
 		{	
-			if (!node->next && 0)
+			/*if (!node->next && 0)
 			{
 				fd = open("testout", O_WRONLY | O_CREAT | O_TRUNC, 0777);
 				cmd->outfd = fd;
-			}
+			}*/
 			ft_redir_fds(cmd->infd, cmd->outfd);
-			if (!node->next && 0)
-				close(fd);
+			/*if (!node->next && 0)
+				close(fd);*/
 			ft_close_all_pipe(cmd->fds, ft_lstsize(cmds));
 			full_path = ft_getfullpath(cmd->cmd, NULL);
 			//ft_putstr_fd(full_path, STDERR_FILENO);
@@ -297,6 +297,25 @@ void	ft_exec_cmds(t_list *cmds)
 	}
 	ft_close_all_pipe(cmd->fds, ft_lstsize(cmds));
 	waitpid(cpid, &r, 0);
+}
+
+int	ft_push_token_to_list(t_list **list, char *str)
+{
+	t_token	*tok;
+	t_list	*new_node;
+
+	if (!str)
+		return (0);
+	tok = malloc(sizeof(t_token));
+	if (!tok)
+		return (free(str), 0);
+	tok->str = str;
+	tok->tok = RAW;
+	new_node = ft_lstnew(tok);
+	if (!new_node)
+		return (free(tok), free(str), 0);
+	ft_lstadd_back(list, new_node);
+	return (1);
 }
 
 t_list	*ft_tokenize(char *line)
@@ -336,66 +355,217 @@ t_list	*ft_tokenize(char *line)
 				ft_lstadd_front(&stack, ft_lstnew(ft_substr(line, j++, 1)));
 		}
 		j += j == i;
-		ft_lstadd_back(&res, ft_lstnew(ft_substr(line, i, j - i)));
+		ft_push_token_to_list(&res, ft_substr(line, i, j - i));
+		//ft_lstadd_back(&res, ft_lstnew(ft_substr(line, i, j - i)));
 		i = j;
 	}
 	return (res);
 }
 
+void	ft_print_enum(t_token_type tok)
+{
+	if (tok == RAW)
+		printf("RAW");
+	else if (tok == PIPE)
+		printf("PIPE_|");
+	else if (tok == HERE_DOC)
+		printf("HERE_DOC_<<");
+	else if (tok == INPUT)
+		printf("INPUT_<");
+	else if (tok == OUTPUT)
+		printf("OUTPUT_>");
+	else if (tok == APPEND)
+		printf("APPEND_>>");
+	else if (tok == ARG)
+		printf("JUST_ARG");
+	else if (tok == INFILE)
+		printf("INFILE");
+	else if (tok == OUTFILE)
+		printf("OUTFILE");
+	else if (tok == DELIMITER)
+		printf("DELIMITER");
+}
+
 void	ft_print_tokens(t_list *tokens)
 {
+	t_token	*t;
+
 	printf("tokens:\n");
 	while (tokens)
 	{
-		printf("%s\n", (char *)(tokens->content));
+		t = tokens->content;
+		printf("data:%s tok_type:", t->str);
+		ft_print_enum(t->tok);
+		printf("\n");
 		tokens = tokens->next;
 	}
 }
 
 int	ft_is_pipe(char *str)
 {
-	return (!ft_strncmp(str, "|", ft_strlen("|")));
+	return (!ft_strncmp(str, "|", ft_strlen("|") + 1));
+}
+
+int	ft_is_pipe_tok(t_token_type t)
+{
+	return (t == PIPE);
 }
 
 int	ft_is_here_doc(char *str)
 {
-	return (!ft_strncmp(str, "<<", ft_strlen("<<")));
+	return (!ft_strncmp(str, "<<", ft_strlen("<<") + 1));
+}
+
+int	ft_is_here_doc_tok(t_token_type t)
+{
+	return (t == HERE_DOC);
 }
 
 int	ft_is_input(char *str)
 {
-	return (!ft_strncmp(str, "<", ft_strlen("<")));
+	return (!ft_strncmp(str, "<", ft_strlen("<") + 1));
+}
+
+int	ft_is_input_tok(t_token_type t)
+{
+	return (t == INPUT);
 }
 
 int	ft_is_output(char *str)
 {
-	return (!ft_strncmp(str, ">", ft_strlen(">")));
+	return (!ft_strncmp(str, ">", ft_strlen(">") + 1));
+}
+
+int	ft_is_output_tok(t_token_type t)
+{
+	return (t == OUTPUT);
 }
 
 int	ft_is_append(char *str)
 {
-	return (!ft_strncmp(str, ">>", ft_strlen(">>")));
+	return (!ft_strncmp(str, ">>", ft_strlen(">>") + 1));
 }
 
-int	ft_parse_token(t_list *tokens)
+int	ft_is_append_tok(t_token_type t)
 {
-	t_list	*node;
-	t_list	*stack;
-	t_token	*t;
-	size_t	i;
+	return (t == APPEND);
+}
 
-	node = tokens;
-	stack = NULL;
-	i = 0;
+int	ft_is_redir(char *str)
+{
+	return (ft_is_here_doc(str)
+			|| ft_is_input(str)
+			|| ft_is_output(str)
+			|| ft_is_append(str));
+}
+
+int	ft_is_redir_tok(t_token_type t)
+{
+	return (ft_is_here_doc_tok(t)
+			|| ft_is_input_tok(t)
+			|| ft_is_output_tok(t)
+			|| ft_is_append_tok(t));
+}
+
+int	ft_valid_pipe_tok(t_list *node, t_token_type tok)
+{
+	return (ft_is_pipe(((t_token *)node->content)->str)
+		&& tok && !ft_is_redir_tok(tok) && !ft_is_pipe_tok(tok));
+}
+
+int	ft_valid_input_tok(t_list *node, t_token_type tok)
+{
+	return (ft_is_input(((t_token *)node->content)->str)
+			&& (!tok || !ft_is_redir_tok(tok)));
+}
+
+int	ft_valid_output_tok(t_list *node, t_token_type tok)
+{
+	return (ft_is_output(((t_token *)node->content)->str)
+			&& (!tok || !ft_is_redir_tok(tok)));
+}
+
+int	ft_valid_here_doc_tok(t_list *node, t_token_type tok)
+{
+	return (ft_is_here_doc(((t_token *)node->content)->str)
+			&& (!tok || !ft_is_redir_tok(tok)));
+}
+
+int	ft_valid_append_tok(t_list *node, t_token_type tok)
+{
+	return (ft_is_append(((t_token *)node->content)->str)
+			&& (!tok || !ft_is_redir_tok(tok)));
+}
+
+int	ft_valid_infile_tok(t_list *node, t_token_type tok)
+{
+	return (!ft_is_pipe(((t_token *)node->content)->str)
+			&& !ft_is_redir(((t_token *)node->content)->str)
+			&& tok && ft_is_input_tok(tok));
+}
+
+int	ft_valid_delimiter_tok(t_list *node, t_token_type tok)
+{
+	return (!ft_is_pipe(((t_token *)node->content)->str)
+			&& !ft_is_redir(((t_token *)node->content)->str)
+			&& tok && ft_is_here_doc_tok(tok));
+}
+
+int	ft_valid_outfile_tok(t_list *node, t_token_type tok)
+{
+	return (!ft_is_pipe(((t_token *)node->content)->str)
+			&& !ft_is_redir(((t_token *)node->content)->str)
+			&& tok && (ft_is_append_tok(tok) || ft_is_output_tok(tok)));
+}
+
+int	ft_valid_arg_tok(t_list *node, t_token_type tok)
+{
+	return (!ft_is_pipe(((t_token *)node->content)->str)
+			&& !ft_is_redir(((t_token *)node->content)->str)
+			&& (!tok || !ft_is_redir_tok(tok)));
+}
+
+//int	ft_pipe_need_more_input(t_list *node, t_list *stack)
+
+//t_list	*ft_lst_dup(t_list *)
+
+int	ft_parse_token(t_list *node)
+{
+	t_token_type	last;
+
+	last = RAW;
 	while (node)
 	{
-		t = malloc(sizeof(t_token));
-		if (!t)
-			; //clean up
-		//if (stack && )
-		i++;
+		if (ft_valid_pipe_tok(node, last))
+			((t_token *)node->content)->tok = PIPE;
+		else if (ft_valid_input_tok(node, last))
+			((t_token *)node->content)->tok = INPUT;
+		else if (ft_valid_output_tok(node, last))
+			((t_token *)node->content)->tok = OUTPUT;
+		else if (ft_valid_here_doc_tok(node, last))
+			((t_token *)node->content)->tok = HERE_DOC;
+		else if (ft_valid_append_tok(node, last))
+			((t_token *)node->content)->tok = APPEND;
+		else if (ft_valid_delimiter_tok(node, last))
+			((t_token *)node->content)->tok = DELIMITER;
+		else if (ft_valid_infile_tok(node, last))
+			((t_token *)node->content)->tok = INFILE;
+		else if (ft_valid_outfile_tok(node, last))
+			((t_token *)node->content)->tok = OUTFILE;
+		else if (ft_valid_arg_tok(node, last))
+			((t_token *)node->content)->tok = ARG;
+		else
+			return (0);
+		//ft_lstadd_front(&stack, node);
+		last = ((t_token *)node->content)->tok;
 		node = node->next;
 	}
+	if (last && ft_is_redir_tok(last))
+		return (0); // clean up
+	if (last && ft_is_pipe_tok(last)) // or unfinished quote
+		return (2); // clean up
+	// if pipe or unfinished quote is at the top of the stack, clean up and return 2
+	//clean up stack
 	return (1);
 }
 
@@ -409,7 +579,7 @@ int	main(int argc, char **argv, char **env)
 
 	//tcgetattr(1, &ter);
 	//ter.c_lflag |= ECHOCTL;
-	//ter.c_lflag |= ICANON;
+	//ter.c_lflag |= ICANON;t_list
 	//tcsetattr(1, 0, &ter);
 	argc += 0;
 	argv += 0;
@@ -428,7 +598,12 @@ int	main(int argc, char **argv, char **env)
 		if (ft_strlen(line))
 		{
 			tokens = ft_tokenize(line);
-			ft_print_tokens(tokens);
+			if (ft_parse_token(tokens) == 1)
+				ft_print_tokens(tokens);
+			else if (ft_parse_token(tokens) == 2)
+				printf("need more input\n");
+			else
+				printf("parse error\n");
 			//cmds = ft_split_parse_cmds(line, env);
 			//ft_exec_cmds(cmds);
 			//ft_print_cmds(cmds);

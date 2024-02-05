@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 22:45:03 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/05 00:19:10 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/05 15:49:22 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,14 @@
 # define TO_PIPE 6
 # define CMD_NOT_FOUND 127
 
+# define ALLOCATE_FAIL -1
+# define PARSE_FAIL 0
+# define PARSE_OK 1
+# define IMCOMPELETE_CMD 2
+
 typedef enum e_token_type
 {
+	RAW,
 	PIPE,
 	HERE_DOC,
 	INPUT,
@@ -51,7 +57,7 @@ typedef enum e_token_type
 typedef struct s_token
 {
 	char			*str;
-	t_token_type	tt;
+	t_token_type	tok;
 }				t_token;
 
 typedef struct s_cmd
