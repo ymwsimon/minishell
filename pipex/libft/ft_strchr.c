@@ -6,9 +6,11 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 20:56:10 by mayeung           #+#    #+#             */
-/*   Updated: 2023/10/16 15:41:21 by mayeung          ###   ########.fr       */
+/*   Updated: 2023/12/29 16:02:11 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "libft.h"
 
 char	*ft_strchr(const char *s, int c)
 {
@@ -20,5 +22,5 @@ char	*ft_strchr(const char *s, int c)
 	}
 	if (s && !c)
 		return ((char *)s);
-	return (0);
+	return (NULL);
 }

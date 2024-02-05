@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 20:53:17 by mayeung           #+#    #+#             */
-/*   Updated: 2023/10/29 12:15:09 by mayeung          ###   ########.fr       */
+/*   Updated: 2023/12/29 16:17:04 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,5 +18,5 @@ void	ft_bzero(void *s, size_t n)
 
 	i = 0;
 	while (s && i != n)
-		((char *)s)[i++] = 0;
+		((unsigned char *)s)[i++] = 0;
 }

@@ -6,15 +6,15 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 20:55:24 by mayeung           #+#    #+#             */
-/*   Updated: 2023/11/05 12:25:24 by mayeung          ###   ########.fr       */
+/*   Updated: 2023/12/29 15:54:27 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	ft_count_word(const char *s, char c)
+static size_t	ft_count_word(const char *s, char c)
 {
-	int	res;
+	size_t	res;
 
 	res = 0;
 	while (s && *s)
@@ -31,9 +31,9 @@ static int	ft_count_word(const char *s, char c)
 	return (res);
 }
 
-static int	ft_word_length(const char *s, char c)
+static size_t	ft_word_length(const char *s, char c)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
 	while (s && s[i] && s[i] != c)
@@ -41,21 +41,36 @@ static int	ft_word_length(const char *s, char c)
 	return (i);
 }
 
+static char	**ft_clean_up(size_t k, char **arr)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < k)
+	{
+		free(arr[i]);
+		i++;
+	}
+	return (NULL);
+}
+
 char	**ft_split(char const *s, char c)
 {
-	char	**res;
-	int		i;
-	int		k;
+	char		**res;
+	size_t		i;
+	size_t		k;
 
 	k = 0;
 	res = malloc(sizeof(char *) * (ft_count_word(s, c) + 1));
 	while (res && s && *s)
 	{
-		while (*s && *s == c)
+		while (*s == c)
 			s++;
 		if (*s)
 		{
 			res[k] = malloc(sizeof(char) * (ft_word_length(s, c) + 1));
+			if (!res[k])
+				return (ft_clean_up(k, res));
 			i = -1;
 			while (s[++i] && s[i] != c)
 				res[k][i] = s[i];
@@ -64,6 +79,6 @@ char	**ft_split(char const *s, char c)
 		}
 	}
 	if (res)
-		res[k] = 0;
+		res[k] = NULL;
 	return (res);
 }

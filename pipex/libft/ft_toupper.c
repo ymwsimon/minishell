@@ -6,9 +6,11 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 20:58:30 by mayeung           #+#    #+#             */
-/*   Updated: 2023/10/16 18:02:04 by mayeung          ###   ########.fr       */
+/*   Updated: 2023/12/28 13:49:08 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "libft.h"
 
 char	ft_toupper(char c)
 {

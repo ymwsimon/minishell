@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 20:54:13 by mayeung           #+#    #+#             */
-/*   Updated: 2023/10/29 21:54:12 by mayeung          ###   ########.fr       */
+/*   Updated: 2023/12/28 13:42:55 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,16 @@
 
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
-	t_list	*n;
+	t_list	*head;
 	t_list	*c;
 
-	n = 0;
+	head = NULL;
 	while (lst && f && del)
 	{
 		c = ft_lstnew(lst->content);
 		c->content = f(c->content);
-		ft_lstadd_back(&n, c);
+		ft_lstadd_back(&head, c);
 		lst = lst->next;
 	}
-	return (n);
+	return (head);
 }

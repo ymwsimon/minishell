@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 20:54:16 by mayeung           #+#    #+#             */
-/*   Updated: 2023/10/16 16:53:27 by mayeung          ###   ########.fr       */
+/*   Updated: 2023/12/28 13:03:08 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_list	*ft_lstnew(void *content)
 	if (n)
 	{
 		n->content = content;
-		n->next = 0;
+		n->next = NULL;
 	}
 	return (n);
 }

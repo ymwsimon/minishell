@@ -6,13 +6,13 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 01:21:42 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/03 00:32:35 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/05 01:13:19 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	import_history(void)
+void	ft_import_history(void)
 {
 	int		fd;
 	char	*line;
@@ -41,21 +41,25 @@ void	import_history(void)
 	free(path);
 }
 
-void	ft_write_history(char *line)
+void	ft_trim_write_history(char **line)
 {
 	int		fd;
 	char	*path;
 	char	*line_with_newline;
+	char	*trimmed;
 
-	if (line && !ft_strlen(line))
+	trimmed = ft_strtrim(*line, " ");
+	free(*line);
+	*line = trimmed;
+	if (*line && !ft_strlen(*line))
 		return ;
 	path = ft_strjoin(getenv("HOME"), "/.minishell_cmd_history");
-	add_history(line);
+	add_history(*line);
 	fd = open(path, O_CREAT | O_WRONLY | O_APPEND, 0777);
 	//printf("path of the history file=%s, fd=%d\n", path, fd);
 	if (fd >= 0)
 	{
-		line_with_newline = ft_strjoin(line, "\n");
+		line_with_newline = ft_strjoin(*line, "\n");
 		write(fd, line_with_newline, ft_strlen(line_with_newline));
 		free(line_with_newline);
 		close(fd);
@@ -295,12 +299,113 @@ void	ft_exec_cmds(t_list *cmds)
 	waitpid(cpid, &r, 0);
 }
 
+t_list	*ft_tokenize(char *line)
+{
+	t_list	*res;
+	t_list	*stack;
+	t_list	*tmp;
+	size_t	i;
+	size_t	j;
+
+	i = 0;
+	res = NULL;
+	stack = NULL;
+	while (line && line[i])
+	{
+		ft_lstadd_front(&stack, ft_lstnew(ft_strdup(" |<>\"'")));
+		while (line[i] && line[i] == ' ')
+			i++;
+		j = i;
+		while (stack)
+		{
+			while (line[j] && !ft_strrchr(stack->content, line[j]))
+				j++;
+			if (ft_strlen(stack->content) == 1
+				|| (line[j] != '"' && line[j] != '\''))
+			{
+				tmp = stack->next;
+				ft_lstdelone(stack, &free);
+				stack = tmp;
+				if (i == j && (line[j] == '<' || line[j] == '>')
+					&& line[j] == line[j + 1])
+					j += 2;
+				if (line[j] == '"' || line[j] == '\'')
+					j++;
+			}
+			else
+				ft_lstadd_front(&stack, ft_lstnew(ft_substr(line, j++, 1)));
+		}
+		j += j == i;
+		ft_lstadd_back(&res, ft_lstnew(ft_substr(line, i, j - i)));
+		i = j;
+	}
+	return (res);
+}
+
+void	ft_print_tokens(t_list *tokens)
+{
+	printf("tokens:\n");
+	while (tokens)
+	{
+		printf("%s\n", (char *)(tokens->content));
+		tokens = tokens->next;
+	}
+}
+
+int	ft_is_pipe(char *str)
+{
+	return (!ft_strncmp(str, "|", ft_strlen("|")));
+}
+
+int	ft_is_here_doc(char *str)
+{
+	return (!ft_strncmp(str, "<<", ft_strlen("<<")));
+}
+
+int	ft_is_input(char *str)
+{
+	return (!ft_strncmp(str, "<", ft_strlen("<")));
+}
+
+int	ft_is_output(char *str)
+{
+	return (!ft_strncmp(str, ">", ft_strlen(">")));
+}
+
+int	ft_is_append(char *str)
+{
+	return (!ft_strncmp(str, ">>", ft_strlen(">>")));
+}
+
+int	ft_parse_token(t_list *tokens)
+{
+	t_list	*node;
+	t_list	*stack;
+	t_token	*t;
+	size_t	i;
+
+	node = tokens;
+	stack = NULL;
+	i = 0;
+	while (node)
+	{
+		t = malloc(sizeof(t_token));
+		if (!t)
+			; //clean up
+		//if (stack && )
+		i++;
+		node = node->next;
+	}
+	return (1);
+}
+
 int	main(int argc, char **argv, char **env)
 {
 	char			*line;
 	char			cwd[2000];
 	//struct termios	ter;
 	t_list			*cmds;
+	t_list			*tokens;
 
 	//tcgetattr(1, &ter);
 	//ter.c_lflag |= ECHOCTL;
@@ -308,19 +413,24 @@ int	main(int argc, char **argv, char **env)
 	//tcsetattr(1, 0, &ter);
 	argc += 0;
 	argv += 0;
+	env += 0;
+	cmds = 0;
+	cmds += 0;
 	printf("current working path=%s\n", getcwd(cwd, 2000));
-	import_history();
+	ft_import_history();
 	while (1)
 	{
 		line = readline("42minishell>>> ");
 		if (!line)
 			break ;
-		ft_write_history(line);
+		ft_trim_write_history(&line);
 		printf("input=%s\n", line);
-		if (ft_strchr(line, '|'))
+		if (ft_strlen(line))
 		{
-			cmds = ft_split_parse_cmds(line, env);
-			ft_exec_cmds(cmds);
+			tokens = ft_tokenize(line);
+			ft_print_tokens(tokens);
+			//cmds = ft_split_parse_cmds(line, env);
+			//ft_exec_cmds(cmds);
 			//ft_print_cmds(cmds);
 		}
 		//else

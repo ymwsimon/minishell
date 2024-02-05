@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 20:53:48 by mayeung           #+#    #+#             */
-/*   Updated: 2023/10/16 16:53:36 by mayeung          ###   ########.fr       */
+/*   Updated: 2023/12/28 12:58:49 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,11 @@ void	ft_lstadd_back(t_list **lst, t_list *new)
 {
 	t_list	*last;
 
-	if (lst && new)
+	if (lst && !(*lst))
+		*lst = new;
+	else if (lst && *lst)
 	{
-		if (!(*lst))
-			*lst = new;
-		else
-		{
-			last = ft_lstlast(*lst);
-			last->next = new;
-		}
+		last = ft_lstlast(*lst);
+		last->next = new;
 	}
 }

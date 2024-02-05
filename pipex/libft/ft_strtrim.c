@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 20:58:12 by mayeung           #+#    #+#             */
-/*   Updated: 2023/10/29 21:34:54 by mayeung          ###   ########.fr       */
+/*   Updated: 2023/12/27 23:09:13 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,28 +15,20 @@
 char	*ft_strtrim(char const *s1, char const *set)
 {
 	char	*res;
-	char	*temp;
 	size_t	i;
+	size_t	j;
 
 	if (!s1 || !set)
-		return (0);
+		return (NULL);
 	i = 0;
 	while (s1[i] && ft_strchr(set, s1[i]))
 		i++;
-	res = ft_strdup(&s1[i]);
+	j = ft_strlen(s1);
+	while (j > i && ft_strchr(set, s1[j - 1]))
+		j--;
+	res = malloc(sizeof(char) * (j - i + 1));
 	if (!res)
-		return (res);
-	i = ft_strlen(res) - 1;
-	while (i < ft_strlen(res) && ft_strchr(set, res[i]))
-		i--;
-	if (i < ft_strlen(res) && res[i])
-	{
-		temp = res;
-		res[i + 1] = 0;
-		res = ft_strdup(res);
-		free(temp);
-		if (!res)
-			return (res);
-	}
+		return (NULL);
+	ft_strlcpy(res, &s1[i], j - i + 1);
 	return (res);
 }
