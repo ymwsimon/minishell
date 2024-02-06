@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 01:21:42 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/06 13:47:12 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/06 20:41:57 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -318,48 +318,44 @@ int	ft_push_token_to_list(t_list **list, char *str)
 	return (1);
 }
 
-t_list	*ft_tokenize(char *line)
+int	ft_is_double_quote(char *str)
 {
-	t_list	*res;
-	t_list	*stack;
-	t_list	*tmp;
-	size_t	i;
-	size_t	j;
+	return (!ft_strncmp(str, "\"", ft_strlen("\"") + 1));
+}
 
-	i = 0;
-	res = NULL;
-	stack = NULL;
-	while (line && line[i])
-	{
-		ft_lstadd_front(&stack, ft_lstnew(ft_strdup(" |<>\"'")));
-		while (line[i] && line[i] == ' ')
-			i++;
-		j = i;
-		while (stack)
-		{
-			while (line[j] && !ft_strrchr(stack->content, line[j]))
-				j++;
-			if (ft_strlen(stack->content) == 1
-				|| (line[j] != '"' && line[j] != '\''))
-			{
-				tmp = stack->next;
-				ft_lstdelone(stack, &free);
-				stack = tmp;
-				if (i == j && (line[j] == '<' || line[j] == '>')
-					&& line[j] == line[j + 1])
-					j += 2;
-				if (line[j] == '"' || line[j] == '\'')
-					j++;
-			}
-			else
-				ft_lstadd_front(&stack, ft_lstnew(ft_substr(line, j++, 1)));
-		}
-		j += j == i;
-		if (!ft_push_token_to_list(&res, ft_substr(line, i, j - i)))
-			free(NULL);//clean up res
-		i = j;
-	}
-	return (res);
+int ft_is_double_quote_tok(t_token_type t)
+{
+	return (t == OPEN_DOUBLE_QUOTE);
+}
+
+int	ft_is_single_quote(char *str)
+{
+	return (!ft_strncmp(str, "'", ft_strlen("'") + 1));
+}
+
+int	ft_is_single_quote_tok(t_token_type t)
+{
+	return (t == OPEN_SINGLE_QUOTE);
+}
+
+int	ft_is_open_paren(char *str)
+{
+	return (!ft_strncmp(str, "(", ft_strlen("(") + 1));
+}
+
+int	ft_is_open_paren_tok(t_token_type t)
+{
+	return (t == OPEN_PAREN);
+}
+
+int	ft_is_close_paren(char *str)
+{
+	return (!ft_strncmp(str, ")", ft_strlen(")") + 1));
+}
+
+int	ft_is_close_paren_tok(t_token_type t)
+{
+	return (t == CLOSE_PAREN);
 }
 
 void	ft_print_enum(t_token_type tok)
@@ -384,6 +380,64 @@ void	ft_print_enum(t_token_type tok)
 		printf("OUTFILE");
 	else if (tok == DELIMITER)
 		printf("DELIMITER");
+	else if (tok == OPEN_DOUBLE_QUOTE)
+		printf("OPEN_DOUBLE_QUOTE");
+	else if (tok == OPEN_SINGLE_QUOTE)
+		printf("OPEN_SINGLE_QUOTE");
+}
+
+t_list	*ft_tokenize(char *line)
+{
+	t_list	*res;
+	t_list	*stack;
+	t_list	*tmp;
+	size_t	i;
+	size_t	j;
+
+	i = 0;
+	res = NULL;
+	stack = NULL;
+	while (line && line[i])
+	{
+		ft_lstadd_front(&stack, ft_lstnew(ft_strdup(" |<>\"'")));
+		while (line[i] && line[i] == ' ')
+			i++;
+		j = i;
+		while (stack && line[j])
+		{
+			while (line[j] && !ft_strrchr(stack->content, line[j]))
+				j++;
+			if ((ft_strlen(stack->content) == 1 && ((char *)stack->content)[0] == line[j])
+				|| (line[j] != '"' && line[j] != '\'' && line[j]))
+			{
+				tmp = stack->next;
+				ft_lstdelone(stack, &free);
+				stack = tmp;
+				if (i == j && (line[j] == '<' || line[j] == '>')
+					&& line[j] == line[j + 1])
+					j += 2;
+				if (line[j] == '"' || line[j] == '\'')
+					j++;
+			}
+			else if (line[j])
+				ft_lstadd_front(&stack, ft_lstnew(ft_substr(line, j++, 1)));
+		}
+		j += j == i;
+		if (!ft_push_token_to_list(&res, ft_substr(line, i, j - i)))
+			free(NULL);//clean up res
+		i = j;
+	}
+
+	if (stack && ft_strlen(stack->content) == 1
+		&& ft_is_double_quote(stack->content))
+		((t_token *)ft_lstlast(res)->content)->tok = OPEN_DOUBLE_QUOTE;
+	if (stack && ft_strlen(stack->content) == 1
+		&& ft_is_single_quote(stack->content))
+		((t_token *)ft_lstlast(res)->content)->tok = OPEN_SINGLE_QUOTE;
+	//printf("stack content%s\n", (char *)stack->content);
+	//ft_print_enum(((t_token *)ft_lstlast(res)->content)->tok);
+	//printf("\n");
+	return (res);
 }
 
 void	ft_print_tokens(t_list *tokens)
@@ -470,30 +524,35 @@ int	ft_is_redir_tok(t_token_type t)
 int	ft_valid_pipe_tok(t_list *node, t_token_type tok)
 {
 	return (ft_is_pipe(((t_token *)node->content)->str)
+		&& ((t_token *)node->content)->tok == RAW
 		&& tok && !ft_is_redir_tok(tok) && !ft_is_pipe_tok(tok));
 }
 
 int	ft_valid_input_tok(t_list *node, t_token_type tok)
 {
 	return (ft_is_input(((t_token *)node->content)->str)
+			&& ((t_token *)node->content)->tok == RAW
 			&& (!tok || !ft_is_redir_tok(tok)));
 }
 
 int	ft_valid_output_tok(t_list *node, t_token_type tok)
 {
 	return (ft_is_output(((t_token *)node->content)->str)
+			&& ((t_token *)node->content)->tok == RAW
 			&& (!tok || !ft_is_redir_tok(tok)));
 }
 
 int	ft_valid_here_doc_tok(t_list *node, t_token_type tok)
 {
 	return (ft_is_here_doc(((t_token *)node->content)->str)
+			&& ((t_token *)node->content)->tok == RAW
 			&& (!tok || !ft_is_redir_tok(tok)));
 }
 
 int	ft_valid_append_tok(t_list *node, t_token_type tok)
 {
 	return (ft_is_append(((t_token *)node->content)->str)
+		&& ((t_token *)node->content)->tok == RAW
 			&& (!tok || !ft_is_redir_tok(tok)));
 }
 
@@ -501,6 +560,7 @@ int	ft_valid_infile_tok(t_list *node, t_token_type tok)
 {
 	return (!ft_is_pipe(((t_token *)node->content)->str)
 			&& !ft_is_redir(((t_token *)node->content)->str)
+			&& ((t_token *)node->content)->tok == RAW
 			&& tok && ft_is_input_tok(tok));
 }
 
@@ -508,6 +568,7 @@ int	ft_valid_delimiter_tok(t_list *node, t_token_type tok)
 {
 	return (!ft_is_pipe(((t_token *)node->content)->str)
 			&& !ft_is_redir(((t_token *)node->content)->str)
+			&& ((t_token *)node->content)->tok == RAW
 			&& tok && ft_is_here_doc_tok(tok));
 }
 
@@ -515,6 +576,7 @@ int	ft_valid_outfile_tok(t_list *node, t_token_type tok)
 {
 	return (!ft_is_pipe(((t_token *)node->content)->str)
 			&& !ft_is_redir(((t_token *)node->content)->str)
+			&& ((t_token *)node->content)->tok == RAW
 			&& tok && (ft_is_append_tok(tok) || ft_is_output_tok(tok)));
 }
 
@@ -522,6 +584,7 @@ int	ft_valid_arg_tok(t_list *node, t_token_type tok)
 {
 	return (!ft_is_pipe(((t_token *)node->content)->str)
 			&& !ft_is_redir(((t_token *)node->content)->str)
+			&& ((t_token *)node->content)->tok == RAW
 			&& (!tok || !ft_is_redir_tok(tok)));
 }
 
@@ -554,15 +617,19 @@ int	ft_parse_token(t_list *node)
 			((t_token *)node->content)->tok = OUTFILE;
 		else if (ft_valid_arg_tok(node, last))
 			((t_token *)node->content)->tok = ARG;
-		else
+		else if (((t_token *)node->content)->tok == RAW)
 			return (0);
 		//ft_lstadd_front(&stack, node);
 		last = ((t_token *)node->content)->tok;
 		node = node->next;
 	}
+	//ft_print_enum(last);
+	//printf("\n");
 	if (last && ft_is_redir_tok(last))
 		return (0); // clean up
-	if (last && ft_is_pipe_tok(last)) // or unfinished quote
+	if (last && (ft_is_pipe_tok(last)
+		|| ft_is_double_quote_tok(last)
+		|| ft_is_single_quote_tok(last))) // or unfinished quote
 		return (2); // clean up
 	// if pipe or unfinished quote is at the top of the stack, clean up and return 2
 	//clean up stack
@@ -576,6 +643,7 @@ int	main(int argc, char **argv, char **env)
 	//struct termios	ter;
 	t_list			*cmds;
 	t_list			*tokens;
+	int				parse_res;
 
 	//tcgetattr(1, &ter);
 	//ter.c_lflag |= ECHOCTL;
@@ -598,9 +666,10 @@ int	main(int argc, char **argv, char **env)
 		if (ft_strlen(line))
 		{
 			tokens = ft_tokenize(line);
-			if (ft_parse_token(tokens) == 1)
+			parse_res = ft_parse_token(tokens);
+			if (parse_res == 1)
 				ft_print_tokens(tokens);
-			else if (ft_parse_token(tokens) == 2)
+			else if (parse_res == 2)
 				printf("need more input\n");
 			else
 				printf("parse error\n");

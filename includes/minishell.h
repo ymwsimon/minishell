@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 22:45:03 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/05 15:49:22 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/06 19:17:32 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,11 @@ typedef enum e_token_type
 	ARG,
 	INFILE,
 	OUTFILE,
-	DELIMITER
+	DELIMITER,
+	OPEN_DOUBLE_QUOTE,
+	OPEN_SINGLE_QUOTE,
+	OPEN_PAREN,
+	CLOSE_PAREN
 }			t_token_type;
 
 typedef struct s_token
