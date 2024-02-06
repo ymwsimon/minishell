@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 01:21:42 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/05 17:39:17 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/06 02:05:29 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,16 +76,16 @@ void	ft_close_all_pipe(int *fds, size_t n)
 		close(fds[i++]);
 }
 
-int	*ft_init_pipe(size_t ncmd)
+int	*ft_init_pipe(size_t npipe)
 {
 	int		*res;
 	size_t	i;
 
-	res = malloc(sizeof(int) * (ncmd - 1) * 2);
+	res = malloc(sizeof(int) * npipe * 2);
 	if (!res)
 		return (NULL);
 	i = 0;
-	while (i < ncmd - 1)
+	while (i < npipe)
 	{
 		if (pipe(&res[i * 2]) == -1)
 			return (ft_close_all_pipe(res, i), free(res), NULL);
@@ -114,7 +114,7 @@ void	*ft_clear_char_arr(char **arr)
 	free(arr);
 	return (NULL);
 }
-
+//don't need
 t_cmd	*ft_parse_single_cmd(char *cmd, int *fds, size_t idx, size_t size)
 {
 	t_cmd	*res;
@@ -149,7 +149,7 @@ t_cmd	*ft_parse_single_cmd(char *cmd, int *fds, size_t idx, size_t size)
 	res->fds = fds;
 	return (res);
 }
-
+//don't need
 t_list	*ft_split_parse_cmds(char *line, char **env)
 {
 	char		**cmds;
@@ -180,7 +180,7 @@ t_list	*ft_split_parse_cmds(char *line, char **env)
 	}
 	return (res);
 }
-
+//????
 void	ft_print_cmd_arg(char **args)
 {
 	printf("args: ");
@@ -190,7 +190,7 @@ void	ft_print_cmd_arg(char **args)
 		args++;
 	}
 }
-
+//???
 void	ft_print_cmds(t_list *cmds)
 {
 	t_cmd	*cmd;
@@ -204,7 +204,7 @@ void	ft_print_cmds(t_list *cmds)
 		cmds = cmds->next;
 	}
 }
-
+//???
 void	ft_redir_fds(int rfd, int wfd)
 {
 	dup2(rfd, STDIN_FILENO);
@@ -259,7 +259,7 @@ void	ft_errmsgname(int error_type, char *fname)
 		exit(CMD_NOT_FOUND);
 	exit(1);
 }
-
+//don't need -- for ref
 void	ft_exec_cmds(t_list *cmds)
 {
 	pid_t	cpid;
@@ -405,7 +405,7 @@ int	ft_is_pipe(char *str)
 {
 	return (!ft_strncmp(str, "|", ft_strlen("|") + 1));
 }
-
+//???
 int	ft_is_pipe_tok(t_token_type t)
 {
 	return (t == PIPE);
@@ -415,7 +415,7 @@ int	ft_is_here_doc(char *str)
 {
 	return (!ft_strncmp(str, "<<", ft_strlen("<<") + 1));
 }
-
+//???
 int	ft_is_here_doc_tok(t_token_type t)
 {
 	return (t == HERE_DOC);
@@ -425,7 +425,7 @@ int	ft_is_input(char *str)
 {
 	return (!ft_strncmp(str, "<", ft_strlen("<") + 1));
 }
-
+//???
 int	ft_is_input_tok(t_token_type t)
 {
 	return (t == INPUT);
@@ -435,7 +435,7 @@ int	ft_is_output(char *str)
 {
 	return (!ft_strncmp(str, ">", ft_strlen(">") + 1));
 }
-
+//???
 int	ft_is_output_tok(t_token_type t)
 {
 	return (t == OUTPUT);
@@ -445,7 +445,7 @@ int	ft_is_append(char *str)
 {
 	return (!ft_strncmp(str, ">>", ft_strlen(">>") + 1));
 }
-
+//???
 int	ft_is_append_tok(t_token_type t)
 {
 	return (t == APPEND);
