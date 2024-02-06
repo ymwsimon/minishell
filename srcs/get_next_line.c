@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
+/*   By: mayeung <mayeung@student.42london.com      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 20:43:35 by mayeung           #+#    #+#             */
-/*   Updated: 2024/01/30 12:49:46 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/01/29 21:29:55 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/get_next_line.h"
+#include "get_next_line.h"
 
 char	*ft_strchr(char *str, int c)
 {
@@ -81,8 +81,10 @@ char	*ft_res_update_remain(char **remain, char *buf, int rs, char *new_re)
 	char	*res;
 
 	free(buf);
-	if (rs == -1 || !remain || !(*remain))
+	if (!remain)
 		return (NULL);
+	if (rs == -1 || !(*remain))
+		return (free(*remain), *remain = NULL, NULL);
 	if (!ft_strchr(*remain, '\n') || !(*(ft_strchr(*remain, '\n') + 1)))
 	{
 		res = ft_strdup(*remain);
@@ -99,9 +101,7 @@ char	*ft_res_update_remain(char **remain, char *buf, int rs, char *new_re)
 		if (!res)
 			return (free(new_re), NULL);
 	}
-	free(*remain);
-	*remain = new_re;
-	return (res);
+	return (free(*remain), *remain = new_re, res);
 }
 
 char	*get_next_line(int fd)
