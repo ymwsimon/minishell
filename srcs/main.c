@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 01:21:42 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/06 02:05:29 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/06 13:47:12 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -355,8 +355,8 @@ t_list	*ft_tokenize(char *line)
 				ft_lstadd_front(&stack, ft_lstnew(ft_substr(line, j++, 1)));
 		}
 		j += j == i;
-		ft_push_token_to_list(&res, ft_substr(line, i, j - i));
-		//ft_lstadd_back(&res, ft_lstnew(ft_substr(line, i, j - i)));
+		if (!ft_push_token_to_list(&res, ft_substr(line, i, j - i)))
+			free(NULL);//clean up res
 		i = j;
 	}
 	return (res);

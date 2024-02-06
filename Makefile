@@ -12,15 +12,19 @@ FLAGS := -Wall -Werror -Wextra -g
 
 LIBFT_DIR := lib/libft
 
+LIBFT := libft.a
+
 LIBS := -lreadline -lft -L$(LIBFT_DIR)
 
 CC := cc
 
 all : $(NAME)
 
-$(NAME) : $(SRCS:%=$(SRCS_DIR)/%.c)
+$(NAME) : $(SRCS:%=$(SRCS_DIR)/%.c) $(LIBFT_DIR)/$(LIBFT)
+	$(CC) $(FLAGS) $(SRCS:%=$(SRCS_DIR)/%.c) -o $(NAME) $(LIBS)
+
+$(LIBFT_DIR)/$(LIBFT) :
 	make -C $(LIBFT_DIR) bonus
-	$(CC) $(FLAGS) $^ -o $(NAME) $(LIBS)
 
 clean :
 	make -C $(LIBFT_DIR) clean
