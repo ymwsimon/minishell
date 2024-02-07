@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 01:21:42 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/06 20:41:57 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/07 19:47:33 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -373,7 +373,7 @@ void	ft_print_enum(t_token_type tok)
 	else if (tok == APPEND)
 		printf("APPEND_>>");
 	else if (tok == ARG)
-		printf("JUST_ARG");
+		printf("ARG");
 	else if (tok == INFILE)
 		printf("INFILE");
 	else if (tok == OUTFILE)
@@ -399,7 +399,7 @@ t_list	*ft_tokenize(char *line)
 	stack = NULL;
 	while (line && line[i])
 	{
-		ft_lstadd_front(&stack, ft_lstnew(ft_strdup(" |<>\"'")));
+		ft_lstadd_front(&stack, ft_lstnew(ft_strdup(" |<>\"'()&")));
 		while (line[i] && line[i] == ' ')
 			i++;
 		j = i;
@@ -413,7 +413,7 @@ t_list	*ft_tokenize(char *line)
 				tmp = stack->next;
 				ft_lstdelone(stack, &free);
 				stack = tmp;
-				if (i == j && (line[j] == '<' || line[j] == '>')
+				if (i == j && (line[j] == '<' || line[j] == '>' || line[j] == '&' || line[j] == '|')
 					&& line[j] == line[j + 1])
 					j += 2;
 				if (line[j] == '"' || line[j] == '\'')
@@ -503,6 +503,26 @@ int	ft_is_append(char *str)
 int	ft_is_append_tok(t_token_type t)
 {
 	return (t == APPEND);
+}
+
+int	ft_is_and(char *str)
+{
+	return (!ft_strncmp(str, "&&", ft_strlen("&&") + 1));
+}
+//???
+int	ft_is_and_tok(t_token_type t)
+{
+	return (t == AND);
+}
+
+int	ft_is_or(char *str)
+{
+	return (!ft_strncmp(str, "||", ft_strlen("||") + 1));
+}
+//???
+int	ft_is_and_tok(t_token_type t)
+{
+	return (t == OR);
 }
 
 int	ft_is_redir(char *str)
