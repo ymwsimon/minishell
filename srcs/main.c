@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 01:21:42 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/09 21:06:47 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/09 21:07:46 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -626,10 +626,10 @@ int	ft_valid_open_paren_tok(t_list *node, t_token_type tok)
 	return (!ft_is_pipe(((t_token *)node->content)->data)
 			&& !ft_is_redir(((t_token *)node->content)->data)
 			&& ((t_token *)node->content)->tok == RAW
-			&& (!tok || tok == PIPE || tok == AND || tok == OR))
+			&& (!tok || tok == PIPE || tok == AND || tok == OR));
 }
 
-int	ft_valid_close_paren_tok(t_list *node, t_token_type)
+///int	ft_valid_close_paren_tok(t_list *node, t_token_type)
 
 //int	ft_pipe_need_more_input(t_list *node, t_list *stack)
 
