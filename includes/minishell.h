@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 22:45:03 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/07 19:44:24 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/09 19:52:12 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,28 +57,28 @@ typedef enum e_token_type
 	OPEN_PAREN,
 	CLOSE_PAREN,
 	AND,
-	OR
+	OR,
+	SIMPLE_CMD
 }			t_token_type;
 
 typedef struct s_token
 {
-	char			*str;
+	void			*data;
 	t_token_type	tok;
 }				t_token;
 
 typedef struct s_cmd
 {
-
-	char	*cmd;
 	char	**args;
 	char	**env;
-	char	*infile;
-	char	*outfile;
-	int		*fds;
-	int		infd;
-	int		outfd;
-	int		in_redir;
-	int		out_redir;
+	t_list	*redirs;
 }				t_cmd;
+
+typedef struct s_astnode
+{
+	struct s_astnode	*left;
+	struct s_astnode	*right;
+	t_token				*tok;
+}				t_astnode;
 
 #endif

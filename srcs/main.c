@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 01:21:42 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/07 19:47:33 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/09 21:06:47 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ void	*ft_clear_char_arr(char **arr)
 	return (NULL);
 }
 //don't need
+/*
 t_cmd	*ft_parse_single_cmd(char *cmd, int *fds, size_t idx, size_t size)
 {
 	t_cmd	*res;
@@ -148,8 +149,9 @@ t_cmd	*ft_parse_single_cmd(char *cmd, int *fds, size_t idx, size_t size)
 	}
 	res->fds = fds;
 	return (res);
-}
+}*/
 //don't need
+/*
 t_list	*ft_split_parse_cmds(char *line, char **env)
 {
 	char		**cmds;
@@ -179,7 +181,7 @@ t_list	*ft_split_parse_cmds(char *line, char **env)
 		i++;
 	}
 	return (res);
-}
+}*/
 //????
 void	ft_print_cmd_arg(char **args)
 {
@@ -191,6 +193,7 @@ void	ft_print_cmd_arg(char **args)
 	}
 }
 //???
+/*
 void	ft_print_cmds(t_list *cmds)
 {
 	t_cmd	*cmd;
@@ -203,7 +206,7 @@ void	ft_print_cmds(t_list *cmds)
 		printf("in redir: %d, infd: %d, out redir: %d, outfd: %d\n", cmd->in_redir, cmd->infd, cmd->out_redir, cmd->outfd);
 		cmds = cmds->next;
 	}
-}
+}*/
 //???
 void	ft_redir_fds(int rfd, int wfd)
 {
@@ -221,10 +224,10 @@ char	*ft_getfullpath(char *pname, char *res)
 	if (pname && ((pname[0] == '/') || pname[0] == '.'))
 		return (ft_strdup(pname));
 	path = getenv("PATH");
-	/*if (path)
-		printf("PATH=%s\n", path);
-	else
-		printf("PATH is empty\n");*/
+	//if (path)
+	//	printf("PATH=%s\n", path);
+	//else
+	//	printf("PATH is empty\n");
 	if (!path)
 		return (NULL);
 	paths = ft_split(path, ':');
@@ -260,6 +263,7 @@ void	ft_errmsgname(int error_type, char *fname)
 	exit(1);
 }
 //don't need -- for ref
+/*
 void	ft_exec_cmds(t_list *cmds)
 {
 	pid_t	cpid;
@@ -278,14 +282,14 @@ void	ft_exec_cmds(t_list *cmds)
 		cmd = node->content;
 		if (!cpid)
 		{	
-			/*if (!node->next && 0)
-			{
-				fd = open("testout", O_WRONLY | O_CREAT | O_TRUNC, 0777);
-				cmd->outfd = fd;
-			}*/
+			//if (!node->next && 0)
+			//{
+			//	fd = open("testout", O_WRONLY | O_CREAT | O_TRUNC, 0777);
+			//	cmd->outfd = fd;
+			//}
 			ft_redir_fds(cmd->infd, cmd->outfd);
-			/*if (!node->next && 0)
-				close(fd);*/
+			//if (!node->next && 0)
+			//	close(fd);
 			ft_close_all_pipe(cmd->fds, ft_lstsize(cmds));
 			full_path = ft_getfullpath(cmd->cmd, NULL);
 			//ft_putstr_fd(full_path, STDERR_FILENO);
@@ -298,7 +302,7 @@ void	ft_exec_cmds(t_list *cmds)
 	ft_close_all_pipe(cmd->fds, ft_lstsize(cmds));
 	waitpid(cpid, &r, 0);
 }
-
+*/
 int	ft_push_token_to_list(t_list **list, char *str)
 {
 	t_token	*tok;
@@ -309,7 +313,7 @@ int	ft_push_token_to_list(t_list **list, char *str)
 	tok = malloc(sizeof(t_token));
 	if (!tok)
 		return (free(str), 0);
-	tok->str = str;
+	tok->data = str;
 	tok->tok = RAW;
 	new_node = ft_lstnew(tok);
 	if (!new_node)
@@ -384,6 +388,12 @@ void	ft_print_enum(t_token_type tok)
 		printf("OPEN_DOUBLE_QUOTE");
 	else if (tok == OPEN_SINGLE_QUOTE)
 		printf("OPEN_SINGLE_QUOTE");
+	else if (tok == AND)
+		printf("AND");
+	else if (tok == OR)
+		printf("OR");
+	else if (tok == SIMPLE_CMD)
+		printf("SIMPLE_CMD");
 }
 
 t_list	*ft_tokenize(char *line)
@@ -448,7 +458,10 @@ void	ft_print_tokens(t_list *tokens)
 	while (tokens)
 	{
 		t = tokens->content;
-		printf("data:%s tok_type:", t->str);
+		if (t->tok != SIMPLE_CMD)
+			printf("data:%s tok_type:", (char *)t->data);
+		else
+			printf("simple cmd");
 		ft_print_enum(t->tok);
 		printf("\n");
 		tokens = tokens->next;
@@ -520,7 +533,7 @@ int	ft_is_or(char *str)
 	return (!ft_strncmp(str, "||", ft_strlen("||") + 1));
 }
 //???
-int	ft_is_and_tok(t_token_type t)
+int	ft_is_or_tok(t_token_type t)
 {
 	return (t == OR);
 }
@@ -543,70 +556,80 @@ int	ft_is_redir_tok(t_token_type t)
 
 int	ft_valid_pipe_tok(t_list *node, t_token_type tok)
 {
-	return (ft_is_pipe(((t_token *)node->content)->str)
+	return (ft_is_pipe(((t_token *)node->content)->data)
 		&& ((t_token *)node->content)->tok == RAW
 		&& tok && !ft_is_redir_tok(tok) && !ft_is_pipe_tok(tok));
 }
 
 int	ft_valid_input_tok(t_list *node, t_token_type tok)
 {
-	return (ft_is_input(((t_token *)node->content)->str)
+	return (ft_is_input(((t_token *)node->content)->data)
 			&& ((t_token *)node->content)->tok == RAW
 			&& (!tok || !ft_is_redir_tok(tok)));
 }
 
 int	ft_valid_output_tok(t_list *node, t_token_type tok)
 {
-	return (ft_is_output(((t_token *)node->content)->str)
+	return (ft_is_output(((t_token *)node->content)->data)
 			&& ((t_token *)node->content)->tok == RAW
 			&& (!tok || !ft_is_redir_tok(tok)));
 }
 
 int	ft_valid_here_doc_tok(t_list *node, t_token_type tok)
 {
-	return (ft_is_here_doc(((t_token *)node->content)->str)
+	return (ft_is_here_doc(((t_token *)node->content)->data)
 			&& ((t_token *)node->content)->tok == RAW
 			&& (!tok || !ft_is_redir_tok(tok)));
 }
 
 int	ft_valid_append_tok(t_list *node, t_token_type tok)
 {
-	return (ft_is_append(((t_token *)node->content)->str)
+	return (ft_is_append(((t_token *)node->content)->data)
 		&& ((t_token *)node->content)->tok == RAW
 			&& (!tok || !ft_is_redir_tok(tok)));
 }
 
 int	ft_valid_infile_tok(t_list *node, t_token_type tok)
 {
-	return (!ft_is_pipe(((t_token *)node->content)->str)
-			&& !ft_is_redir(((t_token *)node->content)->str)
+	return (!ft_is_pipe(((t_token *)node->content)->data)
+			&& !ft_is_redir(((t_token *)node->content)->data)
 			&& ((t_token *)node->content)->tok == RAW
 			&& tok && ft_is_input_tok(tok));
 }
 
 int	ft_valid_delimiter_tok(t_list *node, t_token_type tok)
 {
-	return (!ft_is_pipe(((t_token *)node->content)->str)
-			&& !ft_is_redir(((t_token *)node->content)->str)
+	return (!ft_is_pipe(((t_token *)node->content)->data)
+			&& !ft_is_redir(((t_token *)node->content)->data)
 			&& ((t_token *)node->content)->tok == RAW
 			&& tok && ft_is_here_doc_tok(tok));
 }
 
 int	ft_valid_outfile_tok(t_list *node, t_token_type tok)
 {
-	return (!ft_is_pipe(((t_token *)node->content)->str)
-			&& !ft_is_redir(((t_token *)node->content)->str)
+	return (!ft_is_pipe(((t_token *)node->content)->data)
+			&& !ft_is_redir(((t_token *)node->content)->data)
 			&& ((t_token *)node->content)->tok == RAW
 			&& tok && (ft_is_append_tok(tok) || ft_is_output_tok(tok)));
 }
 
 int	ft_valid_arg_tok(t_list *node, t_token_type tok)
 {
-	return (!ft_is_pipe(((t_token *)node->content)->str)
-			&& !ft_is_redir(((t_token *)node->content)->str)
+	return (!ft_is_pipe(((t_token *)node->content)->data)
+			&& !ft_is_redir(((t_token *)node->content)->data)
 			&& ((t_token *)node->content)->tok == RAW
 			&& (!tok || !ft_is_redir_tok(tok)));
 }
+
+int	ft_valid_open_paren_tok(t_list *node, t_token_type tok)
+{
+	return (!ft_is_pipe(((t_token *)node->content)->data)
+			&& !ft_is_redir(((t_token *)node->content)->data)
+			&& ((t_token *)node->content)->tok == RAW
+			&& (!tok || tok == PIPE || tok == AND || tok == OR))
+}
+
+int	ft_valid_close_paren_tok(t_list *node, t_token_type)
 
 //int	ft_pipe_need_more_input(t_list *node, t_list *stack)
 
