@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 22:45:03 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/09 19:52:12 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/11 17:51:38 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,20 @@ typedef enum e_token_type
 	CLOSE_PAREN,
 	AND,
 	OR,
-	SIMPLE_CMD
+	SIMPLE_CMD,
+	SUBSHELL
 }			t_token_type;
+
+typedef struct s_redir
+{
+	t_token_type	redir_type;
+	char			*str;
+}				t_redir;
 
 typedef struct s_token
 {
-	void			*data;
+	char			*str;
+	t_list			*cmd;
 	t_token_type	tok;
 }				t_token;
 
@@ -80,5 +88,9 @@ typedef struct s_astnode
 	struct s_astnode	*right;
 	t_token				*tok;
 }				t_astnode;
+
+//tokenizer
+t_list	*ft_tokenize(char *line);
+
 
 #endif
