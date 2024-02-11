@@ -1,38 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   is_type_str.c                                      :+:      :+:    :+:   */
+/*   is_type_str2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/11 17:58:34 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/11 18:04:45 by mayeung          ###   ########.fr       */
+/*   Created: 2024/02/11 17:59:29 by mayeung           #+#    #+#             */
+/*   Updated: 2024/02/11 18:04:31 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	ft_is_double_quote(char *str)
+int	ft_is_here_doc(char *str)
 {
-	return (!ft_strncmp(str, "\"", ft_strlen("\"") + 1));
+	return (!ft_strncmp(str, "<<", ft_strlen("<<") + 1));
 }
 
-int	ft_is_single_quote(char *str)
+int	ft_is_input(char *str)
 {
-	return (!ft_strncmp(str, "'", ft_strlen("'") + 1));
+	return (!ft_strncmp(str, "<", ft_strlen("<") + 1));
 }
 
-int	ft_is_open_paren(char *str)
+int	ft_is_output(char *str)
 {
-	return (!ft_strncmp(str, "(", ft_strlen("(") + 1));
+	return (!ft_strncmp(str, ">", ft_strlen(">") + 1));
 }
 
-int	ft_is_close_paren(char *str)
+int	ft_is_append(char *str)
 {
-	return (!ft_strncmp(str, ")", ft_strlen(")") + 1));
+	return (!ft_strncmp(str, ">>", ft_strlen(">>") + 1));
 }
 
-int	ft_is_pipe(char *str)
+int	ft_is_and(char *str)
 {
-	return (!ft_strncmp(str, "|", ft_strlen("|") + 1));
+	return (!ft_strncmp(str, "&&", ft_strlen("&&") + 1));
 }

@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 17:49:47 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/11 17:51:26 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/11 23:13:59 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,9 @@ t_list	*ft_tokenize(char *line)
 				tmp = stack->next;
 				ft_lstdelone(stack, &free);
 				stack = tmp;
-				if (i == j && (line[j] == '<' || line[j] == '>' || line[j] == '&' || line[j] == '|')
+				if (i == j && (line[j] == '<' || line[j] == '>'
+						|| line[j] == '&' || line[j] == '|'
+						|| line[j] == '(' || line[j] == ')')
 					&& line[j] == line[j + 1])
 					j += 2;
 				if (line[j] == '"' || line[j] == '\'')
@@ -53,7 +55,6 @@ t_list	*ft_tokenize(char *line)
 			free(NULL); //clean up res
 		i = j;
 	}
-
 	if (stack && ft_strlen(stack->content) == 1
 		&& ft_is_double_quote(stack->content))
 		((t_token *)ft_lstlast(res)->content)->tok = OPEN_DOUBLE_QUOTE;

@@ -1,38 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   is_type_str.c                                      :+:      :+:    :+:   */
+/*   build_ast.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/11 17:58:34 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/11 18:04:45 by mayeung          ###   ########.fr       */
+/*   Created: 2024/02/11 20:46:40 by mayeung           #+#    #+#             */
+/*   Updated: 2024/02/11 21:16:20 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	ft_is_double_quote(char *str)
+t_astnode	*ft_build_ast(t_list *tokens)
 {
-	return (!ft_strncmp(str, "\"", ft_strlen("\"") + 1));
-}
+	t_astnode	*tree;
+	t_list		*iter;
 
-int	ft_is_single_quote(char *str)
-{
-	return (!ft_strncmp(str, "'", ft_strlen("'") + 1));
-}
+	if (!tokens)
+		return (NULL);
+	iter = tokens;
+	while (iter)
+	{
 
-int	ft_is_open_paren(char *str)
-{
-	return (!ft_strncmp(str, "(", ft_strlen("(") + 1));
-}
-
-int	ft_is_close_paren(char *str)
-{
-	return (!ft_strncmp(str, ")", ft_strlen(")") + 1));
-}
-
-int	ft_is_pipe(char *str)
-{
-	return (!ft_strncmp(str, "|", ft_strlen("|") + 1));
+	}
+	return (tree);
 }

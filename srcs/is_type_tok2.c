@@ -1,38 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   is_type_str.c                                      :+:      :+:    :+:   */
+/*   is_type_tok2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/11 17:58:34 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/11 18:04:45 by mayeung          ###   ########.fr       */
+/*   Created: 2024/02/11 18:08:34 by mayeung           #+#    #+#             */
+/*   Updated: 2024/02/11 18:09:38 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	ft_is_double_quote(char *str)
+int	ft_is_here_doc_tok(t_token_type t)
 {
-	return (!ft_strncmp(str, "\"", ft_strlen("\"") + 1));
+	return (t == HERE_DOC);
 }
 
-int	ft_is_single_quote(char *str)
+int	ft_is_input_tok(t_token_type t)
 {
-	return (!ft_strncmp(str, "'", ft_strlen("'") + 1));
+	return (t == INPUT);
 }
 
-int	ft_is_open_paren(char *str)
+int	ft_is_output_tok(t_token_type t)
 {
-	return (!ft_strncmp(str, "(", ft_strlen("(") + 1));
+	return (t == OUTPUT);
 }
 
-int	ft_is_close_paren(char *str)
+int	ft_is_append_tok(t_token_type t)
 {
-	return (!ft_strncmp(str, ")", ft_strlen(")") + 1));
+	return (t == APPEND);
 }
 
-int	ft_is_pipe(char *str)
+int	ft_is_and_tok(t_token_type t)
 {
-	return (!ft_strncmp(str, "|", ft_strlen("|") + 1));
+	return (t == AND);
 }

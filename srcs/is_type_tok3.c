@@ -1,38 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   is_type_str.c                                      :+:      :+:    :+:   */
+/*   is_type_tok3.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/11 17:58:34 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/11 18:04:45 by mayeung          ###   ########.fr       */
+/*   Created: 2024/02/11 18:10:57 by mayeung           #+#    #+#             */
+/*   Updated: 2024/02/11 23:05:05 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	ft_is_double_quote(char *str)
+int	ft_is_or_tok(t_token_type t)
 {
-	return (!ft_strncmp(str, "\"", ft_strlen("\"") + 1));
+	return (t == OR);
 }
 
-int	ft_is_single_quote(char *str)
+int	ft_is_redir_tok(t_token_type t)
 {
-	return (!ft_strncmp(str, "'", ft_strlen("'") + 1));
+	return (ft_is_here_doc_tok(t)
+		|| ft_is_input_tok(t)
+		|| ft_is_output_tok(t)
+		|| ft_is_append_tok(t));
 }
 
-int	ft_is_open_paren(char *str)
+int	ft_is_arg_tok(t_token_type t)
 {
-	return (!ft_strncmp(str, "(", ft_strlen("(") + 1));
+	return (t == ARG);
 }
 
-int	ft_is_close_paren(char *str)
+int	ft_is_delimiter_tok(t_token_type t)
 {
-	return (!ft_strncmp(str, ")", ft_strlen(")") + 1));
-}
-
-int	ft_is_pipe(char *str)
-{
-	return (!ft_strncmp(str, "|", ft_strlen("|") + 1));
+	return (t == DELIMITER);
 }
