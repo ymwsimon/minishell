@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 17:49:47 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/11 23:13:59 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/12 12:17:53 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_list	*ft_tokenize(char *line)
 	stack = NULL;
 	while (line && line[i])
 	{
-		ft_lstadd_front(&stack, ft_lstnew(ft_strdup(" |<>\"'()&")));
+		ft_lstadd_front(&stack, ft_lstnew(ft_strdup(" |<>\"'()&;")));
 		while (line[i] && line[i] == ' ')
 			i++;
 		j = i;
