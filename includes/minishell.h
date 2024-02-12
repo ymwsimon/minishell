@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 22:45:03 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/11 23:05:43 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/12 22:24:48 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,9 @@
 # define PARSE_FAIL 0
 # define PARSE_OK 1
 # define IMCOMPELETE_CMD 2
+
+# define OPENPAR_AND_OR_PIPE 1
+# define PAREN 2
 
 typedef enum e_token_type
 {
@@ -71,15 +74,15 @@ typedef struct s_redir
 typedef struct s_token
 {
 	char			*str;
-	t_list			*cmd;
-	t_token_type	tok;
+	void			*cmd;
+	t_token_type	toktype;
 }				t_token;
 
 typedef struct s_cmd
 {
 	char	**args;
 	char	**env;
-	t_list	*redirs;
+	char	**redirs;
 }				t_cmd;
 
 typedef struct s_astnode
@@ -157,5 +160,6 @@ void	ft_print_tokens(t_list *tokens);
 void	ft_free_token_node(void *n);
 //char_arr_utils
 void	*ft_clear_char_arr(char **arr);
-
+//build_ast
+t_astnode	*ft_build_ast(t_list *tokens);
 #endif

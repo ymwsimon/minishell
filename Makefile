@@ -1,8 +1,8 @@
 NAME = minishell
 
-SRCS = main get_next_line input_history is_type_str is_type_str2 is_type_str3 is_type_tok \
-		is_type_tok2 is_type_tok3 is_type_tok4 is_valid_tok is_valid_tok2 is_valid_tok3 \
-		parser token_utils tokenizer
+SRCS = main get_next_line input_history tokenizer/is_type_str tokenizer/is_type_str2 tokenizer/is_type_str3 parser/is_type_tok \
+		parser/is_type_tok2 parser/is_type_tok3 parser/is_type_tok4 parser/is_valid_tok parser/is_valid_tok2 parser/is_valid_tok3 \
+		parser/parser tokenizer/token_utils tokenizer/tokenizer build_ast
 
 SRCS_DIR = srcs
 
@@ -29,6 +29,8 @@ $(NAME) : $(OBJS) $(LIBFT_DIR)/$(LIBFT)
 
 $(OBJ_DIR)/%.o : $(SRCS_DIR)/%.c
 	@mkdir -p $(OBJ_DIR)
+	@mkdir -p $(OBJ_DIR)/parser
+	@mkdir -p $(OBJ_DIR)/tokenizer
 	$(CC) $(FLAGS) -c $< -o $@
 
 $(LIBFT_DIR)/$(LIBFT) :
@@ -36,7 +38,7 @@ $(LIBFT_DIR)/$(LIBFT) :
 
 clean :
 	make -C $(LIBFT_DIR) clean
-	rm -rf $(OBJ_DIR)/*.o
+	rm -rf $(OBJ_DIR)/*
 
 fclean : clean
 	make -C $(LIBFT_DIR) fclean

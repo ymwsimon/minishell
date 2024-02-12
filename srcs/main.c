@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 01:21:42 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/11 18:32:43 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/12 22:33:17 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int	main(int argc, char **argv, char **env)
 	int				parse_res;
 	char			*old_line;
 	char			*old_mem;
+	t_astnode		*ast;
 
 	//tcgetattr(1, &ter);
 	//ter.c_lflag |= ECHOCTL;
@@ -61,16 +62,25 @@ int	main(int argc, char **argv, char **env)
 				if (parse_res == PARSE_OK)
 				{
 					ft_print_tokens(tokens);
-
+					ast = ft_build_ast(tokens);
+					ft_print_enum(ast->tok->toktype);
+					printf("\n");
+					ft_print_enum(ast->left->tok->toktype);
+					printf("\n");
+					//ft_print_enum(ast->right->tok->toktype);
+					printf("\n");
 				}
 				else if (parse_res == IMCOMPELETE_CMD)
 				{
 					printf("need more input\n");
 					old_line = line;
+					ft_lstclear(&tokens, &ft_free_token_node);
 				}
 				else if (parse_res == PARSE_FAIL)
+				{	
 					printf("parse error\n");
-				ft_lstclear(&tokens, &ft_free_token_node);
+					ft_lstclear(&tokens, &ft_free_token_node);
+				}
 			}
 		}
 		free(line);

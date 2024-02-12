@@ -6,11 +6,11 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 17:58:34 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/11 18:04:45 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/12 14:55:22 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 int	ft_is_double_quote(char *str)
 {
