@@ -6,11 +6,29 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 20:46:40 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/13 11:59:27 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/13 16:13:52 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void	ft_free_ast(t_ast *node)
+{
+	if (!node)
+		return ;
+	if (node->tok->toktype == SIMPLE_CMD)
+	{
+		ft_clear_char_arr(node->tok->cmd->args);
+		ft_clear_char_arr(node->tok->cmd->redirs);
+		free(node->tok->cmd);
+	}
+	else if (ft_is_pipe_tok(node->tok) || ft_is_and_tok(node->tok)
+			|| ft_is_or_tok(node->tok))
+		free(node->tok->str);
+	free(node->tok);
+	ft_free_ast(node->left);
+	ft_free_ast(node->right);
+}
 
 void	ft_print_ast(t_ast *node)
 {

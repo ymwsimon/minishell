@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 01:21:42 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/13 00:01:27 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/13 16:11:39 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ int	main(int argc, char **argv, char **env)
 					ast = ft_build_ast(tokens);
 					ft_print_ast(ast);
 					printf("\n");
+					ft_free_ast(ast);
 					/*ft_print_enum(ast->tok->toktype);
 					printf("\n");
 					ft_print_enum(ast->left->tok->toktype);
