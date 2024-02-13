@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 22:45:03 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/13 00:00:29 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/13 11:43:38 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,25 +65,18 @@ typedef enum e_token_type
 	SUBSHELL
 }			t_token_type;
 
-typedef struct s_redir
+typedef struct s_cmd
 {
-	t_token_type	redir_type;
-	char			*str;
-}				t_redir;
+	char	**args;
+	char	**redirs;
+}				t_cmd;
 
 typedef struct s_token
 {
 	char			*str;
-	void			*cmd;
+	t_cmd			*cmd;
 	t_token_type	toktype;
 }				t_token;
-
-typedef struct s_cmd
-{
-	char	**args;
-	char	**env;
-	char	**redirs;
-}				t_cmd;
 
 typedef struct s_ast
 {
@@ -114,45 +107,46 @@ int		ft_is_and(char *str);
 int		ft_is_or(char *str);
 int		ft_is_redir(char *str);
 //is_type_tok
-int		ft_is_double_quote_tok(t_token_type t);
-int		ft_is_single_quote_tok(t_token_type t);
-int		ft_is_open_paren_tok(t_token_type t);
-int		ft_is_close_paren_tok(t_token_type t);
-int		ft_is_pipe_tok(t_token_type t);
+int		ft_is_double_quote_tok(t_token *t);
+int		ft_is_single_quote_tok(t_token *t);
+int		ft_is_open_paren_tok(t_token *t);
+int		ft_is_close_paren_tok(t_token *t);
+int		ft_is_pipe_tok(t_token *t);
 //is_type_tok2
-int		ft_is_here_doc_tok(t_token_type t);
-int		ft_is_input_tok(t_token_type t);
-int		ft_is_output_tok(t_token_type t);
-int		ft_is_append_tok(t_token_type t);
-int		ft_is_and_tok(t_token_type t);
+int		ft_is_here_doc_tok(t_token *t);
+int		ft_is_input_tok(t_token *t);
+int		ft_is_output_tok(t_token *t);
+int		ft_is_append_tok(t_token *t);
+int		ft_is_and_tok(t_token *t);
 //is_type_tok3
-int		ft_is_or_tok(t_token_type t);
-int		ft_is_redir_tok(t_token_type t);
-int		ft_is_arg_tok(t_token_type t);
-int		ft_is_delimiter_tok(t_token_type t);
+int		ft_is_or_tok(t_token *t);
+int		ft_is_redir_tok(t_token *t);
+int		ft_is_arg_tok(t_token *t);
+int		ft_is_delimiter_tok(t_token *t);
 //is_type_tok4
-int		ft_is_infile_tok(t_token_type t);
-int		ft_is_outfile_tok(t_token_type t);
+int		ft_is_infile_tok(t_token *t);
+int		ft_is_outfile_tok(t_token *t);
+int		ft_is_raw_tok(t_token *t);
 //is_valid_tok
-int		ft_valid_pipe_tok(t_list *node, t_token_type tok);
-int		ft_valid_input_tok(t_list *node, t_token_type tok);
-int		ft_valid_output_tok(t_list *node, t_token_type tok);
-int		ft_valid_here_doc_tok(t_list *node, t_token_type tok);
-int		ft_valid_append_tok(t_list *node, t_token_type tok);
+int		ft_valid_pipe_tok(t_list *node, t_token *tok);
+int		ft_valid_input_tok(t_list *node, t_token *tok);
+int		ft_valid_output_tok(t_list *node, t_token *tok);
+int		ft_valid_here_doc_tok(t_list *node, t_token *tok);
+int		ft_valid_append_tok(t_list *node, t_token *tok);
 //is_valid_tok2
-int		ft_valid_infile_tok(t_list *node, t_token_type tok);
-int		ft_valid_delimiter_tok(t_list *node, t_token_type tok);
-int		ft_valid_outfile_tok(t_list *node, t_token_type tok);
-int		ft_valid_and_tok(t_list *node, t_token_type tok);
-int		ft_valid_arg_tok(t_list *node, t_token_type tok);
+int		ft_valid_infile_tok(t_list *node, t_token *tok);
+int		ft_valid_delimiter_tok(t_list *node, t_token *tok);
+int		ft_valid_outfile_tok(t_list *node, t_token *tok);
+int		ft_valid_and_tok(t_list *node, t_token *tok);
+int		ft_valid_arg_tok(t_list *node, t_token *tok);
 //is_valid_tok3
-int		ft_valid_open_paren_tok(t_list *node, t_token_type tok, int *open_par);
-int		ft_valid_close_paren_tok(t_list *node, t_token_type tok, int *open_par);
-int		ft_valid_or_tok(t_list *node, t_token_type tok);
+int		ft_valid_open_paren_tok(t_list *node, t_token *tok, int *open_par);
+int		ft_valid_close_paren_tok(t_list *node, t_token *tok, int *open_par);
+int		ft_valid_or_tok(t_list *node, t_token *tok);
 //parser
 int		ft_parse_token(t_list *node);
 int		ft_invalid_tok(t_list *n);
-int		ft_need_more_input(t_token_type t, int open_paren);
+int		ft_need_more_input(t_token *t, int open_paren);
 //token_utils
 int		ft_push_token_to_list(t_list **list, char *str);
 void	ft_print_enum(t_token_type tok);

@@ -6,17 +6,17 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 18:20:08 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/12 18:00:32 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/13 11:48:58 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	ft_valid_open_paren_tok(t_list *node, t_token_type tok, int *open_par)
+int	ft_valid_open_paren_tok(t_list *node, t_token *tok, int *open_par)
 {
 	if (ft_is_open_paren(((t_token *)node->content)->str)
 		&& ((t_token *)node->content)->toktype == RAW
-		&& (!tok || ft_is_pipe_tok(tok) || ft_is_and_tok(tok)
+		&& (ft_is_raw_tok(tok) || ft_is_pipe_tok(tok) || ft_is_and_tok(tok)
 			|| ft_is_or_tok(tok) || ft_is_open_paren_tok(tok)))
 	{
 		*open_par += 1;
@@ -25,7 +25,7 @@ int	ft_valid_open_paren_tok(t_list *node, t_token_type tok, int *open_par)
 	return (0);
 }
 
-int	ft_valid_close_paren_tok(t_list *node, t_token_type tok, int *open_par)
+int	ft_valid_close_paren_tok(t_list *node, t_token *tok, int *open_par)
 {
 	if (ft_is_close_paren(((t_token *)node->content)->str)
 		&& ((t_token *)node->content)->toktype == RAW
@@ -42,7 +42,7 @@ int	ft_valid_close_paren_tok(t_list *node, t_token_type tok, int *open_par)
 	return (0);
 }
 
-int	ft_valid_or_tok(t_list *node, t_token_type tok)
+int	ft_valid_or_tok(t_list *node, t_token *tok)
 {
 	return (ft_is_or(((t_token *)node->content)->str)
 		&& ((t_token *)node->content)->toktype == RAW

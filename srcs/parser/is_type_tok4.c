@@ -6,18 +6,23 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 18:13:02 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/12 14:54:59 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/13 11:40:51 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	ft_is_infile_tok(t_token_type t)
+int	ft_is_infile_tok(t_token *t)
 {
-	return (t == INFILE);
+	return (t->toktype == INFILE);
 }
 
-int	ft_is_outfile_tok(t_token_type t)
+int	ft_is_outfile_tok(t_token *t)
 {
-	return (t == OUTFILE);
+	return (t->toktype == OUTFILE);
+}
+
+int	ft_is_raw_tok(t_token *t)
+{
+	return (t->toktype == RAW);
 }
