@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 20:46:40 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/13 00:02:39 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/13 01:13:57 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,14 @@ int	ft_check_sym(t_list *n, int symbol_to_check)
 		return (ft_is_open_paren_tok(t->toktype) || ft_is_and_tok(t->toktype)
 			|| ft_is_or_tok(t->toktype) || ft_is_pipe_tok(t->toktype));
 	else
-		return (ft_is_open_paren_tok(t->toktype) || ft_is_close_paren_tok(t->toktype));
+		return (ft_is_open_paren_tok(t->toktype)
+			|| ft_is_close_paren_tok(t->toktype));
 }
 
 t_ast	*ft_break_into_ast_node(t_list *lhead, t_list *parent, t_list *rhead)
 {
 	t_ast	*res;
-	t_list		*node;
+	t_list	*node;
 
 	res = malloc(sizeof(t_ast));
 	if (!res)
@@ -73,7 +74,7 @@ t_ast	*ft_break_into_ast_node(t_list *lhead, t_list *parent, t_list *rhead)
 	node->next = NULL;
 	res->left = ft_build_ast(lhead);
 	res->right = ft_build_ast(rhead);
-	//ft_lstdelone(parent, &ft_free_token_node);
+	ft_lstdelone(parent, &ft_free_token_node);
 	//free(parent);
 	return (res);
 }
@@ -97,10 +98,10 @@ t_ast	*ft_break_into_subshell(t_list *tokens)
 	while (node->next != last)
 		node = node->next;
 	node->next = NULL;
-	//ft_lstdelone(last, &ft_free_token_node);
+	ft_lstdelone(last, &ft_free_token_node);
 	//free(last);
 	node = tokens->next;
-	//ft_lstdelone(tokens, &ft_free_token_node);
+	ft_lstdelone(tokens, &ft_free_token_node);
 	//free(tokens);
 	res->left = ft_build_ast(node);
 	return (res);
