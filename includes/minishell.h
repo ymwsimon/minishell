@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 22:45:03 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/13 16:11:28 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/13 21:42:00 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ typedef struct s_cmd
 {
 	char	**args;
 	char	**redirs;
+	char	**here_doc_files;
 }				t_cmd;
 
 typedef struct s_token
@@ -158,4 +159,6 @@ void	*ft_clear_char_arr(char **arr);
 t_ast	*ft_build_ast(t_list *tokens);
 void	ft_print_ast(t_ast *node);
 void	ft_free_ast(t_ast *node);
+//made_here_doc
+int		ft_create_here_doc(t_ast *node, int *id);
 #endif

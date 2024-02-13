@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 01:21:42 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/13 16:11:39 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/13 21:44:13 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ int	main(int argc, char **argv, char **env)
 	int				parse_res;
 	char			*old_line;
 	char			*old_mem;
-	t_ast		*ast;
+	t_ast			*ast;
+	int				id;
 
 	//tcgetattr(1, &ter);
 	//ter.c_lflag |= ECHOCTL;
@@ -61,11 +62,13 @@ int	main(int argc, char **argv, char **env)
 				parse_res = ft_parse_token(tokens);
 				if (parse_res == PARSE_OK)
 				{
+					id = 0;
 					ft_print_tokens(tokens);
 					ast = ft_build_ast(tokens);
 					ft_print_ast(ast);
 					printf("\n");
-					ft_free_ast(ast);
+					ft_create_here_doc(ast, &id);
+					//ft_free_ast(ast);
 					/*ft_print_enum(ast->tok->toktype);
 					printf("\n");
 					ft_print_enum(ast->left->tok->toktype);
