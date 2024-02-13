@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 22:45:03 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/12 22:24:48 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/13 00:00:29 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,12 +85,12 @@ typedef struct s_cmd
 	char	**redirs;
 }				t_cmd;
 
-typedef struct s_astnode
+typedef struct s_ast
 {
-	struct s_astnode	*left;
-	struct s_astnode	*right;
-	t_token				*tok;
-}				t_astnode;
+	struct s_ast	*left;
+	struct s_ast	*right;
+	t_token			*tok;
+}				t_ast;
 //get_next_line
 char	*get_next_line(int fd);
 //input_history
@@ -161,5 +161,6 @@ void	ft_free_token_node(void *n);
 //char_arr_utils
 void	*ft_clear_char_arr(char **arr);
 //build_ast
-t_astnode	*ft_build_ast(t_list *tokens);
+t_ast	*ft_build_ast(t_list *tokens);
+void	ft_print_ast(t_ast *node);
 #endif

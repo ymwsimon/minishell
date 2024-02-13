@@ -6,11 +6,41 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 20:46:40 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/12 22:29:05 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/13 00:02:39 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void	ft_print_ast(t_ast *node)
+{
+	size_t	i;
+
+	if (!node)
+		return ;
+	if (ft_is_pipe_tok(node->tok->toktype) || ft_is_and_tok(node->tok->toktype)
+		|| ft_is_or_tok(node->tok->toktype))
+	{
+		ft_print_ast(node->left);
+		printf(" %s ", node->tok->str);
+		ft_print_ast(node->right);
+	}
+	else if (node->tok->toktype == SIMPLE_CMD)
+	{
+		i = 0;
+		while (((t_cmd *)node->tok->cmd)->args[i])
+			printf("%s ", ((t_cmd *)node->tok->cmd)->args[i++]);
+		i = 0;
+		while (((t_cmd *)node->tok->cmd)->redirs[i])
+			printf("%s ", ((t_cmd *)node->tok->cmd)->redirs[i++]);
+	}
+	else if (node->tok->toktype == SUBSHELL)
+	{
+		printf("(");
+		ft_print_ast(node->left);
+		printf(")");
+	}
+}
 
 int	ft_check_sym(t_list *n, int symbol_to_check)
 {
@@ -24,18 +54,19 @@ int	ft_check_sym(t_list *n, int symbol_to_check)
 		return (ft_is_open_paren_tok(t->toktype) || ft_is_close_paren_tok(t->toktype));
 }
 
-t_astnode	*ft_break_into_ast_node(t_list *lhead, t_list *parent, t_list *rhead)
+t_ast	*ft_break_into_ast_node(t_list *lhead, t_list *parent, t_list *rhead)
 {
-	t_astnode	*res;
+	t_ast	*res;
 	t_list		*node;
 
-	res = malloc(sizeof(t_astnode));
+	res = malloc(sizeof(t_ast));
 	if (!res)
 		return (NULL);
 	res->tok = malloc(sizeof(t_token));
 	if (!res->tok)
 		return (free(res), NULL);
 	res->tok->toktype = ((t_token *)parent->content)->toktype;
+	res->tok->str = ft_strdup(((t_token *)parent->content)->str);
 	node = lhead;
 	while (node->next != parent)
 		node = node->next;
@@ -47,13 +78,13 @@ t_astnode	*ft_break_into_ast_node(t_list *lhead, t_list *parent, t_list *rhead)
 	return (res);
 }
 
-t_astnode	*ft_break_into_subshell(t_list *tokens)
+t_ast	*ft_break_into_subshell(t_list *tokens)
 {
-	t_astnode	*res;
+	t_ast	*res;
 	t_list		*last;
 	t_list		*node;
 
-	res = malloc(sizeof(t_astnode));
+	res = malloc(sizeof(t_ast));
 	if (!res)
 		return (NULL);
 	res->right = NULL;
@@ -75,22 +106,22 @@ t_astnode	*ft_break_into_subshell(t_list *tokens)
 	return (res);
 }
 
-t_astnode	*ft_break_into_sc(t_list *tokens)
+t_ast	*ft_break_into_sc(t_list *tokens)
 {
-	t_astnode	*res;
+	t_ast	*res;
 	t_list		*node;
 	size_t		nredirs;
 	size_t		narg;
 
-	res = malloc(sizeof(t_astnode));
+	res = malloc(sizeof(t_ast));
 	if (!res)
 		return (NULL);
+	res->left = NULL;
 	res->right = NULL;
 	res->tok = malloc(sizeof(t_token));
 	if (!res->tok)
 		return (free(res), NULL);
 	res->tok->toktype = SIMPLE_CMD;
-	tokens += 0;//delete
 	narg = 0;
 	nredirs = 0;
 	node = tokens;
@@ -118,13 +149,15 @@ t_astnode	*ft_break_into_sc(t_list *tokens)
 			|| ft_is_infile_tok(((t_token *)node->content)->toktype)
 			|| ft_is_outfile_tok(((t_token *)node->content)->toktype)
 			|| ft_is_delimiter_tok(((t_token *)node->content)->toktype))
-			((t_cmd *)res->tok->cmd)->redirs[narg++] = ft_strdup(((t_token *)node->content)->str);
+			((t_cmd *)res->tok->cmd)->redirs[nredirs++] = ft_strdup(((t_token *)node->content)->str);
 		node = node->next;
 	}
+	((t_cmd *)res->tok->cmd)->args[narg] = NULL;
+	((t_cmd *)res->tok->cmd)->redirs[nredirs] = NULL;
 	return (res);
 }
 
-t_astnode	*ft_build_ast(t_list *tokens)
+t_ast	*ft_build_ast(t_list *tokens)
 {
 	t_list		*iter;
 	int			symbol_to_check;
