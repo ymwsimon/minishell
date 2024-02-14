@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 22:45:03 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/14 13:20:59 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/14 14:57:31 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,12 @@ typedef struct s_ast
 	struct s_ast	*left;
 	struct s_ast	*right;
 }				t_ast;
+
+typedef struct	s_vars
+{
+	t_list	*toklist;
+	t_ast	*ast;
+}				t_vars;
 //get_next_line
 char	*get_next_line(int fd);
 //input_history

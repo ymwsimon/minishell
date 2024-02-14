@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 20:46:40 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/14 13:24:27 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/14 19:08:18 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,21 +36,23 @@ char	*ft_enum_to_str(t_token_type t)
 
 void	ft_free_ast(t_ast *node)
 {
+	size_t	i;
+
 	if (!node)
 		return ;
-	/*
-	if (node->tok->toktype == SIMPLE_CMD)
+	if (node->toktype == SIMPLE_CMD)
 	{
-		ft_clear_char_arr(node->tok->cmd->args);
-		ft_clear_char_arr(node->tok->cmd->redirs);
-		free(node->tok->cmd);
+		ft_clear_char_arr(node->cmd->args);
+		ft_clear_char_arr(node->cmd->redirs);
+		i = 0;
+		while (node->cmd->here_doc_files[i])
+			unlink(node->cmd->here_doc_files[i++]);
+		ft_clear_char_arr(node->cmd->here_doc_files);
+		free(node->cmd);
 	}
-	else if (ft_is_pipe_tok(node->tok) || ft_is_and_tok(node->tok)
-			|| ft_is_or_tok(node->tok))
-		free(node->tok->str);
-	free(node->tok);
 	ft_free_ast(node->left);
-	ft_free_ast(node->right);*/
+	ft_free_ast(node->right);
+	free(node);
 }
 
 void	ft_print_ast(t_ast *node)
@@ -102,7 +104,7 @@ t_ast	*ft_break_into_ast_node(t_list *lhead, t_list *parent, t_list *rhead)
 	t_ast	*res;
 	t_list	*node;
 
-	res = malloc(sizeof(t_ast));
+	res = ft_calloc(1, sizeof(t_ast));
 	if (!res)
 		return (NULL);
 	res->toktype = ((t_token *)parent->content)->toktype;
@@ -122,7 +124,7 @@ t_ast	*ft_break_into_subshell(t_list *tokens)
 	t_list	*last;
 	t_list	*node;
 
-	res = malloc(sizeof(t_ast));
+	res = ft_calloc(1, sizeof(t_ast));
 	if (!res)
 		return (NULL);
 	res->right = NULL;
@@ -143,6 +145,7 @@ t_ast	*ft_break_into_sc(t_list *tokens)
 {
 	t_ast	*res;
 	t_list	*node;
+	t_list	*old_node;
 	size_t	nredirs;
 	size_t	narg;
 
@@ -182,7 +185,10 @@ t_ast	*ft_break_into_sc(t_list *tokens)
 			|| ft_is_outfile_tok(node->content)
 			|| ft_is_delimiter_tok(node->content))
 			res->cmd->redirs[nredirs++] = ((t_token *)node->content)->str;
+		old_node = node;
 		node = node->next;
+		free(old_node->content);
+		free(old_node);
 	}
 	return (res);
 }

@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 18:28:04 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/12 22:32:54 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/14 18:27:46 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_push_token_to_list(t_list **list, char *str)
 
 	if (!str)
 		return (0);
-	tok = malloc(sizeof(t_token));
+	tok = ft_calloc(1, sizeof(t_token));
 	if (!tok)
 		return (free(str), 0);
 	tok->str = str;
@@ -98,6 +98,5 @@ void	ft_free_token_node(void *n)
 	{
 		free(node->str);
 		free(node);
-		//free cmd too
 	}
 }
