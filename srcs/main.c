@@ -12,7 +12,7 @@
 
 #include "../includes/minishell.h"
 
-int	main(int argc, char **argv, char **env)
+int	main(void)
 {
 	char			*line;
 	char			cwd[2000];
@@ -22,15 +22,15 @@ int	main(int argc, char **argv, char **env)
 	char			*old_line;
 	char			*old_mem;
 	t_ast			*ast;
-	int				id;
+//	int				id;
 
 	//tcgetattr(1, &ter);
 	//ter.c_lflag |= ECHOCTL;
 	//ter.c_lflag |= ICANON;t_list
 	//tcsetattr(1, 0, &ter);
-	argc += 0;
-	argv += 0;
-	env += 0;
+//	(void)argc;
+//	(void **)argv;
+//	(void **)env;
 	old_line = NULL;
 	printf("current working path=%s\n", getcwd(cwd, 2000));
 	ft_import_history();
@@ -59,12 +59,12 @@ int	main(int argc, char **argv, char **env)
 				parse_res = ft_parse_token(tokens);
 				if (parse_res == PARSE_OK)
 				{
-					id = 0;
+//					id = 0;
 					ft_print_tokens(tokens);
 					ast = ft_build_ast(tokens);
 					ft_print_ast(ast);
 					printf("\n");
-					id += 0;
+//					id += 0;
 					//ft_create_here_doc(ast, &id);
 					//ft_free_ast(ast);
 				}

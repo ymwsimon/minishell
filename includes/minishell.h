@@ -38,6 +38,7 @@
 # define PARSE_FAIL 0
 # define PARSE_OK 1
 # define IMCOMPELETE_CMD 2
+# define INVALID_POINTER 3
 
 # define OPENPAR_AND_OR_PIPE 1
 # define PAREN 2
