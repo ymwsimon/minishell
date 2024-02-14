@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 20:23:11 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/13 21:48:35 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/14 13:07:04 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,36 +22,36 @@ int	ft_create_here_doc(t_ast *node, int *id)
 
 	if (!node)
 		return (1);
-	if (node->tok->toktype == SIMPLE_CMD)
+	if (node->toktype == SIMPLE_CMD)
 	{
 		i = 0;
 		nhere_doc = 0;
-		while (node->tok->cmd->redirs[i])
+		while (node->cmd->redirs[i])
 		{
-			if (ft_is_here_doc(node->tok->cmd->redirs[i]))
+			if (ft_is_here_doc(node->cmd->redirs[i]))
 				nhere_doc++;
 			i += 2;
 		}
-		node->tok->cmd->here_doc_files = malloc(sizeof(char *) * (nhere_doc + 1));
-		if (!node->tok->cmd->here_doc_files)
+		node->cmd->here_doc_files = malloc(sizeof(char *) * (nhere_doc + 1));
+		if (!node->cmd->here_doc_files)
 			return (ALLOCATE_FAIL);
 		i = 0;
 		while (i <= nhere_doc)
 		{
-			node->tok->cmd->here_doc_files[i] = ft_strjoin(".here_doc_", ft_itoa(*id));
+			node->cmd->here_doc_files[i] = ft_strjoin(".here_doc_", ft_itoa(*id));
 			(*id)++;
 			i++;
 		}
-		node->tok->cmd->here_doc_files[i] = NULL;
+		node->cmd->here_doc_files[i] = NULL;
 		i = 0;
-		while (node->tok->cmd->redirs[i])
+		while (node->cmd->redirs[i])
 		{
-			if (ft_is_here_doc(node->tok->cmd->redirs[i]))
+			if (ft_is_here_doc(node->cmd->redirs[i]))
 			{
-				printf("file name = %s\n", node->tok->cmd->here_doc_files[i / 2]);
-				fd = open(node->tok->cmd->here_doc_files[i / 2], O_WRONLY | O_TRUNC | O_CREAT, 0777);
+				printf("file name = %s\n", node->cmd->here_doc_files[i / 2]);
+				fd = open(node->cmd->here_doc_files[i / 2], O_WRONLY | O_TRUNC | O_CREAT, 0777);
 				line = get_next_line(STDIN_FILENO);
-				tmp = ft_strjoin(node->tok->cmd->redirs[i + 1], "\n");
+				tmp = ft_strjoin(node->cmd->redirs[i + 1], "\n");
 				while (line && ft_strncmp(line, tmp, ft_strlen(tmp) + 1))
 				{
 					write(fd, line, ft_strlen(line));

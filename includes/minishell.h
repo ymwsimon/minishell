@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 22:45:03 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/13 21:42:00 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/14 13:20:59 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,16 +74,16 @@ typedef struct s_cmd
 
 typedef struct s_token
 {
-	char			*str;
-	t_cmd			*cmd;
 	t_token_type	toktype;
+	char			*str;
 }				t_token;
 
 typedef struct s_ast
 {
+	t_token_type	toktype;
+	t_cmd			*cmd;
 	struct s_ast	*left;
 	struct s_ast	*right;
-	t_token			*tok;
 }				t_ast;
 //get_next_line
 char	*get_next_line(int fd);
