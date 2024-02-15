@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 01:21:42 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/14 13:18:16 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/14 18:58:20 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ int	main(void)
 			if (!line)
 			{
 				free(old_line);
+				rl_clear_history();
 				exit(0);
 			}
 			printf("input=%s\n", line);
@@ -64,9 +65,15 @@ int	main(void)
 					ast = ft_build_ast(tokens);
 					ft_print_ast(ast);
 					printf("\n");
+<<<<<<< HEAD
 //					id += 0;
 					//ft_create_here_doc(ast, &id);
 					//ft_free_ast(ast);
+=======
+					id += 0;
+					ft_create_here_doc(ast, &id);
+					ft_free_ast(ast);
+>>>>>>> 44aa40b515a86956d35b25982572f7aed94469c4
 				}
 				else if (parse_res == IMCOMPELETE_CMD)
 				{

@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 18:14:30 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/13 11:50:22 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/14 19:22:17 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ int	ft_valid_pipe_tok(t_list *node, t_token *tok)
 	return (ft_is_pipe(((t_token *)node->content)->str)
 		&& ((t_token *)node->content)->toktype == RAW
 		&& (ft_is_close_paren_tok(tok) || ft_is_infile_tok(tok)
-			|| ft_is_outfile_tok(tok) || ft_is_arg_tok(tok)));
+			|| ft_is_outfile_tok(tok) || ft_is_delimiter_tok(tok)
+			|| ft_is_arg_tok(tok)));
 }
 
 int	ft_valid_input_tok(t_list *node, t_token *tok)
