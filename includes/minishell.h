@@ -41,6 +41,8 @@
 # define INVALID_POINTER 3
 # define EXE_SUCCESS 0
 # define EXE_FAILURE 1
+# define LEFT_CHILD 4
+# define RIGHT_CHILD 5
 
 # define OPENPAR_AND_OR_PIPE 1
 # define PAREN 2
