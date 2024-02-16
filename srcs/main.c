@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 01:21:42 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/14 18:58:20 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/16 00:51:02 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,9 @@ int	main(int argc, char **argv, char **env)
 				exit(0);
 			}
 			printf("input=%s\n", line);
-			if (ft_strlen(line))
+			if (!ft_space_only(line))
 			{
-				ft_trim_write_history(&line);
+				ft_trim_write_history(line);
 				old_mem = line;
 				line = ft_strjoin(old_line, line);
 				free(old_mem);
