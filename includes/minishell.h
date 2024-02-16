@@ -119,6 +119,7 @@ int		ft_is_and(char *str);
 //is_type_str3
 int		ft_is_or(char *str);
 int		ft_is_redir(char *str);
+int		ft_is_builtin(char *str);
 //is_type_tok
 int		ft_is_double_quote_tok(t_token *t);
 int		ft_is_single_quote_tok(t_token *t);
@@ -173,4 +174,13 @@ void	ft_print_ast(t_ast *node);
 void	ft_free_ast(t_ast *node);
 //made_here_doc
 int		ft_create_here_doc(t_ast *node, int *id);
+//exection
+int		ft_execute(t_ast *ast);
+int		ft_exec_subshell(t_ast *ast);
+int		ft_exec_pipe(t_ast *ast);
+int		ft_exec_pipe_child(t_ast *ast, int child, int *pfds);
+//exec_simple_cmd
+int		ft_exec_simple_cmd(t_ast *ast);
+int		ft_exec_redir(char **here_doc, char **redir, int *i, int *j);
+int		ft_exec_redir2(char **redir, int *i)
 #endif

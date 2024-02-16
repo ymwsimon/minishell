@@ -1,4 +1,16 @@
-#include "minishell.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   execution.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: luyang <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/16 15:32:57 by luyang            #+#    #+#             */
+/*   Updated: 2024/02/16 15:33:10 by luyang           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../includes/minishell.h"
 
 int	ft_exec_pipe_child(t_ast *ast, int child, int *pfds)
 {
@@ -27,9 +39,11 @@ int	ft_exec_pipe(t_ast *ast)
 	pid_t	r_pid;
 	int	pfds[2];
 	int	status;
+	int	original[2];
 
-	pipe(pfds);
-	l_pid = fork();
+	original[0] = dup(STDIN_FILENO);
+	original[1] = dup(STDOUT_FILENO);
+	(pipe(pfds), l_pid = fork())
 	if (l_pid == 0)
 		ft_exec_pipe_child(ast->left, LEFT_CHILD, pfds);
 	else
@@ -39,10 +53,8 @@ int	ft_exec_pipe(t_ast *ast)
 			ft_exec_pipe_child(ast->right, RIGHT_CHILD, pfds);
 		else
 		{
-			close(pfds[0]);
-			close(pfds[1]);
-			waitpid(l_pid, &status, 0);
-			waitpid(r_pid, &status, 0);
+			(close(pfds[0]), close(pfds[1]), waitpid(l_pid, &status, 0),
+				 waitpid(r_pid, &status, 0), ft_r_fd(original))
 			return (status);
 		}
 	}
