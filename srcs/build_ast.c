@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 20:46:40 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/14 19:08:18 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/16 15:22:58 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	ft_free_ast(t_ast *node)
 		ft_clear_char_arr(node->cmd->args);
 		ft_clear_char_arr(node->cmd->redirs);
 		i = 0;
+		//i += 0;
 		while (node->cmd->here_doc_files[i])
 			unlink(node->cmd->here_doc_files[i++]);
 		ft_clear_char_arr(node->cmd->here_doc_files);
