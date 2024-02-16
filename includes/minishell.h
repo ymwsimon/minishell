@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 22:45:03 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/16 12:07:05 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/16 12:12:29 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,9 @@
 # define PARSE_FAIL 0
 # define PARSE_OK 1
 # define IMCOMPELETE_CMD 2
+# define INVALID_POINTER 3
+# define EXE_SUCCESS 0
+# define EXE_FAILURE 1
 
 # define OPENPAR_AND_OR_PIPE 1
 # define PAREN 2

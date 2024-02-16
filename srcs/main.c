@@ -66,8 +66,9 @@ int	main(int argc, char **argv, char **env)
 					ft_print_ast(ast);
 					printf("\n");
 					id += 0;
-					ft_create_here_doc(ast, &id);
-					ft_free_ast(ast);
+					ft_execute(ast);
+					//ft_create_here_doc(ast, &id);
+					//ft_free_ast(ast);
 				}
 				else if (parse_res == IMCOMPELETE_CMD)
 				{
