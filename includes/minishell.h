@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 22:45:03 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/18 12:32:53 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/18 21:55:03 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,6 @@
 
 # define OPENPAR_AND_OR_PIPE 1
 # define PAREN 2
-# define ALL_QUOTE 3
-# define DOUBLEQUOTE_DOLLAR 4
-# define SINGLEQUOTE 5
 
 typedef enum e_token_type
 {
@@ -187,6 +184,9 @@ int		ft_exec_pipe_child(t_ast *ast, int child, int *pfds);
 int		ft_exec_simple_cmd(t_ast *ast);
 int		ft_exec_redir(char **here_doc, char **redir, int *i, int *j);
 int		ft_exec_redir2(char **redir, int *i);
+//get_full_path
+char	*ft_getfullpath(char *pname, char *res);
 //handle_env_quote
 char	*ft_string_resolve(char *str, int is_deli);
+
 #endif

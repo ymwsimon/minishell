@@ -20,9 +20,10 @@ SRCS = 	main \
 		char_utils \
 		made_here_doc \
 		handle_env_quote \
+		get_full_path \
 		#exec_simple_cmd \
 		#exec_utils \
-		#executions 
+		#executions
 
 SRCS_DIR = srcs
 
