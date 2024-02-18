@@ -1,8 +1,28 @@
 NAME = minishell
 
-SRCS = main get_next_line input_history tokenizer/is_type_str tokenizer/is_type_str2 tokenizer/is_type_str3 parser/is_type_tok \
-		parser/is_type_tok2 parser/is_type_tok3 parser/is_type_tok4 parser/is_valid_tok parser/is_valid_tok2 parser/is_valid_tok3 \
-		parser/parser tokenizer/token_utils tokenizer/tokenizer build_ast char_arr_utils made_here_doc
+SRCS = 	main \
+		get_next_line \
+		input_history \
+		tokenizer/is_type_str \
+		tokenizer/is_type_str2 \
+		tokenizer/is_type_str3 \
+		parser/is_type_tok \
+		parser/is_type_tok2 \
+		parser/is_type_tok3 \
+		parser/is_type_tok4 \
+		parser/is_valid_tok \
+		parser/is_valid_tok2 \
+		parser/is_valid_tok3 \
+		parser/parser \
+		tokenizer/token_utils \
+		tokenizer/tokenizer \
+		build_ast \
+		char_utils \
+		made_here_doc \
+		handle_env_quote \
+		#exec_simple_cmd \
+		#exec_utils \
+		#executions 
 
 SRCS_DIR = srcs
 

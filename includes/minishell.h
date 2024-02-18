@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 22:45:03 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/16 12:12:29 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/18 12:32:53 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,9 @@
 
 # define OPENPAR_AND_OR_PIPE 1
 # define PAREN 2
+# define ALL_QUOTE 3
+# define DOUBLEQUOTE_DOLLAR 4
+# define SINGLEQUOTE 5
 
 typedef enum e_token_type
 {
@@ -166,8 +169,9 @@ int		ft_push_token_to_list(t_list **list, char *str);
 void	ft_print_enum(t_token_type tok);
 void	ft_print_tokens(t_list *tokens);
 void	ft_free_token_node(void *n);
-//char_arr_utils
+//char_utils
 void	*ft_clear_char_arr(char **arr);
+char	*ft_free_join_str(char *str1, char *str2);
 //build_ast
 t_ast	*ft_build_ast(t_list *tokens);
 void	ft_print_ast(t_ast *node);
@@ -182,5 +186,7 @@ int		ft_exec_pipe_child(t_ast *ast, int child, int *pfds);
 //exec_simple_cmd
 int		ft_exec_simple_cmd(t_ast *ast);
 int		ft_exec_redir(char **here_doc, char **redir, int *i, int *j);
-int		ft_exec_redir2(char **redir, int *i)
+int		ft_exec_redir2(char **redir, int *i);
+//handle_env_quote
+char	*ft_string_resolve(char *str, int is_deli);
 #endif
