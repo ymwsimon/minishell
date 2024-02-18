@@ -6,9 +6,11 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 21:54:28 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/18 21:54:33 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/18 21:57:27 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "../includes/minishell.h"
 
 char	*ft_getfullpath(char *pname, char *res)
 {
