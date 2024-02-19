@@ -43,7 +43,7 @@ int	ft_exec_pipe(t_ast *ast)
 
 	original[0] = dup(STDIN_FILENO);
 	original[1] = dup(STDOUT_FILENO);
-	(pipe(pfds), l_pid = fork())
+	(pipe(pfds), l_pid = fork());
 	if (l_pid == 0)
 		ft_exec_pipe_child(ast->left, LEFT_CHILD, pfds);
 	else
@@ -54,7 +54,7 @@ int	ft_exec_pipe(t_ast *ast)
 		else
 		{
 			(close(pfds[0]), close(pfds[1]), waitpid(l_pid, &status, 0),
-				 waitpid(r_pid, &status, 0), ft_r_fd(original))
+				 waitpid(r_pid, &status, 0), ft_r_fd(original));
 			return (status);
 		}
 	}
@@ -80,22 +80,19 @@ int	ft_exec_subshell(t_ast *ast)
 int	ft_execute(t_ast *ast)
 {
 	int	status;
+//	int	*original;
 
+//	original = ft_set_original()
 	if (!ast)
 		return (INVALID_POINTER);
 	if (ast->toktype == PIPE)
 		return (ft_exec_pipe(ast));
-	else if (ast->toktype == AND)
+	else if (ast->toktype == AND || ast->toktype == OR)
 	{
 		status = ft_execute(ast->left);
-		if (status == EXE_SUCCESS)
+		if (ast->toktype == AND && status == EXE_SUCCESS)
 			return (ft_execute(ast->right));
-		return (status);
-	}
-	else if (ast->toktype == OR)
-	{
-		status = ft_execute(ast->left);
-		if (status == EXE_FAILURE)
+		if (ast->toktype == OR && status == EXE_FAILURE)
 			return (ft_execute(ast->right));
 		return (status);
 	}

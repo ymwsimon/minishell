@@ -14,6 +14,7 @@
 
 int	ft_exec_program(char **args)
 {
+}
 
 
 int	ft_exec_redir2(char **redir, int *i)
@@ -72,9 +73,11 @@ int	ft_exec_simple_cmd(t_ast *ast)
 {
 	int	i;
 	int	j;
+	int	original_io[2];
 
-	i = 0;
-	j = 0;
+	original_io[0] = dup(STDIN_FILENO);
+	original_io[1] = dup(STDOUT_FILENO);
+	(i = 0, j == 0);
 	if (!ast)
 		return (1); //handle error
 	while (ast->cmd->redirs[i])
@@ -87,5 +90,6 @@ int	ft_exec_simple_cmd(t_ast *ast)
 		ft_exec_builtin(ast->cmd->args);
 	else if (ast->cmd->args[0])
 		ft_exec_program(ast->cmd->args);
+	ft_r_fd(original_io);
 }
 
