@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 20:46:40 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/16 15:22:58 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/18 12:29:57 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,12 +180,13 @@ t_ast	*ft_break_into_sc(t_list *tokens)
 	while (node)
 	{
 		if (ft_is_arg_tok(node->content))
-			res->cmd->args[narg++] = ((t_token *)node->content)->str;
+			res->cmd->args[narg++] = ft_string_resolve(((t_token *)node->content)->str, 0);
 		else if (ft_is_redir_tok(node->content)
 			|| ft_is_infile_tok(node->content)
-			|| ft_is_outfile_tok(node->content)
-			|| ft_is_delimiter_tok(node->content))
-			res->cmd->redirs[nredirs++] = ((t_token *)node->content)->str;
+			|| ft_is_outfile_tok(node->content))
+			res->cmd->redirs[nredirs++] = ft_string_resolve(((t_token *)node->content)->str, 0);
+		else if (ft_is_delimiter_tok(node->content))
+			res->cmd->redirs[nredirs++] = ft_string_resolve(((t_token *)node->content)->str, 1);
 		old_node = node;
 		node = node->next;
 		free(old_node->content);

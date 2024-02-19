@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 01:21:42 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/16 00:51:02 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/18 20:39:24 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,8 @@ int	main(int argc, char **argv, char **env)
 					ast = ft_build_ast(tokens);
 					ft_print_ast(ast);
 					printf("\n");
-					id += 0;
-					ft_execute(ast);
-					//ft_create_here_doc(ast, &id);
+					ft_create_here_doc(ast, &id);
+					//ft_execute(ast);
 					//ft_free_ast(ast);
 				}
 				else if (parse_res == IMCOMPELETE_CMD)
