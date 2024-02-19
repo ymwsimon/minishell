@@ -10,10 +10,35 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 int	ft_exec_program(char **args)
 {
+	char	*full_path;
+	int	p_pid;
+	int	status;
+
+	if (!args || !*args)
+		return (1); //error
+	p_pid = fork();
+	if (p_pid == -1)
+		return (1); //error
+	else if (p_pid == 0)
+	{
+		full_path = ft_getfullpath(args[0], full_path);
+		if (!full_path)
+			return (1); //error
+		args[0] = full_path;
+		if (execve(full_path, args, NULL) == -1)
+			exit(1); //error
+	}
+	else
+	{
+		waitpid(p_pid, &status, 0);
+		return (1); //WIFSIGNALED??
+	}
+
+
 }
 
 
@@ -87,9 +112,9 @@ int	ft_exec_simple_cmd(t_ast *ast)
 			return (1); //error
 	}
 	if (ast->cmd->args[0] && ft_is_builtin(ast->cmd->args[0]))
-		ft_exec_builtin(ast->cmd->args);
+		return (ft_exec_builtin(ast->cmd->args));
 	else if (ast->cmd->args[0])
-		ft_exec_program(ast->cmd->args);
+		return (ft_exec_program(ast->cmd->args));
 	ft_r_fd(original_io);
 }
 

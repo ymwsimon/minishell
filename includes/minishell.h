@@ -184,6 +184,7 @@ int		ft_exec_pipe_child(t_ast *ast, int child, int *pfds);
 int		ft_exec_simple_cmd(t_ast *ast);
 int		ft_exec_redir(char **here_doc, char **redir, int *i, int *j);
 int		ft_exec_redir2(char **redir, int *i);
+int		ft_exec_program(char **args);
 //exec_utils
 int		ft_r_fd(int *original);;
 //get_full_path
