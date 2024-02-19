@@ -21,6 +21,8 @@ SRCS = 	main \
 		made_here_doc \
 		handle_env_quote \
 		get_full_path \
+		builtins/cd \
+		builtins/echo \
 		#exec_simple_cmd \
 		#exec_utils \
 		#executions
@@ -52,6 +54,7 @@ $(OBJ_DIR)/%.o : $(SRCS_DIR)/%.c
 	@mkdir -p $(OBJ_DIR)
 	@mkdir -p $(OBJ_DIR)/parser
 	@mkdir -p $(OBJ_DIR)/tokenizer
+	@mkdir -p $(OBJ_DIR)/builtins
 	$(CC) $(FLAGS) -c $< -o $@
 
 $(LIBFT_DIR)/$(LIBFT) :

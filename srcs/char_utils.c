@@ -12,6 +12,16 @@
 
 #include "../includes/minishell.h"
 
+size_t	ft_char_arr_size(char **arr)
+{
+	size_t	i;
+
+	i = 0;
+	while (arr[i])
+		i++;
+	return (i);
+}
+
 void	*ft_clear_char_arr(char **arr)
 {
 	size_t	i;

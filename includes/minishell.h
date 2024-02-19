@@ -169,6 +169,7 @@ void	ft_free_token_node(void *n);
 //char_utils
 void	*ft_clear_char_arr(char **arr);
 char	*ft_free_join_str(char *str1, char *str2);
+size_t	ft_char_arr_size(char **arr);
 //build_ast
 t_ast	*ft_build_ast(t_list *tokens);
 void	ft_print_ast(t_ast *node);
@@ -191,5 +192,8 @@ int		ft_r_fd(int *original);;
 char	*ft_getfullpath(char *pname, char *res);
 //handle_env_quote
 char	*ft_string_resolve(char *str, int is_deli);
-
+//echo
+int		ft_echo(char **args);
+//cd
+int		ft_cd(char **args);
 #endif
