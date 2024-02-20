@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 21:54:28 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/18 21:57:27 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/20 00:41:30 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,12 @@
 char	*ft_getfullpath(char *pname, char *res)
 {
 	int		i;
-	char	*path;
 	char	**paths;
 
 	i = 0;
 	if (pname && ((pname[0] == '/') || pname[0] == '.'))
 		return (ft_strdup(pname));
-	path = getenv("PATH");
-	if (!path)
-		return (NULL);
-	paths = ft_split(path, ':');
+	paths = ft_split(getenv("PATH"), ':');
 	if (!paths)
 		return (NULL);
 	pname = ft_strjoin("/", pname);
@@ -34,7 +30,8 @@ char	*ft_getfullpath(char *pname, char *res)
 	while (paths[i])
 	{
 		res = ft_strjoin(paths[i], pname);
-		//printf("fullpath:%s\n", res);
+		if (!res)
+			return (ft_clear_char_arr(paths), free(pname), NULL);
 		if (!access(res, F_OK | X_OK))
 			return (ft_clear_char_arr(paths), free(pname), res);
 		free(res);
