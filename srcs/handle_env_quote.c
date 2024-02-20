@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 15:33:30 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/18 18:51:41 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/20 17:26:43 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ char	*ft_string_resolve(char *str, int is_deli)
 	res = ft_strdup("");
 	while (str[i])
 	{
+		j = i;
 		if (str[i] == '"')
 			res = ft_free_join_str(res,
 					ft_convert_double_quote(str, ++i, &j, is_deli));
@@ -82,7 +83,6 @@ char	*ft_string_resolve(char *str, int is_deli)
 			res = ft_free_join_str(res, ft_convert_env_var(str, ++i, &j));
 		else
 		{
-			j = i;
 			while (str[j] && str[j] != '"' && str[j] != '\'')
 				j++;
 			res = ft_free_join_str(res, ft_substr(str, i, j - i));

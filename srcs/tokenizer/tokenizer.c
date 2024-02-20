@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 17:49:47 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/12 18:00:32 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/20 16:54:32 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,9 @@ t_list	*ft_tokenize(char *line)
 		{
 			while (line[j] && !ft_strrchr(stack->content, line[j]))
 				j++;
-			if ((ft_strlen(stack->content) == 1 && ((char *)stack->content)[0] == line[j])
-				|| (line[j] != '"' && line[j] != '\'' && line[j]))
+			if ((ft_strlen(stack->content) != 1) && (line[j] == '\'' || line[j] == '"'))
+				ft_lstadd_front(&stack, ft_lstnew(ft_substr(line, j++, 1)));
+			else if (line[j])
 			{
 				tmp = stack->next;
 				ft_lstdelone(stack, &free);
@@ -47,13 +48,12 @@ t_list	*ft_tokenize(char *line)
 				if (line[j] == '"' || line[j] == '\'')
 					j++;
 			}
-			else if (line[j])
-				ft_lstadd_front(&stack, ft_lstnew(ft_substr(line, j++, 1)));
 		}
 		j += j == i;
-		if (!ft_push_token_to_list(&res, ft_substr(line, i, j - i)))
-			free(NULL); //clean up res
+		ft_push_token_to_list(&res, ft_substr(line, i, j - i));
 		i = j;
+		while (line[i] && line[i] == ' ')
+			i++;
 	}
 	if (stack && ft_strlen(stack->content) == 1
 		&& ft_is_double_quote(stack->content))

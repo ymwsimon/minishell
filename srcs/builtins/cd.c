@@ -1,47 +1,65 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cd.c                                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/20 15:06:31 by mayeung           #+#    #+#             */
+/*   Updated: 2024/02/20 18:19:36 by mayeung          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
-char	*ft_path_prefix(char *path)
+char	*ft_resolve_folder_path(char *path)
 {
 	char	*res;
+	char	cwd[2000];
 
 	res = NULL;
+	if (path && path[0] == '~')
+	{
+		res = getenv("HOME");
+		if (!res)
+			return (NULL);
+		res = ft_strjoin(res, path + 1);
+	}
+	else if (path && (path[0] == '/'
+			|| !ft_strncmp(path, ".", 2) || !ft_strncmp(path, "..", 3)))
+		res = ft_strdup(path);
+	else
+	{
+		res = ft_free_join_str(ft_strdup(getcwd(cwd, 2000)), ft_strdup("/"));
+		if (!res)
+			return (NULL);
+		res = ft_free_join_str(res, ft_strdup(path));
+	}
+	printf("the path is %s\n", res);
 	return (res);
 }
 
-int ft_cd(char **args)
+int	ft_cd(char **args)
 {
-    char    *path;
-	char	cwd[2000];
+	char	*path;
 
-    if (ft_char_arr_size(args) > 2)
-   {
-        ft_putstr_fd("cd: too many arguments\n", STDERR_FILENO);
-        return (1);
-    }
-	printf("%s\n", getenv("HOME"));
-	//path = NULL;
-    if (ft_char_arr_size(args) == 1)
-    {
-		if (chdir(getenv("HOME")))
-		{
-    		//perror("cannot change to home directory\n");
-        	return (1);
-		}
-		else
-			return (0);
-	}
-	path = args[1];
-	if (args[1][0] != '/')
+	if (ft_char_arr_size(args) > 2)
 	{
-		getcwd(cwd, 2000);
-		ft_strlcpy(&cwd[ft_strlen(cwd)], "/", 2);
-		path = ft_strjoin(cwd, args[1]);
-	}
-	ft_putstr_fd(path, STDERR_FILENO);
-	if (chdir(path))
-	{
-		perror(strerror(errno));
+		ft_putstr_fd("cd: too many arguments\n", STDERR_FILENO);
 		return (1);
 	}
-    return (0);
+	if (ft_char_arr_size(args) == 1)
+	{
+		if (chdir(getenv("HOME")))
+			return (perror("cannot change to home directory\n"), 1);
+		return (0);
+	}
+	path = ft_resolve_folder_path(args[1]);
+	if (chdir(path))
+	{
+		ft_putstr_fd(args[1], STDERR_FILENO);
+		perror(" : cd");
+		return (free(path), 1);
+	}
+	return (free(path), 0);
 }
