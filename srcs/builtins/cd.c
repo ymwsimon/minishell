@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 15:06:31 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/20 18:19:36 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/20 19:04:48 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 char	*ft_resolve_folder_path(char *path)
 {
 	char	*res;
-	char	cwd[2000];
 
 	res = NULL;
 	if (path && path[0] == '~')
@@ -30,7 +29,7 @@ char	*ft_resolve_folder_path(char *path)
 		res = ft_strdup(path);
 	else
 	{
-		res = ft_free_join_str(ft_strdup(getcwd(cwd, 2000)), ft_strdup("/"));
+		res = ft_free_join_str(getcwd(NULL, 0), ft_strdup("/"));
 		if (!res)
 			return (NULL);
 		res = ft_free_join_str(res, ft_strdup(path));

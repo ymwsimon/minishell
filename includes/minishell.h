@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 22:45:03 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/18 21:55:03 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/20 18:33:13 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,4 +196,6 @@ char	*ft_string_resolve(char *str, int is_deli);
 int		ft_echo(char **args);
 //cd
 int		ft_cd(char **args);
+//pwd
+int		ft_pwd(char **args);
 #endif

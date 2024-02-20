@@ -23,9 +23,10 @@ SRCS = 	main \
 		get_full_path \
 		builtins/cd \
 		builtins/echo \
-		#exec_simple_cmd \
-		#exec_utils \
-		#executions
+		builtins/pwd \
+		#execution/exec_simple_cmd \
+		#execution/exec_utils \
+		#execution/execution
 
 SRCS_DIR = srcs
 
