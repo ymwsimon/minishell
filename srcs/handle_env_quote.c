@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 15:33:30 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/20 17:26:43 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/21 16:18:09 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ char	*ft_convert_env_var(char *str, size_t i, size_t *j)
 	*j = i;
 	while (str[*j] && ft_isalnum(str[*j]))
 		(*j)++;
+	if (*j == i)
+		return (ft_strdup("$"));
 	tmp = ft_substr(str, i, (*j) - i);
 	if (!tmp)
 		return (NULL);
