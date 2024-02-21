@@ -57,6 +57,7 @@ $(OBJ_DIR)/%.o : $(SRCS_DIR)/%.c
 	@mkdir -p $(OBJ_DIR)/tokenizer
 	@mkdir -p $(OBJ_DIR)/execution
 	@mkdir -p $(OBJ_DIR)/builtins
+	@mkdir -p $(OBJ_DIR)/execution
 	$(CC) $(FLAGS) -c $< -o $@
 
 $(LIBFT_DIR)/$(LIBFT) :
