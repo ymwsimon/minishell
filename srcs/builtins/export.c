@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 20:18:39 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/22 01:21:04 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/22 18:10:16 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,20 @@ int	ft_search_char_arr_prefix(char **arr, char *str, size_t len)
 			return (i);
 	}
 	return (-1);
+}
+
+int	ft_valid_export_args(char *arg)
+{
+	size_t	i;
+
+	i = 0;
+	if (!arg || !ft_isalpha(arg[0]))
+		return (1);
+	while (arg[i] && ft_isalnum(arg[i]))
+		i++;
+	if (arg[i] != '=' || (arg[i] == '=' && !arg[i + 1]))
+		return (1);
+	return (0);
 }
 
 int	ft_export(char **args)
