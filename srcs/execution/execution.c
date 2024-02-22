@@ -45,7 +45,7 @@ int	ft_exec_pipe(t_ast *ast)
 	original[1] = dup(STDOUT_FILENO);
 	(pipe(pfds), l_pid = fork());
 	if (l_pid == 0)
-		ft_exec_pipe_child(ast->left, LEFT_CHILD, pfds);
+		return (ft_exec_pipe_child(ast->left, LEFT_CHILD, pfds));
 	else
 	{
 		r_pid = fork();
@@ -99,5 +99,6 @@ int	ft_execute(t_ast *ast)
 	else if (ast->toktype == SUBSHELL)
 		return (ft_exec_subshell(ast->left));
 	else if (ast->toktype == SIMPLE_CMD)
-		return (ft_execute_simple_cmd(ast->cmd));
+		return (ft_exec_simple_cmd(ast));
+	return (EXE_GENERAL);
 }

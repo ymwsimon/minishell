@@ -41,6 +41,7 @@
 # define INVALID_POINTER 3
 # define EXE_SUCCESS 0
 # define EXE_FAILURE 1
+# define EXE_GENERAL 3
 # define LEFT_CHILD 4
 # define RIGHT_CHILD 5
 
@@ -187,7 +188,8 @@ int		ft_exec_redir(char **here_doc, char **redir, int *i, int *j);
 int		ft_exec_redir2(char **redir, int *i);
 int		ft_exec_program(char **args);
 //exec_utils
-int		ft_r_fd(int *original);;
+void	ft_r_fd(int *original);
+int		ft_get_exit_status(int status);
 //get_full_path
 char	*ft_getfullpath(char *pname, char *res);
 //handle_env_quote

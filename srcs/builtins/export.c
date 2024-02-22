@@ -6,22 +6,23 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 20:18:39 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/20 21:08:03 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/22 00:58:46 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	ft_print_char_arr(char **arr)
+int	ft_print_env(void)
 {
 	size_t	i;
 
 	i = 0;
-	while (arr[i])
+	while (__environ[i])
 	{
-		printf("%s\n", arr[i]);
+		printf("%s\n", __environ[i]);
 		i++;
 	}
+	return (0);
 }
 
 int	ft_search_char_arr_prefix(char **arr, char *str, size_t len)
@@ -37,28 +38,22 @@ int	ft_search_char_arr_prefix(char **arr, char *str, size_t len)
 	return (-1);
 }
 
-int	ft_export(char **args)
+int ft_export(char **args)
 {
 	size_t	i;
-	int		j;
 
-	if (args && ft_char_arr_size(args) == 1)
-		ft_print_char_arr(__environ);
-	else if (args)
+	if (!args)
+		return (1);
+    if (ft_char_arr_size(args) == 1)
+		return (ft_print_env());
+	i = 1;
+	while (args[i])
 	{
-		i = 0;
-		while (args[i])
-		{
-			j = 0;
-			while (args[i][j] && args[i][j] != '=')
-				j++;
-			j = ft_search_char_arr_prefix(__environ, args[i], j + 1);
-			if (j >= 0)
-				;//ft_update_env(__environ, args[i], j);
-			else
-				{;}//ft_append_env(__environ, args[i]);
-			i++;
-		}
-	}
-	return (0);
+		if (ft_valid_export_args(args[i]))
+		{}
+		else
+			return (1);
+		i++;
+	}	
+    return (0);
 }

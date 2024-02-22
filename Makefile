@@ -25,9 +25,9 @@ SRCS = 	main \
 		builtins/echo \
 		builtins/pwd \
 		builtins/export \
-		#execution/exec_simple_cmd \
-		#execution/exec_utils \
-		#execution/execution
+		execution/exec_simple_cmd \
+		execution/exec_utils \
+		execution/execution
 
 SRCS_DIR = srcs
 
@@ -56,7 +56,9 @@ $(OBJ_DIR)/%.o : $(SRCS_DIR)/%.c
 	@mkdir -p $(OBJ_DIR)
 	@mkdir -p $(OBJ_DIR)/parser
 	@mkdir -p $(OBJ_DIR)/tokenizer
+	@mkdir -p $(OBJ_DIR)/execution
 	@mkdir -p $(OBJ_DIR)/builtins
+	@mkdir -p $(OBJ_DIR)/execution
 	$(CC) $(FLAGS) -c $< -o $@
 
 $(LIBFT_DIR)/$(LIBFT) :

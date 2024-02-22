@@ -25,20 +25,20 @@ int	ft_exec_program(char **args)
 		return (1); //error
 	else if (p_pid == 0)
 	{
-		full_path = ft_getfullpath(args[0], full_path);
+		full_path = NULL;
+		ft_getfullpath(args[0], full_path);
 		if (!full_path)
 			return (1); //error
 		args[0] = full_path;
 		if (execve(full_path, args, NULL) == -1)
-			exit(1); //error
+			exit(status); //error
 	}
 	else
 	{
 		waitpid(p_pid, &status, 0);
-		return (1); //WIFSIGNALED??
+		//WIFSIGNALED??
 	}
-
-
+	return (0);
 }
 
 
@@ -60,7 +60,7 @@ int	ft_exec_redir2(char **redir, int *i)
 		fd = open(redir[(*i)++], O_WRONLY | O_CREAT
 				| O_APPEND, 0644);
 		if (fd == -1)
-			return (1), //error
+			return (1); //error
 		dup2(fd, STDOUT_FILENO);
 		close (fd);
 	}
@@ -92,6 +92,7 @@ int	ft_exec_redir(char **here_doc, char **redir, int *i, int *j)
 	}
 	else 
 		return (ft_exec_redir2(redir, i));
+	return (0);
 }
 
 int	ft_exec_simple_cmd(t_ast *ast)
@@ -102,7 +103,7 @@ int	ft_exec_simple_cmd(t_ast *ast)
 
 	original_io[0] = dup(STDIN_FILENO);
 	original_io[1] = dup(STDOUT_FILENO);
-	(i = 0, j == 0);
+	(i = 0, j = 0);
 	if (!ast)
 		return (1); //handle error
 	while (ast->cmd->redirs[i])
@@ -111,10 +112,11 @@ int	ft_exec_simple_cmd(t_ast *ast)
 			       ast->cmd->redirs, &i, &j))
 			return (1); //error
 	}
-	if (ast->cmd->args[0] && ft_is_builtin(ast->cmd->args[0]))
-		return (ft_exec_builtin(ast->cmd->args));
-	else if (ast->cmd->args[0])
+	//if (ast->cmd->args[0] && ft_is_builtin(ast->cmd->args[0]))
+	//	return (ft_exec_builtin(ast->cmd->args));
+	if (ast->cmd->args[0])
 		return (ft_exec_program(ast->cmd->args));
 	ft_r_fd(original_io);
+	return (0);
 }
 

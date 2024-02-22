@@ -12,8 +12,15 @@
 
 #include "../../includes/minishell.h"
 
-int	ft_r_fd(int *original)
+void	ft_r_fd(int *original)
 {
 	dup2(original[0], STDIN_FILENO);
 	dup2(original[1], STDOUT_FILENO);
+}
+
+int	ft_get_exit_status(int status)
+{
+	if (WIFSIGNALED(status))
+		return (128 + WTERMSIG(status));
+	return (WEXITSTATUS(status));
 }
