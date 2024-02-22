@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 20:18:39 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/22 18:10:16 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/22 23:43:14 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	ft_export(char **args)
 	{
 		if (ft_valid_export_args(args[i]))
 		{
-			(NULL);
+			i+=0;
 		}
 		else
 			return (1);
