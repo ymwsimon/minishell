@@ -99,6 +99,6 @@ int	ft_execute(t_ast *ast)
 	else if (ast->toktype == SUBSHELL)
 		return (ft_exec_subshell(ast->left));
 	else if (ast->toktype == SIMPLE_CMD)
-		return (ft_exec_simple_cmd(ast));
+		return (ft_exec_simple_cmd(ast->cmd));
 	return (EXE_GENERAL);
 }

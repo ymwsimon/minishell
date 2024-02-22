@@ -97,6 +97,29 @@ typedef struct s_vars
 	t_list	*toklist;
 	t_ast	*ast;
 }				t_vars;
+
+typedef enum s_err_fd
+{
+	EFD_SUCCESS,
+	EFD_GENERAL,
+	EFD_EXEC = 126,
+	EFD_NOT_FOUND,
+	EFD_CMD_EXEC = 255
+}	t_err_fd;
+
+typedef enum s_err_msg
+{
+	ERR_NO_SUCH_FILE,
+	ERR_PERM_DENIED,
+}	t_err_msg;
+
+typedef struct s_err
+{
+	t_err_fd	fd;
+	t_err_msg	msg;
+	char		*file;
+}	t_err;
+
 //get_next_line
 char	*get_next_line(int fd);
 //input_history
@@ -183,13 +206,22 @@ int		ft_exec_subshell(t_ast *ast);
 int		ft_exec_pipe(t_ast *ast);
 int		ft_exec_pipe_child(t_ast *ast, int child, int *pfds);
 //exec_simple_cmd
-int		ft_exec_simple_cmd(t_ast *ast);
-int		ft_exec_redir(char **here_doc, char **redir, int *i, int *j);
-int		ft_exec_redir2(char **redir, int *i);
+int		ft_exec_simple_cmd(t_cmd *cmd);
+int		ft_exec_redir(char **here_doc, char **redir);
 int		ft_exec_program(char **args);
+//exec_redir
+int		ft_here_doc(char *here_doc);
+int		ft_input(char *redir);
+int		ft_output(char *redir);
+int		ft_append(char *redir);
 //exec_utils
 void	ft_r_fd(int *original);
 int		ft_get_exit_status(int status);
+int		ft_exec_pipe(t_ast *ast);
+int		ft_err_msg(t_err err);
+//check_file
+t_err	ft_check_read(char *file);
+t_err	ft_check_write(char *file);
 //get_full_path
 char	*ft_getfullpath(char *pname, char *res);
 //handle_env_quote
