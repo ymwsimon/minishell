@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 01:21:42 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/18 20:39:24 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/20 21:06:48 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,15 @@ int	main(int argc, char **argv, char **env)
 					ft_print_ast(ast);
 					printf("\n");
 					ft_create_here_doc(ast, &id);
+					if (ast->toktype == SIMPLE_CMD && !ft_strncmp(ast->cmd->args[0], "cd", 3))
+						ft_cd(ast->cmd->args);
+					if (ast->toktype == SIMPLE_CMD && !ft_strncmp(ast->cmd->args[0], "pwd", 4))
+						ft_pwd(ast->cmd->args);
+					if (ast->toktype == SIMPLE_CMD && !ft_strncmp(ast->cmd->args[0], "export", 7))
+						ft_export(ast->cmd->args);	
+				
 					//ft_execute(ast);
-					//ft_free_ast(ast);
+					ft_free_ast(ast);
 				}
 				else if (parse_res == IMCOMPELETE_CMD)
 				{

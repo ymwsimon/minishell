@@ -24,6 +24,7 @@ SRCS = 	main \
 		builtins/cd \
 		builtins/echo \
 		builtins/pwd \
+		builtins/export \
 		#execution/exec_simple_cmd \
 		#execution/exec_utils \
 		#execution/execution
