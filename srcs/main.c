@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 01:21:42 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/23 15:57:58 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/23 19:23:25 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,8 @@ int	main(int argc, char **argv, char **env)
 					if (ft_vars()->ast->toktype == SIMPLE_CMD && !ft_strncmp(ft_vars()->ast->cmd->args[0], "export", 7))
 						ft_export(ft_vars()->ast->cmd->args);	
 				
-					//ft_execute(ast);
+					ft_vars()->last_exe_res = ft_execute(ft_vars()->ast);
+					printf("%d\n", ft_vars()->last_exe_res);
 					ft_free_ast(ft_vars()->ast);
 				}
 				else if (parse_res == IMCOMPELETE_CMD)

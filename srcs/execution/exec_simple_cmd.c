@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_simple_cmd.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luyang <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 15:33:21 by luyang            #+#    #+#             */
-/*   Updated: 2024/02/16 16:45:03 by luyang           ###   ########.fr       */
+/*   Updated: 2024/02/23 19:49:43 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,10 @@ int	ft_exec_program(char **args)
 		return (1); //error
 	else if (p_pid == 0)
 	{
-		full_path = NULL;
-		ft_getfullpath(args[0], full_path);
+		full_path = ft_getfullpath(args[0], NULL);
 		if (!full_path)
 			return (1); //error
-		args[0] = full_path;
-		if (execve(full_path, args, NULL) == -1)
+		if (execve(full_path, args, __environ) == -1)
 			exit(status); //error
 	}
 	else
@@ -50,17 +48,15 @@ int	ft_exec_redir(char **here_doc, char **redir)
 	(i = 0, j = 0, status = 0);
 	while (redir[i] && !status)
 	{
-		if (ft_is_here_doc(redir[i++]))
-		{
+		if (ft_is_here_doc(redir[i]))
 			status = ft_here_doc(here_doc[j++]);
-			i++;
-		}
-		else if (ft_is_input(redir[i++]))
-			status = ft_input(redir[i++]);
-		else if (ft_is_output(redir[i++]))
-			status = ft_output(redir[i++]);
-		else if (ft_is_append(redir[i++]))
-			status = ft_append(redir[i++]);
+		else if (ft_is_input(redir[i]))
+			status = ft_input(redir[i + 1]);
+		else if (ft_is_output(redir[i]))
+			status = ft_output(redir[i + 1]);
+		else if (ft_is_append(redir[i]))
+			status = ft_append(redir[i + 1]);
+		i += 2;
 	}
 	return (status);
 }

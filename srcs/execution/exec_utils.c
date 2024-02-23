@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luyang <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 19:11:31 by luyang            #+#    #+#             */
-/*   Updated: 2024/02/16 19:14:21 by luyang           ###   ########.fr       */
+/*   Updated: 2024/02/23 15:50:20 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,5 @@ int	ft_err_msg(t_err err)
 	if (err.msg == ERR_NO_SUCH_FILE)
 		return (ft_putstr_fd("minishell: ", 2), ft_putstr_fd(err.file, 2),
 			ft_putstr_fd(": No such file or directory", 2), err.fd);
+	return (0);
 }

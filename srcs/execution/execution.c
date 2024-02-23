@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luyang <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 15:32:57 by luyang            #+#    #+#             */
-/*   Updated: 2024/02/16 15:33:10 by luyang           ###   ########.fr       */
+/*   Updated: 2024/02/23 15:51:00 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ int	ft_exec_pipe(t_ast *ast)
 			return (status);
 		}
 	}
+	return (0);
 }
 
 int	ft_exec_subshell(t_ast *ast)
@@ -75,6 +76,7 @@ int	ft_exec_subshell(t_ast *ast)
 		waitpid(pid, &status, 0);
 		return (status);
 	}
+	return (0);
 }
 
 int	ft_execute(t_ast *ast)

@@ -26,9 +26,11 @@ SRCS = 	main \
 		builtins/echo \
 		builtins/pwd \
 		builtins/export \
-		#execution/exec_simple_cmd \
-		#execution/exec_utils \
-		#execution/execution
+		execution/exec_simple_cmd \
+		execution/exec_utils \
+		execution/execution \
+		execution/exec_redir \
+		execution/check_file \
 
 SRCS_DIR = srcs
 
