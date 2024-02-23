@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 22:45:03 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/20 21:07:11 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/23 15:47:38 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -234,4 +234,8 @@ int		ft_cd(char **args);
 int		ft_pwd(char **args);
 //export
 int		ft_export(char **args);
+
+
+//vars
+t_vars  *ft_vars(void);
 #endif

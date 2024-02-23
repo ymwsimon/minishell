@@ -21,13 +21,14 @@ SRCS = 	main \
 		made_here_doc \
 		handle_env_quote \
 		get_full_path \
+		vars \
 		builtins/cd \
 		builtins/echo \
 		builtins/pwd \
 		builtins/export \
-		execution/exec_simple_cmd \
-		execution/exec_utils \
-		execution/execution
+		#execution/exec_simple_cmd \
+		#execution/exec_utils \
+		#execution/execution
 
 SRCS_DIR = srcs
 

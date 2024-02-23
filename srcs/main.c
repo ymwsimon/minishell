@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 01:21:42 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/20 21:06:48 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/23 15:57:58 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@ int	main(int argc, char **argv, char **env)
 	char			*line;
 	char			cwd[2000];
 	//struct termios	ter;
-	t_list			*tokens;
+	//t_list			*tokens;
 	int				parse_res;
 	char			*old_line;
 	char			*old_mem;
-	t_ast			*ast;
+	//t_ast			*ast;
 	int				id;
 
 	//tcgetattr(1, &ter);
@@ -56,36 +56,36 @@ int	main(int argc, char **argv, char **env)
 				free(old_line);
 				old_line = NULL;
 				printf("line=%s\n",line);
-				tokens = ft_tokenize(line);
-				parse_res = ft_parse_token(tokens);
+				ft_vars()->toklist = ft_tokenize(line);
+				parse_res = ft_parse_token(ft_vars()->toklist);
 				if (parse_res == PARSE_OK)
 				{
 					id = 0;
-					ft_print_tokens(tokens);
-					ast = ft_build_ast(tokens);
-					ft_print_ast(ast);
+					ft_print_tokens(ft_vars()->toklist);
+					ft_vars()->ast = ft_build_ast(ft_vars()->toklist);
+					ft_print_ast(ft_vars()->ast);
 					printf("\n");
-					ft_create_here_doc(ast, &id);
-					if (ast->toktype == SIMPLE_CMD && !ft_strncmp(ast->cmd->args[0], "cd", 3))
-						ft_cd(ast->cmd->args);
-					if (ast->toktype == SIMPLE_CMD && !ft_strncmp(ast->cmd->args[0], "pwd", 4))
-						ft_pwd(ast->cmd->args);
-					if (ast->toktype == SIMPLE_CMD && !ft_strncmp(ast->cmd->args[0], "export", 7))
-						ft_export(ast->cmd->args);	
+					ft_create_here_doc(ft_vars()->ast, &id);
+					if (ft_vars()->ast->toktype == SIMPLE_CMD && !ft_strncmp(ft_vars()->ast->cmd->args[0], "cd", 3))
+						ft_cd(ft_vars()->ast->cmd->args);
+					if (ft_vars()->ast->toktype == SIMPLE_CMD && !ft_strncmp(ft_vars()->ast->cmd->args[0], "pwd", 4))
+						ft_pwd(ft_vars()->ast->cmd->args);
+					if (ft_vars()->ast->toktype == SIMPLE_CMD && !ft_strncmp(ft_vars()->ast->cmd->args[0], "export", 7))
+						ft_export(ft_vars()->ast->cmd->args);	
 				
 					//ft_execute(ast);
-					ft_free_ast(ast);
+					ft_free_ast(ft_vars()->ast);
 				}
 				else if (parse_res == IMCOMPELETE_CMD)
 				{
 					printf("need more input\n");
 					old_line = line;
-					ft_lstclear(&tokens, &ft_free_token_node);
+					ft_lstclear(&ft_vars()->toklist, &ft_free_token_node);
 				}
 				else if (parse_res == PARSE_FAIL)
 				{	
 					printf("parse error\n");
-					ft_lstclear(&tokens, &ft_free_token_node);
+					ft_lstclear(&ft_vars()->toklist, &ft_free_token_node);
 				}
 			}
 		}
