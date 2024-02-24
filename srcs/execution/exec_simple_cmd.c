@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 15:33:21 by luyang            #+#    #+#             */
-/*   Updated: 2024/02/24 01:41:05 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/24 18:19:23 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	ft_exec_program(char **args)
 		waitpid(p_pid, &status, 0);
 		//WIFSIGNALED??
 	}
-	return (WEXITSTATUS(status));
+	return (ft_get_exit_status(status));
 }
 
 int	ft_exec_redir(char **here_doc, char **redir)
@@ -68,16 +68,18 @@ int	ft_exec_simple_cmd(t_cmd *cmd)
 
 	original_io[0] = dup(STDIN_FILENO);
 	original_io[1] = dup(STDOUT_FILENO);
+	status = 0;
 	if (!cmd)
 		return (1); //handle error
 	if (cmd->redirs[0])
 	{
 		if (ft_exec_redir(cmd->here_doc_files, cmd->redirs))
-			return (1); //error
+			return (ft_r_fd(original_io), close(original_io[0])
+				, close(original_io[1]), 1); //error
 	}
-	//if (ast->cmd->args[0] && ft_is_builtin(ast->cmd->args[0]))
-	//	return (ft_exec_builtin(ast->cmd->args));
-	if (cmd->args[0])
+	if (cmd->args[0] && ft_is_builtin(cmd->args[0]))
+		status = (ft_exec_builtin(cmd->args));
+	else if (cmd->args[0])
 		status = ft_exec_program(cmd->args);
 	ft_r_fd(original_io);
 	close(original_io[0]);

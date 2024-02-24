@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 01:21:42 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/24 00:10:11 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/24 18:21:55 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,6 @@ int	main(int argc, char **argv, char **env)
 					ft_print_ast(ft_vars()->ast);
 					printf("\n");
 					ft_create_here_doc(ft_vars()->ast, &id);
-					if (ft_vars()->ast->toktype == SIMPLE_CMD && !ft_strncmp(ft_vars()->ast->cmd->args[0], "cd", 3))
-						ft_cd(ft_vars()->ast->cmd->args);
-					if (ft_vars()->ast->toktype == SIMPLE_CMD && !ft_strncmp(ft_vars()->ast->cmd->args[0], "pwd", 4))
-						ft_pwd(ft_vars()->ast->cmd->args);
-					if (ft_vars()->ast->toktype == SIMPLE_CMD && !ft_strncmp(ft_vars()->ast->cmd->args[0], "export", 7))
-						ft_export(ft_vars()->ast->cmd->args);	
-				
 					ft_vars()->last_exe_res = ft_execute(ft_vars()->ast);
 					printf("%d\n", ft_vars()->last_exe_res);
 					ft_free_ast(ft_vars()->ast);

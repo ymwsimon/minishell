@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 22:45:03 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/23 19:13:54 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/24 18:21:14 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -232,11 +232,19 @@ int		ft_echo(char **args);
 //cd
 int		ft_cd(char **args);
 //pwd
-int		ft_pwd(char **args);
+int		ft_pwd(void);
 //export
 int		ft_export(char **args);
-
-
+int		ft_search_char_arr_prefix(char **arr, char *str, int full_len);
 //vars
 t_vars  *ft_vars(void);
+//unset
+int 	ft_unset(char **args);
+//env
+int		ft_env(char **args);
+int		ft_print_env(void);
+//exit
+int		ft_exit(char **args);
+//builtins_utils
+int		ft_exec_builtin(char **args);
 #endif
