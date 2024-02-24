@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 01:21:42 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/24 18:21:55 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/24 23:43:28 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	main(int argc, char **argv, char **env)
 				rl_clear_history();
 				exit(0);
 			}
-			printf("input=%s\n", line);
+			//printf("input=%s\n", line);
 			if (!ft_space_only(line))
 			{
 				ft_trim_write_history(line);
@@ -55,16 +55,16 @@ int	main(int argc, char **argv, char **env)
 				free(old_mem);
 				free(old_line);
 				old_line = NULL;
-				printf("line=%s\n",line);
+				//printf("line=%s\n",line);
 				ft_vars()->toklist = ft_tokenize(line);
 				parse_res = ft_parse_token(ft_vars()->toklist);
 				if (parse_res == PARSE_OK)
 				{
 					id = 0;
-					ft_print_tokens(ft_vars()->toklist);
+					//ft_print_tokens(ft_vars()->toklist);
 					ft_vars()->ast = ft_build_ast(ft_vars()->toklist);
-					ft_print_ast(ft_vars()->ast);
-					printf("\n");
+					//ft_print_ast(ft_vars()->ast);
+					//printf("\n");
 					ft_create_here_doc(ft_vars()->ast, &id);
 					ft_vars()->last_exe_res = ft_execute(ft_vars()->ast);
 					printf("%d\n", ft_vars()->last_exe_res);
