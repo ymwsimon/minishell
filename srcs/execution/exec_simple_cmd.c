@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 15:33:21 by luyang            #+#    #+#             */
-/*   Updated: 2024/02/23 19:49:43 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/24 01:41:05 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 int	ft_exec_program(char **args)
 {
 	char	*full_path;
-	int	p_pid;
-	int	status;
+	int		p_pid;
+	int		status;
 
 	if (!args || !*args)
 		return (1); //error
@@ -36,7 +36,7 @@ int	ft_exec_program(char **args)
 		waitpid(p_pid, &status, 0);
 		//WIFSIGNALED??
 	}
-	return (0);
+	return (WEXITSTATUS(status));
 }
 
 int	ft_exec_redir(char **here_doc, char **redir)
@@ -45,7 +45,7 @@ int	ft_exec_redir(char **here_doc, char **redir)
 	int	j;
 	int	status;
 
-	(i = 0, j = 0, status = 0);
+	(free(NULL), i = 0, j = 0, status = 0);
 	while (redir[i] && !status)
 	{
 		if (ft_is_here_doc(redir[i]))
@@ -64,6 +64,7 @@ int	ft_exec_redir(char **here_doc, char **redir)
 int	ft_exec_simple_cmd(t_cmd *cmd)
 {
 	int	original_io[2];
+	int	status;
 
 	original_io[0] = dup(STDIN_FILENO);
 	original_io[1] = dup(STDOUT_FILENO);
@@ -77,8 +78,10 @@ int	ft_exec_simple_cmd(t_cmd *cmd)
 	//if (ast->cmd->args[0] && ft_is_builtin(ast->cmd->args[0]))
 	//	return (ft_exec_builtin(ast->cmd->args));
 	if (cmd->args[0])
-		return (ft_exec_program(cmd->args));
+		status = ft_exec_program(cmd->args);
 	ft_r_fd(original_io);
-	return (0);
+	close(original_io[0]);
+	close(original_io[1]);
+	return (status);
 }
 

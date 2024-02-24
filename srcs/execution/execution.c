@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 15:32:57 by luyang            #+#    #+#             */
-/*   Updated: 2024/02/23 15:51:00 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/24 01:42:10 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ int	ft_exec_pipe(t_ast *ast)
 {
 	pid_t	l_pid;
 	pid_t	r_pid;
-	int	pfds[2];
-	int	status;
-	int	original[2];
+	int		pfds[2];
+	int		status;
+	int		original[2];
 
 	original[0] = dup(STDIN_FILENO);
 	original[1] = dup(STDOUT_FILENO);
@@ -50,11 +50,13 @@ int	ft_exec_pipe(t_ast *ast)
 	{
 		r_pid = fork();
 		if (r_pid == 0)
-			ft_exec_pipe_child(ast->right, RIGHT_CHILD, pfds);
+			return (ft_exec_pipe_child(ast->right, RIGHT_CHILD, pfds));
 		else
 		{
 			(close(pfds[0]), close(pfds[1]), waitpid(l_pid, &status, 0),
-				 waitpid(r_pid, &status, 0), ft_r_fd(original));
+				waitpid(r_pid, &status, 0), ft_r_fd(original));
+			close(original[0]);
+			close(original[1]);
 			return (status);
 		}
 	}
@@ -64,7 +66,7 @@ int	ft_exec_pipe(t_ast *ast)
 int	ft_exec_subshell(t_ast *ast)
 {
 	pid_t	pid;
-	int	status;
+	int		status;
 
 	pid = fork();
 	if (pid == -1)
