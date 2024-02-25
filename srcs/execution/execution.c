@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 15:32:57 by luyang            #+#    #+#             */
-/*   Updated: 2024/02/24 01:42:10 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/25 01:17:31 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,13 +72,12 @@ int	ft_exec_subshell(t_ast *ast)
 	if (pid == -1)
 		return (EXE_FAILURE);
 	else if (pid == 0)
-		ft_execute(ast);
+		return (ft_execute(ast));
 	else
 	{
 		waitpid(pid, &status, 0);
 		return (status);
 	}
-	return (0);
 }
 
 int	ft_execute(t_ast *ast)
