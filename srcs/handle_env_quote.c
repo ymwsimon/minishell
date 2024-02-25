@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 15:33:30 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/23 19:16:48 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/24 16:47:36 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*ft_convert_env_var(char *str, size_t i, size_t *j)
 
 	*j = i;
 	if (str && str[i] == '?')
-		return (ft_itoa(ft_vars()->last_exe_res));
+		return ((*j)++, ft_itoa(ft_vars()->last_exe_res));
 	while (str[*j] && ft_isalnum(str[*j]))
 		(*j)++;
 	if (*j == i)

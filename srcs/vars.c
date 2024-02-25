@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 15:45:39 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/23 15:47:21 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/24 16:46:21 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 t_vars  *ft_vars(void)
 {
-    static  t_vars  v;
+    static  t_vars  v = (t_vars){NULL, NULL, 0};
 
     return (&v);
 }

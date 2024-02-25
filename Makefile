@@ -24,8 +24,12 @@ SRCS = 	main \
 		vars \
 		builtins/cd \
 		builtins/echo \
-		builtins/pwd \
+		builtins/env \
+		builtins/exit \
 		builtins/export \
+		builtins/pwd \
+		builtins/unset \
+		builtins/builtins_utils \
 		execution/exec_simple_cmd \
 		execution/exec_utils \
 		execution/execution \

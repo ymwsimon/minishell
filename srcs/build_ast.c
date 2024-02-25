@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 20:46:40 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/20 17:20:33 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/24 22:50:52 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,12 +198,14 @@ t_ast	*ft_break_into_sc(t_list *tokens)
 t_ast	*ft_build_ast(t_list *tokens)
 {
 	t_list		*iter;
+	t_list		*break_point;
 	int			symbol_to_check;
 	int			n_open_par;
 
 	if (!tokens)
 		return (NULL);
 	iter = tokens;
+	break_point = NULL;
 	symbol_to_check = OPENPAR_AND_OR_PIPE;
 	n_open_par = 0;
 	while (iter)
@@ -222,10 +224,12 @@ t_ast	*ft_build_ast(t_list *tokens)
 				symbol_to_check = OPENPAR_AND_OR_PIPE;
 		}
 		else if (ft_check_sym(iter, symbol_to_check))
-			return (ft_break_into_ast_node(tokens, iter, iter->next));
+			break_point = iter;
 		iter = iter->next;
 	}
-	if (ft_is_open_paren_tok(tokens->content))
+	if (break_point)
+		return (ft_break_into_ast_node(tokens, break_point, break_point->next));
+	else if (ft_is_open_paren_tok(tokens->content))
 		return (ft_break_into_subshell(tokens));
 	else
 		return (ft_break_into_sc(tokens));
