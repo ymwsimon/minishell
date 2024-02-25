@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 15:32:57 by luyang            #+#    #+#             */
-/*   Updated: 2024/02/25 01:17:31 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/25 01:35:22 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,10 @@ int	ft_exec_pipe(t_ast *ast)
 	pid_t	r_pid;
 	int		pfds[2];
 	int		status;
-	int		original[2];
+	//int		original[2];
 
-	original[0] = dup(STDIN_FILENO);
-	original[1] = dup(STDOUT_FILENO);
+	//original[0] = dup(STDIN_FILENO);
+	//original[1] = dup(STDOUT_FILENO);
 	(pipe(pfds), l_pid = fork());
 	if (l_pid == 0)
 		return (ft_exec_pipe_child(ast->left, LEFT_CHILD, pfds));
@@ -54,13 +54,12 @@ int	ft_exec_pipe(t_ast *ast)
 		else
 		{
 			(close(pfds[0]), close(pfds[1]), waitpid(l_pid, &status, 0),
-				waitpid(r_pid, &status, 0), ft_r_fd(original));
-			close(original[0]);
-			close(original[1]);
+				waitpid(r_pid, &status, 0));//, ft_r_fd(original));
+			//close(original[0]);
+			//close(original[1]);
 			return (status);
 		}
 	}
-	return (0);
 }
 
 int	ft_exec_subshell(t_ast *ast)
