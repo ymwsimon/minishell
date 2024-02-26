@@ -6,33 +6,33 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 20:18:39 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/24 18:39:08 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/26 21:45:39 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	ft_search_char_arr_prefix(char **arr, char *str, int full_len)
+int	ft_search_string_arr_prefix(char **arr, char *str, int full_len)
 {
-	int	i;
-	int	len;
+	int		i;
+	int		len;
+	char	*little_cpy;
+	char	*big_cpy;
 
-	len = 0;
-	while (str && str[len] && str[len] != '=')
-		len++;
+	len = ft_strchr(str, '=') - str;
+	if (full_len)
+		len = ft_strlen(str);
+	little_cpy = ft_substr(str, 0, len);
 	i = 0;
 	while (arr && arr[i])
 	{
-		if (full_len)
-		{
-			len = 0;
-			while (arr[i][len] && arr[i][len] != '=')
-				len++;
-		}
-		if (!ft_strncmp(arr[i], str, len))
-			return (i);
+		big_cpy = ft_substr(arr[i], 0, ft_strchr(arr[i], '=') - arr[i]);
+		if (ft_strnstr(big_cpy, little_cpy, ft_strlen(little_cpy)))
+			return (free(big_cpy), free(little_cpy), i);
+		free(big_cpy);
 		i++;
 	}
+	free(little_cpy);
 	return (-1);
 }
 
@@ -55,13 +55,12 @@ int	ft_update_env(char *str)
 	int		i;
 	char	*old_value;
 
-	i = ft_search_char_arr_prefix(__environ, str, 0);
+	i = ft_search_string_arr_prefix(__environ, str, 0);
 	old_value = __environ[i];
 	__environ[i] = ft_strdup(str);
 	if (!__environ[i])
 		return (1);
-	old_value+=0;
-	//free(old_value);
+	free(old_value);
 	return (0);
 }
 
@@ -103,8 +102,8 @@ int	ft_export(char **args)
 	{
 		if (ft_valid_export_args(args[i]))
 		{
-			printf("the idx:%d\n", ft_search_char_arr_prefix(__environ, args[i], 0));
-			if (ft_search_char_arr_prefix(__environ, args[i], 0) != -1)
+			printf("the idx:%d\n", ft_search_string_arr_prefix(__environ, args[i], 0));
+			if (ft_search_string_arr_prefix(__environ, args[i], 0) != -1)
 				status = ft_update_env(args[i]);
 			else
 				status = ft_add_to_env(args[i]);

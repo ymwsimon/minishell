@@ -6,11 +6,19 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 17:53:38 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/24 18:26:59 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/26 21:49:27 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+void	ft_free_res(void)
+{
+	//ft_free_ast(ft_vars()->ast);
+	//ft_clear_char_arr(__environ);
+	//free(__environ);
+	//rl_clear_history();
+}
 
 char	*next_non_space(char *str)
 {
@@ -52,26 +60,17 @@ int	ft_exit(char **args)
 
 	if (!args)
 		return (1);
-	if (ft_char_arr_size(args) == 1)
-	{
-		ft_free_ast(ft_vars()->ast);
-		exit(0);
-	}
+	res = 0;
 	if (ft_char_arr_size(args) > 2)
 	{
 		ft_putstr_fd("exit: too many arguments\n", STDERR_FILENO);
 		return (1);
 	}
-	res = 0;
-	if (parse_validate_num(args[1], &res, 1))
+	if (ft_char_arr_size(args) == 2 && !parse_validate_num(args[1], &res, 1))
 	{
-		ft_free_ast(ft_vars()->ast);
-		exit(res);
-	}
-	else
-	{
+		res = 2;
 		ft_putstr_fd("exit: numeric argument required\n", STDERR_FILENO);
-		ft_free_ast(ft_vars()->ast);
-		exit(2);
 	}
+	ft_free_res();
+	exit(res);
 }
