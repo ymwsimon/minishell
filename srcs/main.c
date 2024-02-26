@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 01:21:42 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/25 01:33:06 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/26 14:24:33 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	main(int argc, char **argv, char **env)
 					//ft_print_ast(ft_vars()->ast);
 					//printf("\n");
 					ft_create_here_doc(ft_vars()->ast, &id);
-					ft_vars()->last_exe_res = ft_execute(ft_vars()->ast);
+					ft_vars()->last_exe_res = WEXITSTATUS(ft_execute(ft_vars()->ast));
 					printf("%d\n", ft_vars()->last_exe_res);
 					ft_free_ast(ft_vars()->ast);
 				}
