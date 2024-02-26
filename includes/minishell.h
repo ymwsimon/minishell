@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 22:45:03 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/24 18:21:14 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/26 18:11:18 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <termios.h>
+# include <signal.h>
 # include <stdio.h>
 # include <errno.h>
 # include <sys/wait.h>
@@ -247,4 +248,8 @@ int		ft_print_env(void);
 int		ft_exit(char **args);
 //builtins_utils
 int		ft_exec_builtin(char **args);
+//terminal_setting
+void    ft_turn_off_int_sig(void);
+//get_user_input
+int		ft_get_user_input(char *prompt);
 #endif

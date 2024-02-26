@@ -22,6 +22,8 @@ SRCS = 	main \
 		handle_env_quote \
 		get_full_path \
 		vars \
+		terminal_setting \
+		get_user_input \
 		builtins/cd \
 		builtins/echo \
 		builtins/env \
