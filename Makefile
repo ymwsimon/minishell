@@ -24,6 +24,7 @@ SRCS = 	main \
 		vars \
 		terminal_setting \
 		get_user_input \
+		signal \
 		builtins/cd \
 		builtins/echo \
 		builtins/env \

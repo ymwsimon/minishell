@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 21:54:28 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/20 00:41:30 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/27 18:05:02 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*ft_getfullpath(char *pname, char *res)
 	i = 0;
 	if (pname && ((pname[0] == '/') || pname[0] == '.'))
 		return (ft_strdup(pname));
-	paths = ft_split(getenv("PATH"), ':');
+	paths = ft_split(ft_getenv("PATH"), ':');
 	if (!paths)
 		return (NULL);
 	pname = ft_strjoin("/", pname);

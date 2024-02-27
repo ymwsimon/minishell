@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 18:23:15 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/16 00:52:25 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/27 18:05:21 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	ft_import_history(void)
 	char	*trimmed_line;
 	char	*path;
 
-	path = ft_strjoin(getenv("HOME"), "/.minishell_cmd_history");
+	path = ft_strjoin(ft_getenv("HOME"), "/.minishell_cmd_history");
 	fd = open(path, O_RDONLY);
 	//printf("path of the history file=%s, fd=%d\n", path, fd);
 	if (fd >= 0)
@@ -63,7 +63,7 @@ void	ft_trim_write_history(char *line)
 		i++;
 	if (!(*line))
 		return ;
-	path = ft_strjoin(getenv("HOME"), "/.minishell_cmd_history");
+	path = ft_strjoin(ft_getenv("HOME"), "/.minishell_cmd_history");
 	add_history(line);
 	fd = open(path, O_CREAT | O_WRONLY | O_APPEND, 0777);
 	//printf("path of the history file=%s, fd=%d\n", path, fd);

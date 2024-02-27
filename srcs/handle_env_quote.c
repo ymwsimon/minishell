@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 15:33:30 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/24 16:47:36 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/27 18:05:11 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	*ft_convert_env_var(char *str, size_t i, size_t *j)
 	tmp = ft_substr(str, i, (*j) - i);
 	if (!tmp)
 		return (NULL);
-	res = getenv(tmp);
+	res = ft_getenv(tmp);
 	free(tmp);
 	if (!res)
 		return (ft_strdup(""));

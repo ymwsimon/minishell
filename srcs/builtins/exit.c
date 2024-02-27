@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 17:53:38 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/26 21:49:27 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/27 18:48:58 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 
 void	ft_free_res(void)
 {
-	//ft_free_ast(ft_vars()->ast);
-	//ft_clear_char_arr(__environ);
-	//free(__environ);
-	//rl_clear_history();
+	//if (ft_vars()->toklist)
+	//	ft_lstclear(&ft_vars()->toklist, &ft_free_token_node);
+	ft_free_ast(ft_vars()->ast);
+	ft_clear_char_arr(ft_vars()->env);
+	rl_clear_history();
 }
 
 char	*next_non_space(char *str)

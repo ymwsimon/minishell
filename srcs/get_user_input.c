@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 14:22:58 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/26 21:20:01 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/27 18:25:39 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,19 @@ int	ft_get_user_input(char *prompt)
 			if (parse_res == PARSE_OK || parse_res == PARSE_FAIL)
 				break ;
 			old_line = line;
+			line = NULL;
 			ft_lstclear(&ft_vars()->toklist, &ft_free_token_node);
 		}
-		else
-			free(line);
+		else if (ft_space_only(line) && parse_res == PARSE_OK)
+			return (free(line), EMPTY_INPUT);
+		free(line);
 		line = readline("> ");
 	}
 	free(line);
 	if (parse_res == PARSE_FAIL)
+	{
 		ft_lstclear(&ft_vars()->toklist, &ft_free_token_node);
+		ft_vars()->toklist = NULL;
+	}
 	return (parse_res);
 }

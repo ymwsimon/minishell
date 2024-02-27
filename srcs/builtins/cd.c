@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 15:06:31 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/20 19:04:48 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/27 18:05:33 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*ft_resolve_folder_path(char *path)
 	res = NULL;
 	if (path && path[0] == '~')
 	{
-		res = getenv("HOME");
+		res = ft_getenv("HOME");
 		if (!res)
 			return (NULL);
 		res = ft_strjoin(res, path + 1);
@@ -49,7 +49,7 @@ int	ft_cd(char **args)
 	}
 	if (ft_char_arr_size(args) == 1)
 	{
-		if (chdir(getenv("HOME")))
+		if (chdir(ft_getenv("HOME")))
 			return (perror("cannot change to home directory\n"), 1);
 		return (0);
 	}

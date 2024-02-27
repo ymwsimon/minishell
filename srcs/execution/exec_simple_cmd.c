@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 15:33:21 by luyang            #+#    #+#             */
-/*   Updated: 2024/02/24 18:19:23 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/27 19:24:45 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,15 @@ int	ft_exec_program(char **args)
 		full_path = ft_getfullpath(args[0], NULL);
 		if (!full_path)
 			return (1); //error
-		if (execve(full_path, args, __environ) == -1)
-			exit(status); //error
+		if (execve(full_path, args, ft_vars()->env) == -1)
+			exit (status); //error
 	}
 	else
 	{
 		waitpid(p_pid, &status, 0);
 		//WIFSIGNALED??
 	}
-	return (ft_get_exit_status(status));
+	return (status);
 }
 
 int	ft_exec_redir(char **here_doc, char **redir)
@@ -78,7 +78,7 @@ int	ft_exec_simple_cmd(t_cmd *cmd)
 				, close(original_io[1]), 1); //error
 	}
 	if (cmd->args[0] && ft_is_builtin(cmd->args[0]))
-		status = (ft_exec_builtin(cmd->args));
+		status = ft_exec_builtin(cmd->args);
 	else if (cmd->args[0])
 		status = ft_exec_program(cmd->args);
 	ft_r_fd(original_io);

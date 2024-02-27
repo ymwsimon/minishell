@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 22:45:03 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/26 21:37:19 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/27 18:57:53 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@
 # define PARSE_OK 1
 # define IMCOMPELETE_CMD 2
 # define INVALID_POINTER 3
+# define EMPTY_INPUT 4
 # define EXE_SUCCESS 0
 # define EXE_FAILURE 1
 # define EXE_GENERAL 3
@@ -245,7 +246,8 @@ int 	ft_unset(char **args);
 //env
 int		ft_env(char **args);
 int		ft_print_env(void);
-int		ft_cpy_env(char ***arr);
+char	**ft_cpy_env(char **arr);
+char	*ft_getenv(char *str);
 //exit
 int		ft_exit(char **args);
 void	ft_free_res(void);
@@ -255,4 +257,6 @@ int		ft_exec_builtin(char **args);
 void    ft_turn_off_int_sig(void);
 //get_user_input
 int		ft_get_user_input(char *prompt);
+//signal
+void    ft_interrupt_handle(int i);
 #endif
