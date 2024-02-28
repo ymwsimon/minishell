@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 15:33:21 by luyang            #+#    #+#             */
-/*   Updated: 2024/02/28 18:19:24 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/28 21:04:49 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ int	ft_exec_program(char **args)
 	}
 	else
 	{
-		signal(SIGINT, &ft_interrupt_exe_parent);
+		signal(SIGINT, &ft_signal_exe_parent);
+		signal(SIGQUIT, &ft_signal_exe_parent);
 		waitpid(p_pid, &status, 0);
 		//WIFSIGNALED??
 	}
