@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 15:33:21 by luyang            #+#    #+#             */
-/*   Updated: 2024/02/27 19:24:45 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/28 18:19:24 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,13 @@ int	ft_exec_program(char **args)
 	{
 		full_path = ft_getfullpath(args[0], NULL);
 		if (!full_path)
-			return (1); //error
+			exit (1); //error
 		if (execve(full_path, args, ft_vars()->env) == -1)
 			exit (status); //error
 	}
 	else
 	{
+		signal(SIGINT, &ft_interrupt_exe_parent);
 		waitpid(p_pid, &status, 0);
 		//WIFSIGNALED??
 	}
@@ -74,16 +75,13 @@ int	ft_exec_simple_cmd(t_cmd *cmd)
 	if (cmd->redirs[0])
 	{
 		if (ft_exec_redir(cmd->here_doc_files, cmd->redirs))
-			return (ft_r_fd(original_io), close(original_io[0])
-				, close(original_io[1]), 1); //error
+			return (ft_r_fd(original_io), 1); //error
 	}
 	if (cmd->args[0] && ft_is_builtin(cmd->args[0]))
 		status = ft_exec_builtin(cmd->args);
 	else if (cmd->args[0])
 		status = ft_exec_program(cmd->args);
 	ft_r_fd(original_io);
-	close(original_io[0]);
-	close(original_io[1]);
 	return (status);
 }
 

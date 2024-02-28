@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 14:22:58 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/27 18:25:39 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/28 18:25:24 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	ft_get_user_input(char *prompt)
 	char	*old_line;
 	int		parse_res;
 
+	signal(SIGINT, &ft_interrupt_handle);
 	old_line = NULL;
 	parse_res = PARSE_OK;
 	line = readline(prompt);
@@ -30,7 +31,7 @@ int	ft_get_user_input(char *prompt)
 			exit(0);
 		}
 		if (!line && parse_res == IMCOMPELETE_CMD)
-			return (ft_putstr_fd("unexpected EOF ", STDERR_FILENO), PARSE_FAIL);
+			return (signal(SIGINT, SIG_DFL), ft_putstr_fd("unexpected EOF ", STDERR_FILENO), PARSE_FAIL);
 		if (!ft_space_only(line))
 		{
 			ft_trim_write_history(line);
@@ -44,7 +45,7 @@ int	ft_get_user_input(char *prompt)
 			ft_lstclear(&ft_vars()->toklist, &ft_free_token_node);
 		}
 		else if (ft_space_only(line) && parse_res == PARSE_OK)
-			return (free(line), EMPTY_INPUT);
+			return (signal(SIGINT, SIG_DFL), free(line), EMPTY_INPUT);
 		free(line);
 		line = readline("> ");
 	}
@@ -54,5 +55,5 @@ int	ft_get_user_input(char *prompt)
 		ft_lstclear(&ft_vars()->toklist, &ft_free_token_node);
 		ft_vars()->toklist = NULL;
 	}
-	return (parse_res);
+	return (signal(SIGINT, SIG_DFL), parse_res);
 }

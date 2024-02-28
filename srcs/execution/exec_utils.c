@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 19:11:31 by luyang            #+#    #+#             */
-/*   Updated: 2024/02/23 15:50:20 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/28 16:56:10 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ void	ft_r_fd(int *original)
 {
 	dup2(original[0], STDIN_FILENO);
 	dup2(original[1], STDOUT_FILENO);
+	close(original[0]);
+	close(original[1]);
 }
 
 int	ft_get_exit_status(int status)

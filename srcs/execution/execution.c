@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 15:32:57 by luyang            #+#    #+#             */
-/*   Updated: 2024/02/25 01:35:22 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/28 18:33:57 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ int	ft_exec_pipe(t_ast *ast)
 			return (ft_exec_pipe_child(ast->right, RIGHT_CHILD, pfds));
 		else
 		{
+			signal(SIGINT, SIG_IGN);
 			(close(pfds[0]), close(pfds[1]), waitpid(l_pid, &status, 0),
 				waitpid(r_pid, &status, 0));//, ft_r_fd(original));
 			//close(original[0]);
@@ -74,6 +75,7 @@ int	ft_exec_subshell(t_ast *ast)
 		return (ft_execute(ast));
 	else
 	{
+		signal(SIGINT, SIG_IGN);
 		waitpid(pid, &status, 0);
 		return (status);
 	}

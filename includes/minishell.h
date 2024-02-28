@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 22:45:03 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/27 18:57:53 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/02/28 18:19:06 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -259,4 +259,5 @@ void    ft_turn_off_int_sig(void);
 int		ft_get_user_input(char *prompt);
 //signal
 void    ft_interrupt_handle(int i);
+void    ft_interrupt_exe_parent(int i);
 #endif
