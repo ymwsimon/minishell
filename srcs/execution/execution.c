@@ -29,7 +29,6 @@ int	ft_exec_pipe_child(t_ast *ast, int child, int *pfds)
 		close(pfds[0]);
 	}
 	status = ft_execute(ast);
-	//clean?
 	exit (status);
 }
 
@@ -39,10 +38,7 @@ int	ft_exec_pipe(t_ast *ast)
 	pid_t	r_pid;
 	int		pfds[2];
 	int		status;
-	//int		original[2];
 
-	//original[0] = dup(STDIN_FILENO);
-	//original[1] = dup(STDOUT_FILENO);
 	(pipe(pfds), l_pid = fork());
 	if (l_pid == 0)
 		return (ft_exec_pipe_child(ast->left, LEFT_CHILD, pfds));
@@ -55,10 +51,8 @@ int	ft_exec_pipe(t_ast *ast)
 		{
 			ft_ignore_signal();
 			(close(pfds[0]), close(pfds[1]), waitpid(l_pid, &status, 0),
-				waitpid(r_pid, &status, 0));//, ft_r_fd(original));
-			//close(original[0]);
-			//close(original[1]);
-			return (status);
+				waitpid(r_pid, &status, 0));
+			return (ft_get_exit_status(status));
 		}
 	}
 }
@@ -77,7 +71,7 @@ int	ft_exec_subshell(t_ast *ast)
 	{
 		ft_ignore_signal();
 		waitpid(pid, &status, 0);
-		return (status);
+		return (ft_get_exit_status(status));
 	}
 }
 
