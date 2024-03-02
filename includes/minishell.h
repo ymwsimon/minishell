@@ -116,7 +116,6 @@ typedef enum s_err_msg
 {
 	ERR_NO_SUCH_FILE,
 	ERR_PERM_DENIED,
-	ERR_CMD_NOT_FOUND,
 }	t_err_msg;
 
 typedef struct s_err
@@ -228,7 +227,6 @@ int		ft_err_msg(t_err err);
 //check_file
 t_err	ft_check_read(char *file);
 t_err	ft_check_write(char *file);
-t_err	ft_check_exec(char *path, char *file);
 //get_full_path
 char	*ft_getfullpath(char *pname, char *res);
 //handle_env_quote

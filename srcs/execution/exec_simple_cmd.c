@@ -26,19 +26,19 @@ int	ft_exec_program(char **args)
 	else if (p_pid == 0)
 	{
 		full_path = ft_getfullpath(args[0], NULL);
-		status = ft_err_msg(ft_check_exec(full_path, args[0]));
-		if (status)
-			exit (status); //think about this
+		if (!full_path)
+			exit (1); //error
 		if (execve(full_path, args, ft_vars()->env) == -1)
-			exit (errno); //error
+			exit (status); //error
 	}
 	else
 	{
 		signal(SIGINT, &ft_signal_exe_parent);
 		signal(SIGQUIT, &ft_signal_exe_parent);
 		waitpid(p_pid, &status, 0);
+		//WIFSIGNALED??
 	}
-	return (ft_get_exit_status(status));
+	return (status);
 }
 
 int	ft_exec_redir(char **here_doc, char **redir)
