@@ -34,6 +34,9 @@ int	ft_err_msg(t_err err)
 			ft_putstr_fd(": Permission denied\n", 2), err.fd);
 	if (err.msg == ERR_NO_SUCH_FILE)
 		return (ft_putstr_fd("minishell: ", 2), ft_putstr_fd(err.file, 2),
-			ft_putstr_fd(": No such file or directory", 2), err.fd);
+			ft_putstr_fd(": No such file or directory\n", 2), err.fd);
+	if (err.msg == ERR_CMD_NOT_FOUND)
+		return (ft_putstr_fd(err.file, 2), ft_putstr_fd(": command not found\n", 2),
+			err.fd);
 	return (0);
 }
