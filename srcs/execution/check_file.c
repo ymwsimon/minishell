@@ -22,8 +22,31 @@ t_err	ft_check_write(char *file)
 	return ((t_err){EFD_NOT_FOUND, ERR_NO_SUCH_FILE, file});
 }
 
+int	ft_check_dir(char *file)
+{
+	DIR	*directory;
+	int	i;
+
+	i = 0;
+	while (file[i])
+	{
+		i++;
+	}
+	if (file[i - 1] == '/' || (file[0] == '.'
+		&& file[1] == '/'))
+	{
+		directory = opendir(file);
+		if (directory)
+			return (closedir(directory), 1);
+	}
+	return (0);
+
+}
+
 t_err	ft_check_exec(char *path, char *file)
 {
+//	if (ft_check_dir(file))
+//		return ((t_err){EFD_EXEC, ERR_IS_DIR, file});
 	if (!path)
 		return ((t_err){EFD_NOT_FOUND, ERR_CMD_NOT_FOUND, file});
 	if (access(path,F_OK) == 0)
