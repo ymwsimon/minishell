@@ -6,28 +6,29 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 14:22:58 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/28 20:59:32 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/03 22:48:01 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	ft_get_user_input(char *prompt)
+int	ft_get_user_input(void)
 {
 	char	*line;
 	char	*old_line;
 	int		parse_res;
 
-	signal(SIGINT, &ft_interrupt_handle);
+	signal(SIGINT, &ft_signal_handler_waiting_input);
 	signal(SIGQUIT, SIG_IGN);
 	old_line = NULL;
 	parse_res = PARSE_OK;
-	line = readline(prompt);
+	line = readline(PROMPT);
 	while (1)
 	{
 		if (!line && parse_res == PARSE_OK)
 		{
 			free(old_line);
+			printf("exit\n");
 			ft_free_res();
 			exit(0);
 		}
@@ -48,7 +49,7 @@ int	ft_get_user_input(char *prompt)
 		else if (ft_space_only(line) && parse_res == PARSE_OK)
 			return (ft_default_signal(), free(line), EMPTY_INPUT);
 		free(line);
-		line = readline("> ");
+		line = readline(PROMPT_CON);
 	}
 	free(line);
 	if (parse_res == PARSE_FAIL)

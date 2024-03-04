@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 15:33:21 by luyang            #+#    #+#             */
-/*   Updated: 2024/02/28 21:04:49 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/03 18:53:06 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ int	ft_exec_program(char **args)
 	}
 	else
 	{
-		signal(SIGINT, &ft_signal_exe_parent);
-		signal(SIGQUIT, &ft_signal_exe_parent);
+		signal(SIGINT, &ft_signal_handler_exe_parent);
+		signal(SIGQUIT, &ft_signal_handler_exe_parent);
 		waitpid(p_pid, &status, 0);
 	}
 	return (ft_get_exit_status(status));

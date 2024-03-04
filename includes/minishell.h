@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 22:45:03 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/28 22:05:46 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/03 18:51:28 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@
 # include <errno.h>
 # include <sys/wait.h>
 
+# define PROMPT "minishell>>> "
+# define PROMPT_CON "> "
 # define NO_REDIRECT 0 
 # define FROM_FILE 1
 # define FROM_HERE_DOC 2
@@ -243,9 +245,9 @@ int		ft_pwd(void);
 int		ft_export(char **args);
 int		ft_search_string_arr_prefix(char **arr, char *str, int full_len);
 //vars
-t_vars  *ft_vars(void);
+t_vars	*ft_vars(void);
 //unset
-int 	ft_unset(char **args);
+int		ft_unset(char **args);
 //env
 int		ft_env(char **args);
 int		ft_print_env(void);
@@ -257,12 +259,13 @@ void	ft_free_res(void);
 //builtins_utils
 int		ft_exec_builtin(char **args);
 //terminal_setting
-void    ft_turn_off_int_sig(void);
+void	ft_turn_off_int_sig(void);
 //get_user_input
-int		ft_get_user_input(char *prompt);
+int		ft_get_user_input(void);
 //signal
-void    ft_interrupt_handle(int i);
-void    ft_signal_exe_parent(int i);
-void    ft_default_signal(void);
-void    ft_ignore_signal(void);
+void	ft_signal_handler_waiting_input(int i);
+void	ft_signal_handler_exe_parent(int i);
+void	ft_signal_handler_exe_child(int i);
+void	ft_default_signal(void);
+void	ft_ignore_signal(void);
 #endif
