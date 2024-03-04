@@ -25,6 +25,7 @@
 # include <stdio.h>
 # include <errno.h>
 # include <sys/wait.h>
+# include <dirent.h>
 
 # define PROMPT "minishell>>> "
 # define PROMPT_CON "> "
@@ -119,6 +120,7 @@ typedef enum s_err_msg
 	ERR_NO_SUCH_FILE,
 	ERR_PERM_DENIED,
 	ERR_CMD_NOT_FOUND,
+	ERR_IS_DIR
 }	t_err_msg;
 
 typedef struct s_err
@@ -228,10 +230,16 @@ void	ft_r_fd(int *original);
 int		ft_get_exit_status(int status);
 int		ft_exec_pipe(t_ast *ast);
 int		ft_err_msg(t_err err);
+/*//globber
+char	**ft_globber(char **args);
+char	**ft_globbing(char *arg);
+//globber_utils
+int	ft_count_args(char **args);*/
 //check_file
 t_err	ft_check_read(char *file);
 t_err	ft_check_write(char *file);
 t_err	ft_check_exec(char *path, char *file);
+int		ft_check_dir(char *file);
 //get_full_path
 char	*ft_getfullpath(char *pname, char *res);
 //handle_env_quote
@@ -268,4 +276,5 @@ void	ft_signal_handler_exe_child(int i);
 void	ft_setup_signal_handler_child(void);
 void	ft_default_signal(void);
 void	ft_ignore_signal(void);
+
 #endif

@@ -78,6 +78,7 @@ int	ft_exec_simple_cmd(t_cmd *cmd)
 		if (ft_exec_redir(cmd->here_doc_files, cmd->redirs))
 			return (ft_r_fd(original_io), 1); //error
 	}
+//	ft_globber(cmd->args);
 	if (cmd->args[0] && ft_is_builtin(cmd->args[0]))
 		status = ft_exec_builtin(cmd->args);
 	else if (cmd->args[0])
