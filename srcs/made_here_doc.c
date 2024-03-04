@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 20:23:11 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/03 22:54:24 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/04 18:36:03 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,13 @@
 int	ft_create_here_doc(t_ast *node, int *id)
 {
 	int		i;
-	int		j;
 	int		nhere_doc;
 	int		fd;
-	char	*line;
 	char	*tmp;
-	pid_t	pid;
 	int		status;
 
-	if (!node)
-		return (0);
+	if (!node || !id)
+		return (INVALID_POINTER);
 	if (node->toktype == SIMPLE_CMD)
 	{
 		i = 0;
@@ -45,12 +42,41 @@ int	ft_create_here_doc(t_ast *node, int *id)
 			if (!tmp)
 				return (ALLOCATE_FAIL);
 			node->cmd->here_doc_files[i] = ft_strjoin(".here_doc_", tmp);
+			printf("the file name is %s\n", node->cmd->here_doc_files[i]);
 			if (!node->cmd->here_doc_files[i])
 				return (ALLOCATE_FAIL);
+			fd = open(node->cmd->here_doc_files[i], O_WRONLY | O_TRUNC | O_CREAT, 0777);
+			close(fd);
 			free(tmp);
 			(*id)++;
 			i++;
 		}
+		return (0);
+	}
+	else
+	{
+		status = ft_create_here_doc(node->left, id);
+		if (node->toktype != SUBSHELL)
+			status |= ft_create_here_doc(node->right, id);
+		return (status);
+	}
+}
+
+int	ft_fill_here_doc(t_ast *node)
+{
+	int		i;
+	int		j;
+	int		fd;
+	char	*line;
+	char	*tmp;
+	pid_t	pid;
+	int		status;
+
+	if (!node)
+		return (INVALID_POINTER);
+	if (node->toktype == SIMPLE_CMD)
+	{
+		ft_setup_signal_handler_child();
 		pid = fork();
 		if(pid == 0)
 		{
@@ -60,30 +86,29 @@ int	ft_create_here_doc(t_ast *node, int *id)
 			{
 				if (ft_is_here_doc(node->cmd->redirs[i]))
 				{
-					printf("file name = %s delimiter = %s \n", node->cmd->here_doc_files[j], node->cmd->redirs[i + 1]);
+					//printf("file name = %s delimiter = %s \n", node->cmd->here_doc_files[j], node->cmd->redirs[i + 1]);
 					fd = open(node->cmd->here_doc_files[j], O_WRONLY | O_TRUNC | O_CREAT, 0777);
 					if (fd == -1)
-						return (0);
-					printf("%s", PROMPT_CON);
-					line = get_next_line(STDIN_FILENO);
-					tmp = ft_strjoin(node->cmd->redirs[i + 1], "\n");
-					if (!tmp)
-						return (ALLOCATE_FAIL);
+						return (-1);
+					line = readline(PROMPT_CON);
+					tmp = node->cmd->redirs[i + 1];
+					//printf("the deli %s\n", tmp);
+					//printf("the line %s\n", line);
 					while (line && ft_strncmp(line, tmp, ft_strlen(tmp) + 1))
 					{
 						if (write(fd, line, ft_strlen(line)) == -1)
-							return (close(fd), 0);
+							return (close(fd), ALLOCATE_FAIL);
 						free(line);
-						printf("%s", PROMPT_CON);
-						line = get_next_line(STDIN_FILENO);
+						line = readline(PROMPT_CON);
 					}
+					if (!line)
+						printf("warning: here-document delimited by end-of-file (wanted `%s')\n", tmp);
 					close(fd);
-					free(tmp);
 					j++;
 				}
 				i++;
 			}
-			ft_free_res();
+			ft_free_res(0);
 			exit(0);
 		}
 		else
@@ -97,9 +122,9 @@ int	ft_create_here_doc(t_ast *node, int *id)
 	}
 	else
 	{
-		status = ft_create_here_doc(node->left, id);
-		if (node->toktype != SUBSHELL)
-			status |= ft_create_here_doc(node->right, id);
+		status = ft_fill_here_doc(node->left);
+		if (node->toktype != SUBSHELL && status == 0)
+			status = ft_fill_here_doc(node->right);
 		return (status);
 	}
 }

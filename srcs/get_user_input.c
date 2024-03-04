@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 14:22:58 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/03 22:48:01 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/04 22:10:01 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	ft_get_user_input(void)
 		{
 			free(old_line);
 			printf("exit\n");
-			ft_free_res();
+			ft_free_res(1);
 			exit(0);
 		}
 		if (!line && parse_res == IMCOMPELETE_CMD)

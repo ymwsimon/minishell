@@ -6,17 +6,17 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 17:53:38 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/03 22:50:53 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/04 17:50:13 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	ft_free_res(void)
+void	ft_free_res(int del_hd)
 {
 	//if (ft_vars()->toklist)
 	//	ft_lstclear(&ft_vars()->toklist, &ft_free_token_node);
-	ft_free_ast(ft_vars()->ast);
+	ft_free_ast(ft_vars()->ast, del_hd);
 	ft_clear_char_arr(ft_vars()->env);
 	rl_clear_history();
 }
@@ -73,6 +73,6 @@ int	ft_exit(char **args)
 		ft_putstr_fd("exit: numeric argument required\n", STDERR_FILENO);
 	}
 	printf("exit\n");
-	ft_free_res();
+	ft_free_res(1);
 	exit(res);
 }

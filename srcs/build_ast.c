@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 20:46:40 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/03 22:18:09 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/04 17:46:35 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*ft_enum_to_str(t_token_type t)
 	return (res);
 }
 
-void	ft_free_ast(t_ast *node)
+void	ft_free_ast(t_ast *node, int del_hd)
 {
 	size_t	i;
 
@@ -45,13 +45,13 @@ void	ft_free_ast(t_ast *node)
 		ft_clear_char_arr(node->cmd->args);
 		ft_clear_char_arr(node->cmd->redirs);
 		i = 0;
-		while (node->cmd->here_doc_files && node->cmd->here_doc_files[i])
+		while (del_hd && node->cmd->here_doc_files && node->cmd->here_doc_files[i])
 			unlink(node->cmd->here_doc_files[i++]);
 		ft_clear_char_arr(node->cmd->here_doc_files);
 		free(node->cmd);
 	}
-	ft_free_ast(node->left);
-	ft_free_ast(node->right);
+	ft_free_ast(node->left, del_hd);
+	ft_free_ast(node->right, del_hd);
 	free(node);
 }
 

@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 22:45:03 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/03 18:51:28 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/04 17:51:23 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,9 +205,10 @@ size_t	ft_char_arr_size(char **arr);
 //build_ast
 t_ast	*ft_build_ast(t_list *tokens);
 void	ft_print_ast(t_ast *node);
-void	ft_free_ast(t_ast *node);
+void	ft_free_ast(t_ast *node, int del_hd);
 //made_here_doc
 int		ft_create_here_doc(t_ast *node, int *id);
+int		ft_fill_here_doc(t_ast *node);
 //exection
 int		ft_execute(t_ast *ast);
 int		ft_exec_subshell(t_ast *ast);
@@ -255,17 +256,16 @@ char	**ft_cpy_env(char **arr);
 char	*ft_getenv(char *str);
 //exit
 int		ft_exit(char **args);
-void	ft_free_res(void);
+void	ft_free_res(int del_hd);
 //builtins_utils
 int		ft_exec_builtin(char **args);
-//terminal_setting
-void	ft_turn_off_int_sig(void);
 //get_user_input
 int		ft_get_user_input(void);
 //signal
 void	ft_signal_handler_waiting_input(int i);
 void	ft_signal_handler_exe_parent(int i);
 void	ft_signal_handler_exe_child(int i);
+void	ft_setup_signal_handler_child(void);
 void	ft_default_signal(void);
 void	ft_ignore_signal(void);
 #endif

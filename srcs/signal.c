@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 18:53:20 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/03 18:50:30 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/04 17:46:47 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,15 @@ void	ft_signal_handler_exe_child(int i)
 {
 	if (i == SIGINT || i == SIGQUIT)
 	{
-		ft_free_res();
-		exit(1);
+		ft_free_res(0);
+		exit(127);
 	}
+}
+
+void	ft_setup_signal_handler_child(void)
+{
+	signal(SIGINT, &ft_signal_handler_exe_child);
+	signal(SIGQUIT, &ft_signal_handler_exe_child);
 }
 
 void	ft_default_signal(void)
