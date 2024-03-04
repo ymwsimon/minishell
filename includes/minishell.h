@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 22:45:03 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/04 17:51:23 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/04 22:41:33 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@
 # define CMD_NOT_FOUND 127
 
 # define ALLOCATE_FAIL -1
-# define PARSE_FAIL 0
-# define PARSE_OK 1
+# define PARSE_OK 0
+# define PARSE_FAIL 1
 # define IMCOMPELETE_CMD 2
 # define INVALID_POINTER 3
 # define EMPTY_INPUT 4

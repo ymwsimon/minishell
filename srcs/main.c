@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 01:21:42 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/04 17:52:52 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/04 22:48:28 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,13 @@ int	main(int argc, char **argv, char **env)
 		{
 			ft_vars()->ast = ft_build_ast(ft_vars()->toklist);
 			id = 0;
+			if (!ft_vars()->ast)
+				printf("empty ast\n");
 			id = ft_create_here_doc(ft_vars()->ast, &id);
-			printf("create hd %d\n", id);
-			id = ft_fill_here_doc(ft_vars()->ast);
-			printf("fill hd %d\n", id);
+			//printf("create hd %d\n", id);
+			if (id == 0)
+				id = ft_fill_here_doc(ft_vars()->ast);
+			//printf("fill hd %d\n", id);
 			if (id == 0)
 			{
 				ft_vars()->last_exe_res = ft_execute(ft_vars()->ast);

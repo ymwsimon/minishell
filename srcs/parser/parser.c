@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 18:25:13 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/13 11:47:32 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/04 22:35:08 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	ft_parse_token(t_list *node)
 		else if (((t_token *)node->content)->toktype == RAW)
 		{
 			printf("unexcepted token: %s\n", ((t_token *)node->content)->str);
-			return (0);
+			return (PARSE_FAIL);
 		}
 		//ft_lstadd_front(&stack, node);
 		last.toktype = ((t_token *)node->content)->toktype;
@@ -85,9 +85,9 @@ int	ft_parse_token(t_list *node)
 		printf("the last tok ");
 		ft_print_enum(last.toktype);
 		printf("\n");
-		return (0);
+		return (PARSE_FAIL);
 	}
 	if (ft_need_more_input(&last, open_paren))
-		return (2);
-	return (1);
+		return (IMCOMPELETE_CMD);
+	return (PARSE_OK);
 }
