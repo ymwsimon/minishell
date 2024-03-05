@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 20:46:40 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/04 17:46:35 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/05 20:29:15 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,25 +34,26 @@ char	*ft_enum_to_str(t_token_type t)
 	return (res);
 }
 
-void	ft_free_ast(t_ast *node, int del_hd)
+void	ft_free_ast(t_ast **node, int del_hd)
 {
 	size_t	i;
 
-	if (!node)
+	if (!node || !(*node))
 		return ;
-	if (node->toktype == SIMPLE_CMD)
+	if ((*node)->toktype == SIMPLE_CMD)
 	{
-		ft_clear_char_arr(node->cmd->args);
-		ft_clear_char_arr(node->cmd->redirs);
+		ft_clear_char_arr((*node)->cmd->args);
+		ft_clear_char_arr((*node)->cmd->redirs);
 		i = 0;
-		while (del_hd && node->cmd->here_doc_files && node->cmd->here_doc_files[i])
-			unlink(node->cmd->here_doc_files[i++]);
-		ft_clear_char_arr(node->cmd->here_doc_files);
-		free(node->cmd);
+		while (del_hd && (*node)->cmd->here_doc_files && (*node)->cmd->here_doc_files[i])
+			unlink((*node)->cmd->here_doc_files[i++]);
+		ft_clear_char_arr((*node)->cmd->here_doc_files);
+		free((*node)->cmd);
 	}
-	ft_free_ast(node->left, del_hd);
-	ft_free_ast(node->right, del_hd);
-	free(node);
+	ft_free_ast(&(*node)->left, del_hd);
+	ft_free_ast(&(*node)->right, del_hd);
+	free((*node));
+	*node = NULL;
 }
 
 void	ft_print_ast(t_ast *node)

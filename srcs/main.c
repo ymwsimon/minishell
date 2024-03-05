@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 01:21:42 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/04 22:48:28 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/05 20:34:08 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int	main(int argc, char **argv, char **env)
 {
-	int				parse_res;
 	int				id;
 
 	argc += 0;
@@ -24,8 +23,7 @@ int	main(int argc, char **argv, char **env)
 	ft_import_history();
 	while (1)
 	{
-		parse_res = ft_get_user_input();
-		if (parse_res == PARSE_OK)
+		if (ft_get_user_input() == PARSE_OK)
 		{
 			ft_vars()->ast = ft_build_ast(ft_vars()->toklist);
 			id = 0;
@@ -41,12 +39,10 @@ int	main(int argc, char **argv, char **env)
 				ft_vars()->last_exe_res = ft_execute(ft_vars()->ast);
 				printf("%d\n", ft_vars()->last_exe_res);
 			}
-			ft_free_ast(ft_vars()->ast, 1);
+			ft_free_ast(&ft_vars()->ast, 1);
 			ft_vars()->ast = NULL;
 			ft_vars()->toklist = NULL;
 		}
-		else if (parse_res == PARSE_FAIL)
-			ft_vars()->last_exe_res = 2;
 	}
 	ft_free_res(1);
 	return (0);
