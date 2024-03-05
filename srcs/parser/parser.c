@@ -82,9 +82,8 @@ int	ft_parse_token(t_list *node)
 	//printf("\n");
 	if (!ft_is_raw_tok(&last) && ft_is_redir_tok(&last))
 	{
-		printf("the last tok ");
-		ft_print_enum(last.toktype);
-		printf("\n");
+		ft_putstr_fd("minishell: syntax " 
+			"error near unexpected token `newline'\n", 2);
 		return (PARSE_FAIL);
 	}
 	if (ft_need_more_input(&last, open_paren))

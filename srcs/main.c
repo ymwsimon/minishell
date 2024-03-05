@@ -46,7 +46,7 @@ int	main(int argc, char **argv, char **env)
 			ft_vars()->toklist = NULL;
 		}
 		else if (parse_res == PARSE_FAIL)
-			printf("parse error\n");
+			ft_vars()->last_exe_res = 2;
 	}
 	ft_free_res(1);
 	return (0);
