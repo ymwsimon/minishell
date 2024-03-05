@@ -49,6 +49,8 @@ t_err	ft_check_exec(char *path, char *file)
 		return ((t_err){EFD_EXEC, ERR_IS_DIR, file});
 	if (!path)
 		return ((t_err){EFD_NOT_FOUND, ERR_CMD_NOT_FOUND, file});
+	if (!*file)
+		return ((t_err){EFD_NOT_FOUND, ERR_CMD_NOT_FOUND, "\'\'"});
 	if (access(path,F_OK) == 0)
 	{
 		if (access(path, X_OK) == -1)
