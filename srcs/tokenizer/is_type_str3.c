@@ -37,4 +37,4 @@ int	ft_is_builtin(char *str)
 		return (1);
 	else
 		return (0);
-} 
+}

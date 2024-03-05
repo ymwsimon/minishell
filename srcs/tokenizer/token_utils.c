@@ -31,7 +31,7 @@ int	ft_push_token_to_list(t_list **list, char *str)
 	return (1);
 }
 
-void	ft_print_enum(t_token_type tok)
+/*void	ft_print_enum(t_token_type tok)
 {
 	if (tok == RAW)
 		printf("RAW");
@@ -69,9 +69,9 @@ void	ft_print_enum(t_token_type tok)
 		printf("SIMPLE_CMD");
 	else if (tok == SUBSHELL)
 		printf("SUBSHELL");
-}
+}*/
 
-void	ft_print_tokens(t_list *tokens)
+/*void	ft_print_tokens(t_list *tokens)
 {
 	t_token	*t;
 
@@ -87,7 +87,7 @@ void	ft_print_tokens(t_list *tokens)
 		printf("\n");
 		tokens = tokens->next;
 	}
-}
+}*/
 
 void	ft_free_token_node(void *n)
 {

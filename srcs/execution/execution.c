@@ -78,9 +78,7 @@ int	ft_exec_subshell(t_ast *ast)
 int	ft_execute(t_ast *ast)
 {
 	int	status;
-//	int	*original;
 
-//	original = ft_set_original()
 	if (!ast)
 		return (INVALID_POINTER);
 	if (ast->toktype == PIPE)

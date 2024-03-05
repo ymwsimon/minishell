@@ -19,18 +19,18 @@ int	ft_exec_program(char **args)
 	int		status;
 
 	if (!args || !*args)
-		return (1); //error
+		return (1);
 	p_pid = fork();
 	if (p_pid == -1)
-		return (1); //error
+		return (1);
 	else if (p_pid == 0)
 	{
 		full_path = ft_getfullpath(args[0], NULL);
 		status = ft_err_msg(ft_check_exec(full_path, args[0]));
 		if (status)
-			exit (status); //think about this
+			exit (status);
 		if (execve(full_path, args, ft_vars()->env) == -1)
-			exit (errno); //error
+			exit (errno);
 	}
 	else
 	{
@@ -72,13 +72,12 @@ int	ft_exec_simple_cmd(t_cmd *cmd)
 	original_io[1] = dup(STDOUT_FILENO);
 	status = 0;
 	if (!cmd)
-		return (1); //handle error
+		return (1);
 	if (cmd->redirs[0])
 	{
 		if (ft_exec_redir(cmd->here_doc_files, cmd->redirs))
-			return (ft_r_fd(original_io), 1); //error
+			return (ft_r_fd(original_io), 1);
 	}
-//	ft_globber(cmd->args);
 	if (cmd->args[0] && ft_is_builtin(cmd->args[0]))
 		status = ft_exec_builtin(cmd->args);
 	else if (cmd->args[0])
@@ -86,4 +85,3 @@ int	ft_exec_simple_cmd(t_cmd *cmd)
 	ft_r_fd(original_io);
 	return (status);
 }
-
