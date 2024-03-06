@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
+/*   By: luyang <luyang@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 22:45:03 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/06 19:01:00 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/06 21:15:39 by luyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -219,9 +219,14 @@ size_t	ft_char_arr_size(char **arr);
 t_ast	*ft_build_ast(t_list *tokens);
 void	ft_print_ast(t_ast *node);
 void	ft_free_ast(t_ast **node, int del_hd);
-//made_here_doc
+//create_here_doc
 int		ft_create_here_doc(t_ast *node, int *id);
+int		ft_create_hd_simple_cmd(t_ast **node, int *i, int *id, int nhere_doc);
+//fill_here_doc
 int		ft_fill_here_doc(t_ast *node);
+int		ft_fill_hd_simple_cmd(t_ast **node, int status);
+int		ft_fill_hd_child(t_ast **node);
+int		ft_fill_hd_child_helper(t_ast **node, int i, int fd);
 //exection
 int		ft_execute(t_ast *ast);
 int		ft_exec_subshell(t_ast *ast);

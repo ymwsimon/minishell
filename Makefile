@@ -18,7 +18,8 @@ SRCS = 	main \
 		tokenizer/tokenizer \
 		build_ast \
 		char_utils \
-		made_here_doc \
+		create_here_doc \
+		fill_here_doc \
 		handle_env_quote \
 		get_full_path \
 		vars \
