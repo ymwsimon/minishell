@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 18:23:15 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/06 13:38:26 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/06 18:43:48 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void	ft_import_history(void)
 
 	path = ft_strjoin(ft_getenv("HOME"), HISTORY_FILE_NAME);
 	fd = open(path, O_RDONLY);
-	//printf("path of the history file=%s, fd=%d\n", path, fd);
 	if (fd >= 0)
 	{
 		line = get_next_line(fd);
@@ -66,7 +65,6 @@ void	ft_trim_write_history(char *line)
 	path = ft_strjoin(ft_getenv("HOME"), HISTORY_FILE_NAME);
 	add_history(line);
 	fd = open(path, O_CREAT | O_WRONLY | O_APPEND, 0777);
-	//printf("path of the history file=%s, fd=%d\n", path, fd);
 	if (fd >= 0)
 	{
 		line_with_newline = ft_strjoin(line, "\n");

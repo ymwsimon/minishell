@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 22:45:03 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/06 16:57:38 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/06 19:01:00 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@
 # define ALLOCATE_FAIL -1
 # define PARSE_OK 0
 # define PARSE_FAIL 1
+# define NO_PARSE_RESULT 2
 # define IMCOMPELETE_CMD 2
 # define INVALID_POINTER 3
 # define EMPTY_INPUT 4
@@ -263,6 +264,7 @@ int		ft_export(char **args);
 int		ft_search_string_arr_prefix(char **arr, char *str, int full_len);
 //vars
 t_vars	*ft_vars(void);
+int		ft_event(void);
 //unset
 int		ft_unset(char **args);
 //env
@@ -282,6 +284,7 @@ void	ft_signal_handler_waiting_input(int i);
 void	ft_signal_handler_exe_parent(int i);
 void	ft_signal_handler_exe_child(int i);
 int		ft_setup_signal_handler_child(int using_readline);
+//signal2
 void	ft_default_signal(void);
 void	ft_ignore_signal(void);
 

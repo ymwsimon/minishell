@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vars.c                                             :+:      :+:    :+:   */
+/*   signal2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/23 15:45:39 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/06 18:34:27 by mayeung          ###   ########.fr       */
+/*   Created: 2024/03/06 19:00:25 by mayeung           #+#    #+#             */
+/*   Updated: 2024/03/06 19:00:39 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-t_vars	*ft_vars(void)
+void	ft_default_signal(void)
 {
-	static t_vars	v = (t_vars){NULL, NULL, NULL, 0, 0};
-
-	return (&v);
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 }
 
-int	ft_event(void)
+void	ft_ignore_signal(void)
 {
-	return (0);
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 }

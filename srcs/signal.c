@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 18:53:20 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/06 16:51:01 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/06 19:00:53 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,7 @@ void	ft_signal_handler_exe_parent(int i)
 	if (i == SIGINT)
 		printf("\n");
 	else if (i == SIGQUIT)
-	{
-		printf("\n");
-		printf("Quit (core dumped)\n");
-	}
+		printf("\nQuit (core dumped)\n");
 }
 
 void	ft_signal_handler_exe_child(int i)
@@ -53,16 +50,4 @@ int	ft_setup_signal_handler_child(int using_readline)
 	else
 		signal(SIGQUIT, SIG_IGN);
 	return (0);
-}
-
-void	ft_default_signal(void)
-{
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
-}
-
-void	ft_ignore_signal(void)
-{
-	signal(SIGINT, SIG_IGN);
-	signal(SIGQUIT, SIG_IGN);
 }
