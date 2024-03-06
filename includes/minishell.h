@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 22:45:03 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/06 16:50:31 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/06 16:57:38 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@
 # define EXE_GENERAL 3
 # define LEFT_CHILD 4
 # define RIGHT_CHILD 5
-
+# define FALSE 0
+# define TRUE 1
 # define OPENPAR_AND_OR_PIPE 1
 # define PAREN 2
 
