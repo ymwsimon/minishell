@@ -6,7 +6,7 @@
 /*   By: luyang <luyang@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 22:45:03 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/06 21:15:39 by luyang           ###   ########.fr       */
+/*   Updated: 2024/03/06 21:27:22 by luyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,6 +218,8 @@ size_t	ft_char_arr_size(char **arr);
 //build_ast
 t_ast	*ft_build_ast(t_list *tokens);
 void	ft_print_ast(t_ast *node);
+//build_ast2
+t_ast	*ft_break_into_sc(t_list *tokens);
 void	ft_free_ast(t_ast **node, int del_hd);
 //create_here_doc
 int		ft_create_here_doc(t_ast *node, int *id);

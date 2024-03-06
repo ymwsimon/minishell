@@ -17,6 +17,7 @@ SRCS = 	main \
 		tokenizer/token_utils \
 		tokenizer/tokenizer \
 		build_ast \
+		build_ast2 \
 		char_utils \
 		create_here_doc \
 		fill_here_doc \
