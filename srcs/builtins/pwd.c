@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 18:28:38 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/24 18:07:16 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/06 18:45:14 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	ft_pwd(void)
 
 	res = getcwd(NULL, 0);
 	if (!res)
-	{	
+	{
 		perror(NULL);
 		return (1);
 	}
