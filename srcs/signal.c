@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 18:53:20 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/06 01:04:38 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/06 13:09:09 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ void	ft_signal_handler_waiting_input(int i)
 {
 	if (i == SIGINT)
 	{
-		ft_vars()->last_signal = 126;
+		ft_vars()->break_readline = 1;
+		ft_vars()->last_exe_res = 130;
 		rl_done = 1;
 	}
 }
@@ -37,14 +38,21 @@ void	ft_signal_handler_exe_child(int i)
 	if (i == SIGINT || i == SIGQUIT)
 	{
 		ft_free_res(0);
-		exit(127);
+		if (i == SIGINT)
+			exit(130);
+		else
+			exit(131);
 	}
 }
 
-void	ft_setup_signal_handler_child(void)
+int	ft_setup_signal_handler_child(int using_readline)
 {
 	signal(SIGINT, &ft_signal_handler_exe_child);
-	signal(SIGQUIT, &ft_signal_handler_exe_child);
+	if (!using_readline)
+		signal(SIGQUIT, &ft_signal_handler_exe_child);
+	else
+		signal(SIGQUIT, SIG_IGN);
+	return (0);
 }
 
 void	ft_default_signal(void)

@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 22:45:03 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/05 20:28:32 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/06 13:38:16 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # include <sys/wait.h>
 # include <dirent.h>
 
+# define HISTORY_FILE_NAME "/.minishell_cmd_history"
 # define PROMPT "minishell>>> "
 # define PROMPT_CON "> "
 # define NO_REDIRECT 0 
@@ -103,7 +104,7 @@ typedef struct s_vars
 	t_ast	*ast;
 	char	**env;
 	int		last_exe_res;
-	int		last_signal;
+	int		break_readline;
 }				t_vars;
 
 typedef enum s_err_fd
@@ -273,7 +274,7 @@ int		ft_get_user_input(void);
 void	ft_signal_handler_waiting_input(int i);
 void	ft_signal_handler_exe_parent(int i);
 void	ft_signal_handler_exe_child(int i);
-void	ft_setup_signal_handler_child(void);
+int		ft_setup_signal_handler_child(int using_readline);
 void	ft_default_signal(void);
 void	ft_ignore_signal(void);
 

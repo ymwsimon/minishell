@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 01:21:42 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/06 01:24:57 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/06 13:13:53 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	main(int argc, char **argv, char **env)
 	env += 0;
 	ft_vars()->env = ft_cpy_env(__environ);
 	ft_import_history();
-	while (1)
+	while (isatty(STDIN_FILENO))
 	{
 		if (ft_get_user_input() == PARSE_OK)
 		{
@@ -34,10 +34,11 @@ int	main(int argc, char **argv, char **env)
 			if (id == 0)
 				id = ft_fill_here_doc(ft_vars()->ast);
 			//printf("fill hd %d\n", id);
+			ft_setup_signal_handler_child(0);
 			if (id == 0)
 			{
 				ft_vars()->last_exe_res = ft_execute(ft_vars()->ast);
-				printf("%d\n", ft_vars()->last_exe_res);
+				printf("last execution result: %d\n", ft_vars()->last_exe_res);
 			}
 			ft_free_ast(&ft_vars()->ast, 1);
 			ft_vars()->ast = NULL;

@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 14:22:58 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/06 01:25:35 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/06 13:20:09 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,20 +28,20 @@ int	ft_get_user_input(void)
 	rl_event_hook = ft_event;
 	old_line = NULL;
 	parse_res = PARSE_OK;
+	ft_vars()->break_readline = 0;
 	line = readline(PROMPT);
-	ft_vars()->last_signal = 0;
-	while (!ft_vars()->last_signal || parse_res == PARSE_OK)
+	while (!ft_vars()->break_readline || parse_res == PARSE_OK)
 	{
 		if (!line && parse_res == PARSE_OK)
 		{
 			free(old_line);
 			ft_putstr_fd("exit\n", STDOUT_FILENO);
 			ft_free_res(1);
-			exit(0);
+			exit(ft_vars()->last_exe_res);
 		}
 		if (!line && parse_res == IMCOMPELETE_CMD)
 			return (ft_default_signal(),
-				ft_putstr_fd("unexpected EOF ", STDERR_FILENO), PARSE_FAIL);
+				ft_putstr_fd("unexpected EOF\n", STDERR_FILENO), PARSE_FAIL);
 		if (!ft_space_only(line) || parse_res == IMCOMPELETE_CMD)
 		{
 			ft_trim_write_history(line);
@@ -66,7 +66,7 @@ int	ft_get_user_input(void)
 		line = readline(PROMPT_CON);
 	}
 	free(line);
-	if (ft_vars()->last_signal)
+	if (ft_vars()->break_readline)
 	{
 		parse_res = EMPTY_INPUT;
 		free(old_line);
