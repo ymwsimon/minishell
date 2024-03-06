@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 22:45:03 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/06 13:38:16 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/06 16:50:31 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,9 @@
 # include <dirent.h>
 
 # define HISTORY_FILE_NAME "/.minishell_cmd_history"
+# define HERE_DOC_PREFIX ".here_doc_"
+# define HD_NULL_MSG "warning: here-document delimited by end-of-file"
+# define HD_NULL_MSG2 " (wanted `%s')\n"
 # define PROMPT "minishell>>> "
 # define PROMPT_CON "> "
 # define NO_REDIRECT 0 
@@ -38,7 +41,8 @@
 # define FROM_PIPE 5
 # define TO_PIPE 6
 # define CMD_NOT_FOUND 127
-
+# define SIGINT_CODE 130
+# define SIGQUIT_CODE 131
 # define ALLOCATE_FAIL -1
 # define PARSE_OK 0
 # define PARSE_FAIL 1
