@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 22:45:03 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/06 13:38:16 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/06 19:01:00 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,9 @@
 # include <dirent.h>
 
 # define HISTORY_FILE_NAME "/.minishell_cmd_history"
+# define HERE_DOC_PREFIX ".here_doc_"
+# define HD_NULL_MSG "warning: here-document delimited by end-of-file"
+# define HD_NULL_MSG2 " (wanted `%s')\n"
 # define PROMPT "minishell>>> "
 # define PROMPT_CON "> "
 # define NO_REDIRECT 0 
@@ -38,10 +41,12 @@
 # define FROM_PIPE 5
 # define TO_PIPE 6
 # define CMD_NOT_FOUND 127
-
+# define SIGINT_CODE 130
+# define SIGQUIT_CODE 131
 # define ALLOCATE_FAIL -1
 # define PARSE_OK 0
 # define PARSE_FAIL 1
+# define NO_PARSE_RESULT 2
 # define IMCOMPELETE_CMD 2
 # define INVALID_POINTER 3
 # define EMPTY_INPUT 4
@@ -50,7 +55,8 @@
 # define EXE_GENERAL 3
 # define LEFT_CHILD 4
 # define RIGHT_CHILD 5
-
+# define FALSE 0
+# define TRUE 1
 # define OPENPAR_AND_OR_PIPE 1
 # define PAREN 2
 
@@ -260,6 +266,7 @@ int		ft_export(char **args);
 int		ft_search_string_arr_prefix(char **arr, char *str, int full_len);
 //vars
 t_vars	*ft_vars(void);
+int		ft_event(void);
 //unset
 int		ft_unset(char **args);
 //env
@@ -279,6 +286,7 @@ void	ft_signal_handler_waiting_input(int i);
 void	ft_signal_handler_exe_parent(int i);
 void	ft_signal_handler_exe_child(int i);
 int		ft_setup_signal_handler_child(int using_readline);
+//signal2
 void	ft_default_signal(void);
 void	ft_ignore_signal(void);
 

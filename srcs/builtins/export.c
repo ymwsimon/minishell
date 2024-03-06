@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 20:18:39 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/06 01:22:41 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/06 18:44:54 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,6 @@ int	ft_export(char **args)
 	{
 		if (ft_valid_export_args(args[i]))
 		{
-			//printf("the idx:%d\n", ft_search_string_arr_prefix(ft_vars()->env, args[i], 0));
 			if (ft_search_string_arr_prefix(ft_vars()->env, args[i], 0) != -1)
 				status = ft_update_env(args[i]);
 			else
@@ -111,6 +110,6 @@ int	ft_export(char **args)
 		else
 			status |= 1;
 		i++;
-	}	
+	}
 	return (status);
 }

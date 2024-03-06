@@ -24,6 +24,7 @@ SRCS = 	main \
 		vars \
 		get_user_input \
 		signal \
+		signal2 \
 		builtins/cd \
 		builtins/echo \
 		builtins/env \

@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 01:21:42 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/06 13:13:53 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/06 16:08:37 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ int	main(int argc, char **argv, char **env)
 				printf("last execution result: %d\n", ft_vars()->last_exe_res);
 			}
 			ft_free_ast(&ft_vars()->ast, 1);
-			ft_vars()->ast = NULL;
 			ft_vars()->toklist = NULL;
 		}
 	}

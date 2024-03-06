@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 15:06:31 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/06 01:06:10 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/06 18:48:47 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ char	*ft_resolve_folder_path(char *path)
 			return (NULL);
 		res = ft_free_join_str(res, ft_strdup(path));
 	}
-	//printf("the path is %s\n", res);
 	return (res);
 }
 

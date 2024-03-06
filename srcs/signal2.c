@@ -1,28 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   signal2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/20 18:28:38 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/06 18:45:14 by mayeung          ###   ########.fr       */
+/*   Created: 2024/03/06 19:00:25 by mayeung           #+#    #+#             */
+/*   Updated: 2024/03/06 19:00:39 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../includes/minishell.h"
 
-int	ft_pwd(void)
+void	ft_default_signal(void)
 {
-	char	*res;
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
+}
 
-	res = getcwd(NULL, 0);
-	if (!res)
-	{
-		perror(NULL);
-		return (1);
-	}
-	printf("%s\n", res);
-	free(res);
-	return (0);
+void	ft_ignore_signal(void)
+{
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 }
