@@ -6,12 +6,12 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 20:46:40 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/05 20:29:15 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/06 19:36:47 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
+/*
 char	*ft_enum_to_str(t_token_type t)
 {
 	char	*res;
@@ -33,29 +33,9 @@ char	*ft_enum_to_str(t_token_type t)
 		res = "||";
 	return (res);
 }
+*/
 
-void	ft_free_ast(t_ast **node, int del_hd)
-{
-	size_t	i;
-
-	if (!node || !(*node))
-		return ;
-	if ((*node)->toktype == SIMPLE_CMD)
-	{
-		ft_clear_char_arr((*node)->cmd->args);
-		ft_clear_char_arr((*node)->cmd->redirs);
-		i = 0;
-		while (del_hd && (*node)->cmd->here_doc_files && (*node)->cmd->here_doc_files[i])
-			unlink((*node)->cmd->here_doc_files[i++]);
-		ft_clear_char_arr((*node)->cmd->here_doc_files);
-		free((*node)->cmd);
-	}
-	ft_free_ast(&(*node)->left, del_hd);
-	ft_free_ast(&(*node)->right, del_hd);
-	free((*node));
-	*node = NULL;
-}
-
+/*
 void	ft_print_ast(t_ast *node)
 {
 	size_t	i;
@@ -87,6 +67,7 @@ void	ft_print_ast(t_ast *node)
 		printf(")");
 	}
 }
+*/
 
 int	ft_check_sym(t_list *n, int symbol_to_check)
 {
@@ -142,57 +123,24 @@ t_ast	*ft_break_into_subshell(t_list *tokens)
 	return (res);
 }
 
-t_ast	*ft_break_into_sc(t_list *tokens)
+void	ft_ast_process_node(t_list *iter, int *n_open_par,
+	int symbol_to_check, t_list **break_point)
 {
-	t_ast	*res;
-	t_list	*node;
-	t_list	*old_node;
-	size_t	nredirs;
-	size_t	narg;
-
-	res = ft_calloc(1, sizeof(t_ast));
-	if (!res)
-		return (NULL);
-	res->toktype = SIMPLE_CMD;
-	narg = 0;
-	nredirs = 0;
-	node = tokens;
-	while (node)
+	if (ft_check_sym(iter, symbol_to_check)
+		&& ft_is_open_paren_tok(iter->content))
 	{
-		if (ft_is_arg_tok(node->content))
-			narg++;
-		else if (ft_is_redir_tok(node->content))
-			nredirs++;
-		node = node->next;
+		symbol_to_check = PAREN;
+		(*n_open_par)++;
 	}
-	res->cmd = ft_calloc(1, sizeof(t_cmd));
-	if (!res->cmd)
-		return (free(res), NULL);
-	res->cmd->args = ft_calloc(narg + 1, sizeof(char *));
-	if (!res->cmd->args)
-		return (free(res->cmd), free(res), NULL);
-	res->cmd->redirs = ft_calloc(nredirs * 2 + 1, sizeof(char *));
-	if (!res->cmd->redirs)
-		return (free(res->cmd->args), free(res->cmd), free(res), NULL);
-	node = tokens;
-	narg = 0;
-	nredirs = 0;
-	while (node)
+	else if (ft_check_sym(iter, symbol_to_check)
+		&& ft_is_close_paren_tok(iter->content))
 	{
-		if (ft_is_arg_tok(node->content))
-			res->cmd->args[narg++] = ft_string_resolve(((t_token *)node->content)->str, 0);
-		else if (ft_is_redir_tok(node->content)
-			|| ft_is_infile_tok(node->content)
-			|| ft_is_outfile_tok(node->content))
-			res->cmd->redirs[nredirs++] = ft_string_resolve(((t_token *)node->content)->str, 0);
-		else if (ft_is_delimiter_tok(node->content))
-			res->cmd->redirs[nredirs++] = ft_string_resolve(((t_token *)node->content)->str, 1);
-		old_node = node;
-		node = node->next;
-		free(old_node->content);
-		free(old_node);
+		(*n_open_par)--;
+		if ((*n_open_par) == 0)
+			symbol_to_check = OPENPAR_AND_OR_PIPE;
 	}
-	return (res);
+	else if (ft_check_sym(iter, symbol_to_check))
+		*break_point = iter;
 }
 
 t_ast	*ft_build_ast(t_list *tokens)
@@ -210,21 +158,7 @@ t_ast	*ft_build_ast(t_list *tokens)
 	n_open_par = 0;
 	while (iter)
 	{
-		if (ft_check_sym(iter, symbol_to_check)
-			&& ft_is_open_paren_tok(iter->content))
-		{
-			symbol_to_check = PAREN;
-			n_open_par++;
-		}
-		else if (ft_check_sym(iter, symbol_to_check)
-			&& ft_is_close_paren_tok(iter->content))
-		{
-			n_open_par--;
-			if (!n_open_par)
-				symbol_to_check = OPENPAR_AND_OR_PIPE;
-		}
-		else if (ft_check_sym(iter, symbol_to_check))
-			break_point = iter;
+		ft_ast_process_node(iter, &n_open_par, symbol_to_check, &break_point);
 		iter = iter->next;
 	}
 	if (break_point)
