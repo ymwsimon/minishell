@@ -195,6 +195,8 @@ int		ft_valid_open_paren_tok(t_list *node, t_token *tok, int *open_par);
 int		ft_valid_close_paren_tok(t_list *node, t_token *tok, int *open_par);
 int		ft_valid_or_tok(t_list *node, t_token *tok);
 //parser
+void	ft_parse_token_helper1(t_list **node, t_token *last, int *open_paren);
+int		ft_parse_token_helper(t_list **node, t_token *last, int *open_paren);
 int		ft_parse_token(t_list *node);
 int		ft_invalid_tok(t_list *n);
 int		ft_need_more_input(t_token *t, int open_paren);
