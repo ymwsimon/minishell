@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 18:25:13 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/04 22:35:08 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/06 01:26:17 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	ft_parse_token(t_list *node)
 	//printf("\n");
 	if (!ft_is_raw_tok(&last) && ft_is_redir_tok(&last))
 	{
-		ft_putstr_fd("minishell: syntax " 
+		ft_putstr_fd("minishell: syntax "
 			"error near unexpected token `newline'\n", 2);
 		return (PARSE_FAIL);
 	}

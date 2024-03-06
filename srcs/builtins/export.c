@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 20:18:39 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/27 18:07:16 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/06 01:22:41 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	ft_add_to_env(char *str)
 
 	i = ft_char_arr_size(ft_vars()->env);
 	old_env = ft_vars()->env;
-	ft_vars()->env = ft_calloc(i + 2, sizeof(char *));
+	(ft_vars()->env) = ft_calloc(i + 2, sizeof(char *));
 	if (!ft_vars()->env)
 		return (1);
 	i = 0;
@@ -102,7 +102,7 @@ int	ft_export(char **args)
 	{
 		if (ft_valid_export_args(args[i]))
 		{
-			printf("the idx:%d\n", ft_search_string_arr_prefix(ft_vars()->env, args[i], 0));
+			//printf("the idx:%d\n", ft_search_string_arr_prefix(ft_vars()->env, args[i], 0));
 			if (ft_search_string_arr_prefix(ft_vars()->env, args[i], 0) != -1)
 				status = ft_update_env(args[i]);
 			else

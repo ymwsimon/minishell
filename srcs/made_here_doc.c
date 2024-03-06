@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 20:23:11 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/04 22:41:28 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/06 13:36:54 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,11 @@ int	ft_create_here_doc(t_ast *node, int *id)
 			if (!tmp)
 				return (ALLOCATE_FAIL);
 			node->cmd->here_doc_files[i] = ft_strjoin(".here_doc_", tmp);
-			printf("the file name is %s\n", node->cmd->here_doc_files[i]);
+			//printf("the file name is %s\n", node->cmd->here_doc_files[i]);
 			if (!node->cmd->here_doc_files[i])
 				return (ALLOCATE_FAIL);
-			fd = open(node->cmd->here_doc_files[i], O_WRONLY | O_TRUNC | O_CREAT, 0777);
+			fd = open(node->cmd->here_doc_files[i],
+					O_WRONLY | O_TRUNC | O_CREAT, 0777);
 			close(fd);
 			free(tmp);
 			(*id)++;
@@ -76,9 +77,9 @@ int	ft_fill_here_doc(t_ast *node)
 		return (INVALID_POINTER);
 	if (node->toktype == SIMPLE_CMD)
 	{
-		ft_setup_signal_handler_child();
+		ft_setup_signal_handler_child(1);
 		pid = fork();
-		if(pid == 0)
+		if (pid == 0)
 		{
 			i = 0;
 			j = 0;
@@ -87,7 +88,8 @@ int	ft_fill_here_doc(t_ast *node)
 				if (ft_is_here_doc(node->cmd->redirs[i]))
 				{
 					//printf("file name = %s delimiter = %s \n", node->cmd->here_doc_files[j], node->cmd->redirs[i + 1]);
-					fd = open(node->cmd->here_doc_files[j], O_WRONLY | O_TRUNC | O_CREAT, 0777);
+					fd = open(node->cmd->here_doc_files[j],
+							O_WRONLY | O_TRUNC | O_CREAT, 0777);
 					if (fd == -1)
 						return (-1);
 					line = readline(PROMPT_CON);
@@ -96,11 +98,13 @@ int	ft_fill_here_doc(t_ast *node)
 					//printf("the line %s\n", line);
 					while (line && ft_strncmp(line, tmp, ft_strlen(tmp) + 1))
 					{
-						if (write(fd, line, ft_strlen(line)) == -1)
+						if (write(fd, line, ft_strlen(line)) == -1
+							|| write(fd, "\n", 1) == -1)
 							return (close(fd), ALLOCATE_FAIL);
 						free(line);
 						line = readline(PROMPT_CON);
 					}
+					free(line);
 					if (!line)
 						printf("warning: here-document delimited by end-of-file (wanted `%s')\n", tmp);
 					close(fd);
@@ -117,6 +121,8 @@ int	ft_fill_here_doc(t_ast *node)
 			signal(SIGQUIT, &ft_signal_handler_exe_parent);
 			waitpid(pid, &status, 0);
 			//printf("%d\n", status);
+			if (ft_get_exit_status(status))
+				ft_vars()->last_exe_res = ft_get_exit_status(status);
 			return (ft_get_exit_status(status));
 		}
 	}
