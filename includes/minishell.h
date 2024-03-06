@@ -138,6 +138,8 @@ void	ft_import_history(void);
 void	ft_trim_write_history(char *line);
 //tokenizer
 t_list	*ft_tokenize(char *line);
+int		tokenize_helper1(t_list **stack, size_t *j, size_t i, char *line);
+int		tokenize_helper2(t_list **stack, t_list **res);
 //is_type_str
 int		ft_is_double_quote(char *str);
 int		ft_is_single_quote(char *str);
