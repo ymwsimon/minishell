@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 18:14:30 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/14 19:22:17 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/06 01:21:28 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,19 +33,22 @@ int	ft_valid_output_tok(t_list *node, t_token *tok)
 {
 	return (ft_is_output(((t_token *)node->content)->str)
 		&& ((t_token *)node->content)->toktype == RAW
-		&& (ft_is_raw_tok(tok) || (!ft_is_redir_tok(tok) && !ft_is_close_paren_tok(tok))));
+		&& (ft_is_raw_tok(tok)
+			|| (!ft_is_redir_tok(tok) && !ft_is_close_paren_tok(tok))));
 }
 
 int	ft_valid_here_doc_tok(t_list *node, t_token *tok)
 {
 	return (ft_is_here_doc(((t_token *)node->content)->str)
 		&& ((t_token *)node->content)->toktype == RAW
-		&& (ft_is_raw_tok(tok) || (!ft_is_redir_tok(tok) && !ft_is_close_paren_tok(tok))));
+		&& (ft_is_raw_tok(tok)
+			|| (!ft_is_redir_tok(tok) && !ft_is_close_paren_tok(tok))));
 }
 
 int	ft_valid_append_tok(t_list *node, t_token *tok)
 {
 	return (ft_is_append(((t_token *)node->content)->str)
 		&& ((t_token *)node->content)->toktype == RAW
-		&& (ft_is_raw_tok(tok) || (!ft_is_redir_tok(tok) && !ft_is_close_paren_tok(tok))));
+		&& (ft_is_raw_tok(tok)
+			|| (!ft_is_redir_tok(tok) && !ft_is_close_paren_tok(tok))));
 }

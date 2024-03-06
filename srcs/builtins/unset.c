@@ -6,26 +6,26 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 17:22:06 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/27 18:07:57 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/06 01:24:03 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int ft_remove_from_env(char *str)
+int	ft_remove_from_env(char *str)
 {
-    int     i;
-    char    *to_remove;
+	int		i;
+	char	*to_remove;
 
 	if (!ft_vars()->env || !ft_vars()->env[0])
 		return (0);
-    i = ft_search_string_arr_prefix(ft_vars()->env, str, 1);
-	printf("idx in env: %s %d\n", str, i);
+	i = ft_search_string_arr_prefix(ft_vars()->env, str, 1);
+	//printf("idx in env: %s %d\n", str, i);
 	if (i == -1)
 		return (0);
-    to_remove = ft_vars()->env[i];
-    while (ft_vars()->env[i])
-    {
+	to_remove = ft_vars()->env[i];
+	while (ft_vars()->env[i])
+	{
 		ft_vars()->env[i] = ft_vars()->env[i + 1];
 		i++;
 	}
@@ -33,7 +33,7 @@ int ft_remove_from_env(char *str)
 	return (0);
 }
 
-int ft_unset(char **args)
+int	ft_unset(char **args)
 {
 	size_t	i;
 	int		status;

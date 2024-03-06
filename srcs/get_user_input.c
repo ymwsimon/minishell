@@ -6,13 +6,13 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 14:22:58 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/05 20:18:32 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/06 01:25:35 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int ft_event(void)
+int	ft_event(void)
 {
 	return (0);
 }
@@ -40,7 +40,8 @@ int	ft_get_user_input(void)
 			exit(0);
 		}
 		if (!line && parse_res == IMCOMPELETE_CMD)
-			return (ft_default_signal(), ft_putstr_fd("unexpected EOF ", STDERR_FILENO), PARSE_FAIL);
+			return (ft_default_signal(),
+				ft_putstr_fd("unexpected EOF ", STDERR_FILENO), PARSE_FAIL);
 		if (!ft_space_only(line) || parse_res == IMCOMPELETE_CMD)
 		{
 			ft_trim_write_history(line);

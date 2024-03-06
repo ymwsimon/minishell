@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 17:47:31 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/27 18:12:20 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/06 01:22:07 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,10 @@ int	ft_print_env(void)
 	return (0);
 }
 
-int ft_env(char **args)
+int	ft_env(char **args)
 {
 	if (ft_char_arr_size(args) != 1)
-		return (1);//print error
+		return (1);
 	ft_print_env();
 	return (0);
 }
