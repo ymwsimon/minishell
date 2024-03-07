@@ -1,0 +1,85 @@
+/bin/ls
+/usr/bin/pwd
+
+/bin/ls -l
+/usr/bin/find . -name "*.c"
+/bin/grep "pattern" file.txt
+
+echo "Hello, World!"
+echo -n "No newline"
+echo $USER
+
+exit
+exit 0
+exit 42
+
+/bin/ls
+echo $?
+/bin/ls file_doesnt_exist
+echo $?
+expr $? + $?
+
+Press Ctrl+C in an empty prompt and after typing some text.
+Press Ctrl+D in an empty prompt and after typing some text.
+Press Ctrl+\ in an empty prompt and after typing some text. ->this still shows different results, ours shows core dumped, while bash does nothing
+
+
+
+Run a blocking command like cat without arguments or grep "pattern", and then try Ctrl+C, Ctrl+D, and Ctrl+.\
+
+echo "Hello World"
+echo "Hello   World"
+echo "cat file.txt | grep pattern"
+: echo "cat file.txt | cat > output.txt"
+
+echo '$USER'
+echo 'Hello World'
+echo 'Hello   World'
+echo 'cat file.txt | grep pattern'
+
+env
+
+unset NEW_VAR
+env | grep NEW_VAR
+
+cd /
+cd ~
+cd .. 
+cd ../..
+cd /path/that/doesnt/exist
+
+testing program
+
+ls
+wc file.txt
+unset PATH
+ls
+export PATH=/bin:/usr/bin
+ls
+
+echo "Hello" > output.txt
+cat file.txt > output.txt
+ls -l >> output.txt
+cat << EOF
+This is a
+multi-line
+input
+EOF
+
+cat file.txt | grep pattern
+ls -l | wc -l
+cat file_doesnt_exist | grep pattern
+cat file.txt | grep pattern | wc -l
+cat file.txt | grep pattern > output.txt
+
+Type a command, press Ctrl+C, and then press Enter.
+Navigate through the history using the Up and Down arrows.
+Execute invalid commands like dsbksdgbksdghsd.
+Execute a long command with many arguments.
+
+ls && echo "Success" || echo "Failure"
+false || echo "Failure" && echo "Success"
+(true && echo "True") || echo "False"
+(false || echo "False") && echo "True"
+
+
