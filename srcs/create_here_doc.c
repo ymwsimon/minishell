@@ -6,32 +6,33 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 20:23:11 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/07 00:37:25 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/07 12:27:47 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	ft_create_hd_simple_cmd(t_ast **node, int *i, int *id, int nhere_doc)
+int	ft_create_hd_simple_cmd(t_ast **node, int *id, int nhere_doc)
 {
 	int		fd;
 	char	*tmp;
+	int		i;
 
-	if (!node || !i || !id)
+	if (!node || !id)
 		return (INVALID_POINTER);
 	(*node)->cmd->here_doc_files = ft_calloc(sizeof(char *), nhere_doc + 1);
 	if (!(*node)->cmd->here_doc_files)
 		return (ALLOCATE_FAIL);
 	i = 0;
-	while (*i < nhere_doc)
+	while (i < nhere_doc)
 	{
 		tmp = ft_itoa(*id);
 		if (!tmp)
 			return (ALLOCATE_FAIL);
-		(*node)->cmd->here_doc_files[*i] = ft_strjoin(HERE_DOC_PREFIX, tmp);
-		if (!(*node)->cmd->here_doc_files[*i])
+		(*node)->cmd->here_doc_files[i] = ft_strjoin(HERE_DOC_PREFIX, tmp);
+		if (!(*node)->cmd->here_doc_files[i])
 			return (free(tmp), ALLOCATE_FAIL);
-		fd = open((*node)->cmd->here_doc_files[(*i)++],
+		fd = open((*node)->cmd->here_doc_files[i++],
 				O_WRONLY | O_TRUNC | O_CREAT, 0777);
 		if (fd == -1)
 			return (free(tmp), EXE_FAILURE);
@@ -54,10 +55,11 @@ int	ft_create_here_doc(t_ast *node, int *id)
 		nhere_doc = 0;
 		while (node->cmd->redirs[i])
 		{
-			if (ft_is_here_doc(node->cmd->redirs[i++]))
+			if (ft_is_here_doc(node->cmd->redirs[i]))
 				nhere_doc++;
+			i++;
 		}
-		return (ft_create_hd_simple_cmd(&node, &i, id, nhere_doc));
+		return (ft_create_hd_simple_cmd(&node, id, nhere_doc));
 	}
 	else
 	{

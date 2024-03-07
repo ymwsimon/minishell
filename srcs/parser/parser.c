@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luyang <luyang@student.42london.com>       +#+  +:+       +#+        */
+/*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 18:25:13 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/07 01:44:11 by luyang           ###   ########.fr       */
+/*   Updated: 2024/03/07 12:33:53 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,14 +72,13 @@ int	ft_parse_token_helper(t_list **node, t_token *last, int *open_paren)
 			((t_token *)(*node)->content)->toktype = PIPE;
 		else if (ft_valid_input_tok(*node, last))
 			((t_token *)(*node)->content)->toktype = INPUT;
-
-
 		else
 		{
-			ft_parse_token_helper1(&node, last, open_paren);
+			ft_parse_token_helper1(node, last, open_paren);
 			if (((t_token *)(*node)->content)->toktype == RAW)
 			{
-				printf("unexcepted token: %s\n", ((t_token *)(*node)->content)->str);
+				printf("unexcepted token: %s\n",
+					((t_token *)(*node)->content)->str);
 				return (PARSE_FAIL);
 			}
 		}
