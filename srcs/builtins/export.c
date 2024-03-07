@@ -41,12 +41,12 @@ int	ft_valid_export_args(char *arg)
 	size_t	i;
 
 	i = 0;
-	if (!arg || !ft_isalpha(arg[0]))
-		return (0);
-	while (arg[i] && ft_isalnum(arg[i]))
+	if (!arg || (!ft_isalpha(arg[0]) && arg[0] != '_'))
+		return (ft_err_msg((t_err){0, ERR_INVALID_EXPORT, arg}));
+	while (arg[i] && (ft_isalnum(arg[i]) || arg[i] == '_'))
 		i++;
-	if (arg[i] != '=' || (arg[i] == '=' && !arg[i + 1]))
-		return (0);
+	if (arg[i] != '=')
+		return (ft_err_msg((t_err){0, ERR_INVALID_EXPORT, arg}));
 	return (1);
 }
 
