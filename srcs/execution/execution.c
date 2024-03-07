@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 15:32:57 by luyang            #+#    #+#             */
-/*   Updated: 2024/02/28 21:01:18 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/07 18:37:52 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,26 +32,30 @@ int	ft_exec_pipe_child(t_ast *ast, int child, int *pfds)
 	exit (status);
 }
 
-int	ft_exec_pipe(t_ast *ast)
+int	ft_exec_pipe(t_ast *ast, int status)
 {
 	pid_t	l_pid;
 	pid_t	r_pid;
 	int		pfds[2];
-	int		status;
 
 	(pipe(pfds), l_pid = fork());
 	if (l_pid == 0)
-		return (ft_exec_pipe_child(ast->left, LEFT_CHILD, pfds));
+	{
+		status = (ft_exec_pipe_child(ast->left, LEFT_CHILD, pfds));
+		(ft_free_res(FALSE), exit(status));
+	}
 	else
 	{
 		r_pid = fork();
 		if (r_pid == 0)
-			return (ft_exec_pipe_child(ast->right, RIGHT_CHILD, pfds));
+		{
+			status = (ft_exec_pipe_child(ast->right, RIGHT_CHILD, pfds));
+			(ft_free_res(FALSE), exit(status));
+		}
 		else
 		{
-			ft_ignore_signal();
-			(close(pfds[0]), close(pfds[1]), waitpid(l_pid, &status, 0),
-				waitpid(r_pid, &status, 0));
+			(ft_ignore_signal(), close(pfds[0]), close(pfds[1]),
+				waitpid(l_pid, &status, 0), waitpid(r_pid, &status, 0));
 			return (ft_get_exit_status(status));
 		}
 	}
@@ -66,7 +70,11 @@ int	ft_exec_subshell(t_ast *ast)
 	if (pid == -1)
 		return (EXE_FAILURE);
 	else if (pid == 0)
-		exit (ft_execute(ast));
+	{
+		status = (ft_execute(ast));
+		ft_free_res(FALSE);
+		exit(status);
+	}
 	else
 	{
 		ft_ignore_signal();
@@ -82,7 +90,7 @@ int	ft_execute(t_ast *ast)
 	if (!ast)
 		return (INVALID_POINTER);
 	if (ast->toktype == PIPE)
-		return (ft_exec_pipe(ast));
+		return (ft_exec_pipe(ast, 0));
 	else if (ast->toktype == AND || ast->toktype == OR)
 	{
 		status = ft_execute(ast->left);

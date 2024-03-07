@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 01:21:42 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/07 17:30:16 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/07 18:08:23 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ int	main(int argc, char **argv, char **env)
 			ft_free_ast(&ft_vars()->ast, 1);
 			ft_vars()->toklist = NULL;
 		}
-		else
-			printf("parse error\n");
+		//else
+		//	printf("parse error\n");
 		/* the new main
 		if (ft_get_user_input() == PARSE_OK
 			&& ft_build_ast(ft_vars()->toklist) == EXE_SUCCESS

@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 22:45:03 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/07 15:49:34 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/07 18:39:39 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,7 +230,7 @@ int		ft_fill_here_doc(t_ast *node);
 //exection
 int		ft_execute(t_ast *ast);
 int		ft_exec_subshell(t_ast *ast);
-int		ft_exec_pipe(t_ast *ast);
+int		ft_exec_pipe(t_ast *ast, int status);
 int		ft_exec_pipe_child(t_ast *ast, int child, int *pfds);
 //exec_simple_cmd
 int		ft_exec_simple_cmd(t_cmd *cmd);
@@ -244,7 +244,6 @@ int		ft_append(char *redir);
 //exec_utils
 void	ft_r_fd(int *original);
 int		ft_get_exit_status(int status);
-int		ft_exec_pipe(t_ast *ast);
 int		ft_err_msg(t_err err);
 /*//globber
 char	**ft_globber(char **args);
