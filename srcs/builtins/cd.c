@@ -55,8 +55,9 @@ int	ft_cd(char **args)
 	path = ft_resolve_folder_path(args[1]);
 	if (chdir(path))
 	{
+		ft_putstr_fd("minishell: cd: ", 2);
 		ft_putstr_fd(args[1], STDERR_FILENO);
-		perror(" : cd");
+		ft_putstr_fd(": No such file or directory\n", 2);
 		return (free(path), 1);
 	}
 	return (free(path), 0);
