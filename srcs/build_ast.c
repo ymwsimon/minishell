@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 20:46:40 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/06 19:36:47 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/07 17:32:54 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ char	*ft_enum_to_str(t_token_type t)
 		res = "||";
 	return (res);
 }
-*/
 
-/*
+
+
 void	ft_print_ast(t_ast *node)
 {
 	size_t	i;
@@ -124,22 +124,22 @@ t_ast	*ft_break_into_subshell(t_list *tokens)
 }
 
 void	ft_ast_process_node(t_list *iter, int *n_open_par,
-	int symbol_to_check, t_list **break_point)
+	int *symbol_to_check, t_list **break_point)
 {
-	if (ft_check_sym(iter, symbol_to_check)
+	if (ft_check_sym(iter, *symbol_to_check)
 		&& ft_is_open_paren_tok(iter->content))
 	{
-		symbol_to_check = PAREN;
+		*symbol_to_check = PAREN;
 		(*n_open_par)++;
 	}
-	else if (ft_check_sym(iter, symbol_to_check)
+	else if (ft_check_sym(iter, *symbol_to_check)
 		&& ft_is_close_paren_tok(iter->content))
 	{
 		(*n_open_par)--;
 		if ((*n_open_par) == 0)
-			symbol_to_check = OPENPAR_AND_OR_PIPE;
+			*symbol_to_check = OPENPAR_AND_OR_PIPE;
 	}
-	else if (ft_check_sym(iter, symbol_to_check))
+	else if (ft_check_sym(iter, *symbol_to_check))
 		*break_point = iter;
 }
 
@@ -158,7 +158,7 @@ t_ast	*ft_build_ast(t_list *tokens)
 	n_open_par = 0;
 	while (iter)
 	{
-		ft_ast_process_node(iter, &n_open_par, symbol_to_check, &break_point);
+		ft_ast_process_node(iter, &n_open_par, &symbol_to_check, &break_point);
 		iter = iter->next;
 	}
 	if (break_point)

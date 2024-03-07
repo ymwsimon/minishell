@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 19:11:31 by luyang            #+#    #+#             */
-/*   Updated: 2024/02/28 16:56:10 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/07 17:35:33 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ int	ft_err_msg(t_err err)
 		return (ft_putstr_fd("minishell: ", 2), ft_putstr_fd(err.file, 2),
 			ft_putstr_fd(": Is a directory\n", 2), err.fd);
 	if (err.msg == ERR_INVALID_EXPORT)
-		return (ft_putstr_fd("minishell: export: `", 2), ft_putstr_fd(err.file, 2),
+		return (ft_putstr_fd("minishell: export: `", 2),
+			ft_putstr_fd(err.file, 2),
 			ft_putstr_fd("': not a valid identifier\n", 2), err.fd);
 	return (0);
 }
