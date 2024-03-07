@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
+/*   By: luyang <luyang@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 18:25:13 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/06 01:26:17 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/07 01:41:28 by luyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,13 +73,16 @@ int	ft_parse_token_helper(t_list **node, t_token *last, int *open_paren)
 		else if (ft_valid_input_tok(node, last))
 			((t_token *)(*node)->content)->toktype = INPUT;
 
-		else if (((t_token *)(*node)->content)->toktype == RAW)
-		{
-			printf("unexcepted token: %s\n", ((t_token *)(*node)->content)->str);
-			return (PARSE_FAIL);
-		}
+
 		else
+		{
 			ft_parse_token_helper1(&node, last, open_paren);
+			if (((t_token *)(*node)->content)->toktype == RAW)
+			{
+				printf("unexcepted token: %s\n", ((t_token *)(*node)->content)->str);
+				return (PARSE_FAIL);
+			}
+		}
 		last->toktype = ((t_token *)(*node)->content)->toktype;
 		(*node) = (*node)->next;
 	}
