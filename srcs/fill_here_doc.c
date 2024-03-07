@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_here_doc.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luyang <luyang@student.42london.com>       +#+  +:+       +#+        */
+/*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 20:52:47 by luyang            #+#    #+#             */
-/*   Updated: 2024/03/06 21:23:58 by luyang           ###   ########.fr       */
+/*   Updated: 2024/03/07 00:36:42 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	ft_fill_hd_simple_cmd(t_ast **node, int status)
 		status = ft_fill_hd_child(&node);
 		if (status == EXE_FAILURE || status == INVALID_POINTER)
 			return (status);
-		ft_free_res(FALSE), exit(EXE_SUCCESS);
+		(ft_free_res(FALSE), exit(EXE_SUCCESS));
 	}
 	else
 	{
