@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 01:21:42 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/07 16:02:05 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/07 16:27:52 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,16 @@ int	main(int argc, char **argv, char **env)
 			ft_free_ast(&ft_vars()->ast, 1);
 			ft_vars()->toklist = NULL;
 		}
+		/* the new main
+		if (ft_get_user_input() == PARSE_OK
+			&& ft_build_ast(ft_vars()->toklist == EXE_SUCCESS
+			&& ft_create_here_doc(ft_vars()->ast, &id) == EXE_SUCCESS
+			&& ft_fill_here_doc(ft_vars()->ast) == EXE_SUCCESS
+			&& ft_setup_signal_handler_child(0) == EXE_SUCCESS) 
+			ft_vars()->last_exe_res = ft_execute(ft_vars()->ast);
+		ft_free_ast(&ft_vars()->ast, 1);
+		ft_vars()->toklist = NULL;
+		*/
 		if (!isatty(STDIN_FILENO))
 			break ;
 	}
