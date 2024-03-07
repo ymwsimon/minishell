@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_here_doc.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luyang <luyang@student.42london.com>       +#+  +:+       +#+        */
+/*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 20:52:47 by luyang            #+#    #+#             */
-/*   Updated: 2024/03/06 21:23:58 by luyang           ###   ########.fr       */
+/*   Updated: 2024/03/07 01:16:21 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	ft_fill_hd_child(t_ast **node)
 	int	status;
 
 	if (!node)
-		reurn (INVALID_POINTER);
+		return (INVALID_POINTER);
 	i = 0;
 	j = 0;
 	while ((*node)->cmd->redirs[i])
@@ -58,7 +58,7 @@ int	ft_fill_hd_child(t_ast **node)
 					O_WRONLY | O_TRUNC | O_CREAT, 0777);
 			if (fd == -1)
 				return (EXE_FAILURE);
-			status = ft_fill_hd_child_helper(&node, i, fd);
+			status = ft_fill_hd_child_helper(node, i, fd);
 			if (status != EXE_SUCCESS)
 				return (status);
 		}
@@ -79,10 +79,10 @@ int	ft_fill_hd_simple_cmd(t_ast **node, int status)
 		return (EXE_FAILURE);
 	else if (pid == 0)
 	{
-		status = ft_fill_hd_child(&node);
+		status = ft_fill_hd_child(node);
 		if (status == EXE_FAILURE || status == INVALID_POINTER)
 			return (status);
-		ft_free_res(FALSE), exit(EXE_SUCCESS);
+		(ft_free_res(FALSE), exit(EXE_SUCCESS));
 	}
 	else
 	{
