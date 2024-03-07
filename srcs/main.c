@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 01:21:42 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/07 12:29:04 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/07 16:02:05 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	main(int argc, char **argv, char **env)
 	env += 0;
 	ft_vars()->env = ft_cpy_env(__environ);
 	ft_import_history();
-	while (isatty(STDIN_FILENO))
+	while (1)
 	{
 		if (ft_get_user_input() == PARSE_OK)
 		{
@@ -43,6 +43,8 @@ int	main(int argc, char **argv, char **env)
 			ft_free_ast(&ft_vars()->ast, 1);
 			ft_vars()->toklist = NULL;
 		}
+		if (!isatty(STDIN_FILENO))
+			break ;
 	}
 	ft_free_res(1);
 	return (0);

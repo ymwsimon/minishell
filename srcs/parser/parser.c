@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 18:25:13 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/07 12:33:53 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/07 15:54:32 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	ft_invalid_tok(t_list *n)
 	node = n->content;
 	return (!node->toktype && (!(ft_strncmp(node->str, "&", ft_strlen("&") + 1))
 			|| !(ft_strncmp(node->str, ";", ft_strlen(";") + 1))
+			|| !(ft_strncmp(node->str, "\n", ft_strlen("\n") + 1))
 			|| !(ft_strncmp(node->str, "((", ft_strlen("((") + 1))
 			|| !(ft_strncmp(node->str, "))", ft_strlen("))") + 1))));
 }
