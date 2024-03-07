@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 22:45:03 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/07 12:30:00 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/07 15:49:34 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,6 +161,7 @@ int		ft_is_append(char *str);
 int		ft_is_and(char *str);
 //is_type_str3
 int		ft_is_or(char *str);
+int		ft_is_newline(char *str);
 int		ft_is_redir(char *str);
 int		ft_is_builtin(char *str);
 //is_type_tok
