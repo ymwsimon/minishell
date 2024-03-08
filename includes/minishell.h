@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 22:45:03 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/08 14:08:02 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/08 16:47:46 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,11 +218,12 @@ void	ft_free_token_node(void *n);
 void	*ft_clear_char_arr(char **arr);
 char	*ft_free_join_str(char *str1, char *str2);
 size_t	ft_char_arr_size(char **arr);
+char	*ft_create_unexpected_message(char *str);
 //build_ast
-t_ast	*ft_build_ast(t_list *tokens);
+int		ft_build_ast(t_ast **ast, t_list *tokens);
 void	ft_print_ast(t_ast *node);
 //build_ast2
-t_ast	*ft_break_into_sc(t_list *tokens);
+int		ft_break_into_sc(t_ast **ast, t_list *tokens);
 void	ft_free_ast(t_ast **node, int del_hd);
 //create_here_doc
 int		ft_create_here_doc(t_ast *node, int *id);

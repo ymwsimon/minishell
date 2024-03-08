@@ -6,37 +6,36 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 19:35:30 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/06 19:39:02 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/08 16:11:08 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-t_ast	*ft_allocate_mem_sc_node(t_ast *res, size_t nredirs, size_t narg)
+int	ft_allocate_mem_sc_node(t_ast *res, size_t nredirs, size_t narg)
 {
 	res->cmd = ft_calloc(1, sizeof(t_cmd));
 	if (!res->cmd)
-		return (free(res), NULL);
+		return (ALLOCATE_FAIL);
 	res->cmd->args = ft_calloc(narg + 1, sizeof(char *));
 	if (!res->cmd->args)
-		return (free(res->cmd), free(res), NULL);
+		return (free(res->cmd), ALLOCATE_FAIL);
 	res->cmd->redirs = ft_calloc(nredirs * 2 + 1, sizeof(char *));
 	if (!res->cmd->redirs)
-		return (free(res->cmd->args), free(res->cmd), free(res), NULL);
-	return (res);
+		return (free(res->cmd->args), free(res->cmd), ALLOCATE_FAIL);
+	return (EXE_SUCCESS);
 }
 
-t_ast	*ft_init_sc_node(t_list *tokens)
+int	ft_init_sc_node(t_ast **ast, t_list *tokens)
 {
-	t_ast	*res;
 	t_list	*node;
 	size_t	nredirs;
 	size_t	narg;
 
-	res = ft_calloc(1, sizeof(t_ast));
-	if (!res)
-		return (NULL);
-	res->toktype = SIMPLE_CMD;
+	*ast = ft_calloc(1, sizeof(t_ast));
+	if (!(*ast))
+		return (ALLOCATE_FAIL);
+	(*ast)->toktype = SIMPLE_CMD;
 	narg = 0;
 	nredirs = 0;
 	node = tokens;
@@ -48,11 +47,12 @@ t_ast	*ft_init_sc_node(t_list *tokens)
 			nredirs++;
 		node = node->next;
 	}
-	res = ft_allocate_mem_sc_node(res, nredirs, narg);
-	return (res);
+	if (ft_allocate_mem_sc_node(*ast, nredirs, narg))
+		return (free(*ast), ALLOCATE_FAIL);
+	return (EXE_SUCCESS);
 }
 
-void	ft_process_making_sc_node(t_list *node, t_ast *res,
+int	ft_process_making_sc_node(t_list *node, t_ast *res,
 	size_t *nredirs, size_t *narg)
 {
 	if (ft_is_arg_tok(node->content))
@@ -66,31 +66,33 @@ void	ft_process_making_sc_node(t_list *node, t_ast *res,
 	else if (ft_is_delimiter_tok(node->content))
 		res->cmd->redirs[(*nredirs)++]
 			= ft_string_resolve(((t_token *)node->content)->str, 1);
+	return (EXE_SUCCESS);
 }
 
-t_ast	*ft_break_into_sc(t_list *tokens)
+int	ft_break_into_sc(t_ast **ast, t_list *tokens)
 {
-	t_ast	*res;
 	t_list	*node;
 	t_list	*old_node;
 	size_t	nredirs;
 	size_t	narg;
 
-	res = ft_init_sc_node(tokens);
-	if (!res)
-		return (NULL);
+	if (!ast || !tokens)
+		return (INVALID_POINTER);
+	if (ft_init_sc_node(ast, tokens))
+		return (ALLOCATE_FAIL);
 	node = tokens;
 	narg = 0;
 	nredirs = 0;
 	while (node)
 	{
-		ft_process_making_sc_node(node, res, &nredirs, &narg);
+		if (ft_process_making_sc_node(node, *ast, &nredirs, &narg))
+			return (ft_free_ast(ast, FALSE), EXE_FAILURE); // free linked list
 		old_node = node;
 		node = node->next;
 		free(old_node->content);
 		free(old_node);
 	}
-	return (res);
+	return (EXE_SUCCESS);
 }
 
 void	ft_free_ast(t_ast **node, int del_hd)

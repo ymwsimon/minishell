@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 17:53:38 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/06 13:31:35 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/08 16:57:56 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 
 void	ft_free_res(int del_hd)
 {
-	//if (ft_vars()->toklist)
-	//	ft_lstclear(&ft_vars()->toklist, &ft_free_token_node);
-	//ft_vars()->toklist = NULL;
 	ft_free_ast(&ft_vars()->ast, del_hd);
 	ft_clear_char_arr(ft_vars()->env);
 	rl_clear_history();

@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 18:25:13 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/07 15:54:32 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/08 16:53:58 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,10 @@ int	ft_parse_token_helper(t_list **node, t_token *last, int *open_paren)
 			ft_parse_token_helper1(node, last, open_paren);
 			if (((t_token *)(*node)->content)->toktype == RAW)
 			{
-				printf("unexcepted token: %s\n",
-					((t_token *)(*node)->content)->str);
+				((t_token *)(*node)->content)->str
+					= ft_create_unexpected_message(((t_token *)(*node)
+							->content)->str);
+				ft_putstr_fd(((t_token *)(*node)->content)->str, 2);
 				return (PARSE_FAIL);
 			}
 		}
@@ -99,11 +101,15 @@ int	ft_parse_token(t_list *node)
 	open_paren = 0;
 	status = ft_parse_token_helper(&node, &last, &open_paren);
 	if (status == PARSE_FAIL)
+	{
+		ft_vars()->last_exe_res = 2;
 		return (status);
+	}
 	if (!ft_is_raw_tok(&last) && ft_is_redir_tok(&last))
 	{
 		ft_putstr_fd("minishell: syntax "
 			"error near unexpected token `newline'\n", 2);
+		ft_vars()->last_exe_res = 2;
 		return (PARSE_FAIL);
 	}
 	if (ft_need_more_input(&last, open_paren))

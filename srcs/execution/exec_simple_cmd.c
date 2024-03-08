@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 15:33:21 by luyang            #+#    #+#             */
-/*   Updated: 2024/03/03 18:53:06 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/08 17:03:16 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	ft_exec_program(char **args)
 		if (status)
 			exit (status);
 		if (execve(full_path, args, ft_vars()->env) == -1)
-			exit (errno);
+			exit (EXE_FAILURE);
 	}
 	else
 	{

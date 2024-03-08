@@ -6,11 +6,120 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 20:46:40 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/07 17:32:54 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/08 16:55:09 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+int	ft_check_sym(t_list *n, int symbol_to_check)
+{
+	t_token	*t;
+
+	t = n->content;
+	if (symbol_to_check == OPENPAR_AND_OR_PIPE)
+		return (ft_is_open_paren_tok(t) || ft_is_and_tok(t)
+			|| ft_is_or_tok(t) || ft_is_pipe_tok(t));
+	else
+		return (ft_is_open_paren_tok(t) || ft_is_close_paren_tok(t));
+}
+
+int	ft_break_into_ast_node(t_ast **ast, t_list *lhead,
+	t_list *parent, t_list *rhead)
+{
+	t_list	*node;
+	int		status;
+
+	if (!ast || !lhead || !parent || !rhead)
+		return (INVALID_POINTER);
+	*ast = ft_calloc(1, sizeof(t_ast));
+	if (!(*ast))
+		return (ALLOCATE_FAIL); // free linked list
+	(*ast)->toktype = ((t_token *)parent->content)->toktype;
+	node = lhead;
+	while (node->next != parent)
+		node = node->next;
+	node->next = NULL;
+	status = ft_build_ast(&(*ast)->left, lhead);
+	if (!status)
+		status = ft_build_ast(&(*ast)->right, rhead);
+	if (!status)
+		ft_lstdelone(parent, &ft_free_token_node);
+	return (status);
+}
+
+int	ft_break_into_subshell(t_ast **ast, t_list *tokens)
+{
+	t_list	*last;
+	t_list	*node;
+
+	if (!ast || !tokens)
+		return (INVALID_POINTER);
+	*ast = ft_calloc(1, sizeof(t_ast));
+	if (!(*ast))
+		return (ALLOCATE_FAIL);//free tokens
+	(*ast)->right = NULL;
+	(*ast)->toktype = SUBSHELL;
+	last = ft_lstlast(tokens);
+	node = tokens;
+	while (node->next != last)
+		node = node->next;
+	node->next = NULL;
+	ft_lstdelone(last, &ft_free_token_node);
+	node = tokens->next;
+	ft_lstdelone(tokens, &ft_free_token_node);
+	return (ft_build_ast(&(*ast)->left, node));
+}
+
+void	ft_ast_process_node(t_list *iter, int *n_open_par,
+	int *symbol_to_check, t_list **break_point)
+{
+	if (!iter || !n_open_par || !symbol_to_check || !break_point)
+		return ;
+	if (ft_check_sym(iter, *symbol_to_check)
+		&& ft_is_open_paren_tok(iter->content))
+	{
+		*symbol_to_check = PAREN;
+		(*n_open_par)++;
+	}
+	else if (ft_check_sym(iter, *symbol_to_check)
+		&& ft_is_close_paren_tok(iter->content))
+	{
+		(*n_open_par)--;
+		if ((*n_open_par) == 0)
+			*symbol_to_check = OPENPAR_AND_OR_PIPE;
+	}
+	else if (ft_check_sym(iter, *symbol_to_check))
+		*break_point = iter;
+}
+
+int	ft_build_ast(t_ast **ast, t_list *tokens)
+{
+	t_list		*iter;
+	t_list		*break_point;
+	int			symbol_to_check;
+	int			n_open_par;
+
+	if (!tokens)
+		return (INVALID_POINTER);
+	iter = tokens;
+	break_point = NULL;
+	symbol_to_check = OPENPAR_AND_OR_PIPE;
+	n_open_par = 0;
+	while (iter)
+	{
+		ft_ast_process_node(iter, &n_open_par, &symbol_to_check, &break_point);
+		iter = iter->next;
+	}
+	if (break_point)
+		return (ft_break_into_ast_node(ast, tokens, break_point,
+				break_point->next));
+	else if (ft_is_open_paren_tok(tokens->content))
+		return (ft_break_into_subshell(ast, tokens));
+	else
+		return (ft_break_into_sc(ast, tokens));
+}
+
 /*
 char	*ft_enum_to_str(t_token_type t)
 {
@@ -68,103 +177,3 @@ void	ft_print_ast(t_ast *node)
 	}
 }
 */
-
-int	ft_check_sym(t_list *n, int symbol_to_check)
-{
-	t_token	*t;
-
-	t = n->content;
-	if (symbol_to_check == OPENPAR_AND_OR_PIPE)
-		return (ft_is_open_paren_tok(t) || ft_is_and_tok(t)
-			|| ft_is_or_tok(t) || ft_is_pipe_tok(t));
-	else
-		return (ft_is_open_paren_tok(t) || ft_is_close_paren_tok(t));
-}
-
-t_ast	*ft_break_into_ast_node(t_list *lhead, t_list *parent, t_list *rhead)
-{
-	t_ast	*res;
-	t_list	*node;
-
-	res = ft_calloc(1, sizeof(t_ast));
-	if (!res)
-		return (NULL);
-	res->toktype = ((t_token *)parent->content)->toktype;
-	node = lhead;
-	while (node->next != parent)
-		node = node->next;
-	node->next = NULL;
-	res->left = ft_build_ast(lhead);
-	res->right = ft_build_ast(rhead);
-	ft_lstdelone(parent, &ft_free_token_node);
-	return (res);
-}
-
-t_ast	*ft_break_into_subshell(t_list *tokens)
-{
-	t_ast	*res;
-	t_list	*last;
-	t_list	*node;
-
-	res = ft_calloc(1, sizeof(t_ast));
-	if (!res)
-		return (NULL);
-	res->right = NULL;
-	res->toktype = SUBSHELL;
-	last = ft_lstlast(tokens);
-	node = tokens;
-	while (node->next != last)
-		node = node->next;
-	node->next = NULL;
-	ft_lstdelone(last, &ft_free_token_node);
-	node = tokens->next;
-	ft_lstdelone(tokens, &ft_free_token_node);
-	res->left = ft_build_ast(node);
-	return (res);
-}
-
-void	ft_ast_process_node(t_list *iter, int *n_open_par,
-	int *symbol_to_check, t_list **break_point)
-{
-	if (ft_check_sym(iter, *symbol_to_check)
-		&& ft_is_open_paren_tok(iter->content))
-	{
-		*symbol_to_check = PAREN;
-		(*n_open_par)++;
-	}
-	else if (ft_check_sym(iter, *symbol_to_check)
-		&& ft_is_close_paren_tok(iter->content))
-	{
-		(*n_open_par)--;
-		if ((*n_open_par) == 0)
-			*symbol_to_check = OPENPAR_AND_OR_PIPE;
-	}
-	else if (ft_check_sym(iter, *symbol_to_check))
-		*break_point = iter;
-}
-
-t_ast	*ft_build_ast(t_list *tokens)
-{
-	t_list		*iter;
-	t_list		*break_point;
-	int			symbol_to_check;
-	int			n_open_par;
-
-	if (!tokens)
-		return (NULL);
-	iter = tokens;
-	break_point = NULL;
-	symbol_to_check = OPENPAR_AND_OR_PIPE;
-	n_open_par = 0;
-	while (iter)
-	{
-		ft_ast_process_node(iter, &n_open_par, &symbol_to_check, &break_point);
-		iter = iter->next;
-	}
-	if (break_point)
-		return (ft_break_into_ast_node(tokens, break_point, break_point->next));
-	else if (ft_is_open_paren_tok(tokens->content))
-		return (ft_break_into_subshell(tokens));
-	else
-		return (ft_break_into_sc(tokens));
-}
