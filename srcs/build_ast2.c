@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 19:35:30 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/08 16:11:08 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/08 19:45:48 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,9 @@ int	ft_break_into_sc(t_ast **ast, t_list *tokens)
 	while (node)
 	{
 		if (ft_process_making_sc_node(node, *ast, &nredirs, &narg))
-			return (ft_free_ast(ast, FALSE), EXE_FAILURE); // free linked list
+			return (ft_lstclear(&ft_vars()->toklist, &ft_free_token_node),
+				ft_vars()->toklist = NULL,
+				ft_free_ast(ast, FALSE), EXE_FAILURE);
 		old_node = node;
 		node = node->next;
 		free(old_node->content);

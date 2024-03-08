@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 17:49:47 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/07 15:47:47 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/08 19:24:54 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	tokenize_helper1(t_list **stack, size_t *j, size_t i, char *line)
 				|| line[*j] == '(' || line[*j] == ')')
 			&& line[*j] == line[*j + 1])
 			*j += 2;
-		if (line[*j] == '"' || line[*j] == '\'')
+		else if (line[*j] == '"' || line[*j] == '\'')
 			(*j)++;
 	}
 	return (0);
@@ -67,7 +67,7 @@ t_list	*ft_tokenize(char *line)
 	while (line && line[i])
 	{
 		ft_lstadd_front(&stack, ft_lstnew(ft_strdup(" |<>\"'()&;\n")));
-		while (line[i] && line[i] == ' ')
+		while (line[i] && (line[i] == ' ' || line[i] == '\n'))
 			i++;
 		j = i;
 		while (stack && line[j])
@@ -75,7 +75,7 @@ t_list	*ft_tokenize(char *line)
 		j += j == i;
 		ft_push_token_to_list(&res, ft_substr(line, i, j - i));
 		i = j;
-		while (line[i] && line[i] == ' ')
+		while (line[i] && (line[i] == ' ' || line[i] == '\n'))
 			i++;
 	}
 	tokenize_helper2(&stack, &res);

@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 22:45:03 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/08 16:47:46 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/08 19:28:52 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,9 @@
 # define PARSE_OK 0
 # define PARSE_FAIL 1
 # define NO_PARSE_RESULT 2
-# define IMCOMPELETE_CMD 2
-# define INVALID_POINTER 3
+# define IMCOMPELETE_CMD 3
 # define EMPTY_INPUT 4
+# define INVALID_POINTER 3
 # define SIGNAL_ERROR 5
 # define EXE_SUCCESS 0
 # define EXE_FAILURE 1
@@ -295,5 +295,7 @@ int		ft_setup_signal_handler_child(int using_readline);
 //signal2
 int		ft_default_signal(void);
 int		ft_ignore_signal(void);
+//handle_non_terminal
+int		ft_redir_file_arg(int arc, char **argv);
 
 #endif

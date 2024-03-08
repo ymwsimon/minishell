@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 15:32:57 by luyang            #+#    #+#             */
-/*   Updated: 2024/03/07 18:37:52 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/08 19:38:44 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int	ft_exec_pipe_child(t_ast *ast, int child, int *pfds)
 		close(pfds[0]);
 	}
 	status = ft_execute(ast);
+	ft_free_res(FALSE);
 	exit (status);
 }
 

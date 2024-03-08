@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 20:46:40 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/08 16:55:09 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/08 19:44:42 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ int	ft_break_into_ast_node(t_ast **ast, t_list *lhead,
 		return (INVALID_POINTER);
 	*ast = ft_calloc(1, sizeof(t_ast));
 	if (!(*ast))
-		return (ALLOCATE_FAIL); // free linked list
+		return (ft_lstclear(&ft_vars()->toklist, &ft_free_token_node),
+			ft_vars()->toklist = NULL, ALLOCATE_FAIL);
 	(*ast)->toktype = ((t_token *)parent->content)->toktype;
 	node = lhead;
 	while (node->next != parent)
@@ -57,7 +58,8 @@ int	ft_break_into_subshell(t_ast **ast, t_list *tokens)
 		return (INVALID_POINTER);
 	*ast = ft_calloc(1, sizeof(t_ast));
 	if (!(*ast))
-		return (ALLOCATE_FAIL);//free tokens
+		return (ft_lstclear(&ft_vars()->toklist, &ft_free_token_node),
+			ft_vars()->toklist = NULL, ALLOCATE_FAIL);
 	(*ast)->right = NULL;
 	(*ast)->toktype = SUBSHELL;
 	last = ft_lstlast(tokens);

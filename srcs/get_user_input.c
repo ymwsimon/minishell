@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 14:22:58 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/08 15:29:20 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/08 19:21:48 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +84,9 @@ int	ft_get_user_input(void)
 	while (!ft_vars()->break_readline
 		&& (parse_res == NO_PARSE_RESULT || parse_res == IMCOMPELETE_CMD))
 	{
-		if (!line && parse_res == NO_PARSE_RESULT)
+		if (!line && (parse_res == NO_PARSE_RESULT))
 			ft_exit_shell(&old_line);
-		if (!line && parse_res == IMCOMPELETE_CMD)
+		if (!line && (parse_res == IMCOMPELETE_CMD))
 			return (ft_putstr_fd("unexpected EOF\n", STDERR_FILENO),
 				PARSE_FAIL);
 		if ((!ft_space_only(line) || parse_res == IMCOMPELETE_CMD)
