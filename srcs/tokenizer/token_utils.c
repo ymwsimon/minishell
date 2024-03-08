@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 18:28:04 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/14 18:27:46 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/08 19:55:18 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	ft_push_token_to_list(t_list **list, char *str)
 	t_list	*new_node;
 
 	if (!str)
-		return (0);
+		return (INVALID_POINTER);
 	tok = ft_calloc(1, sizeof(t_token));
 	if (!tok)
 		return (free(str), 0);
@@ -28,7 +28,19 @@ int	ft_push_token_to_list(t_list **list, char *str)
 	if (!new_node)
 		return (free(tok), free(str), 0);
 	ft_lstadd_back(list, new_node);
-	return (1);
+	return (EXE_SUCCESS);
+}
+
+void	ft_free_token_node(void *n)
+{
+	t_token	*node;
+
+	node = n;
+	if (node)
+	{
+		free(node->str);
+		free(node);
+	}
 }
 
 /*void	ft_print_enum(t_token_type tok)
@@ -88,15 +100,3 @@ int	ft_push_token_to_list(t_list **list, char *str)
 		tokens = tokens->next;
 	}
 }*/
-
-void	ft_free_token_node(void *n)
-{
-	t_token	*node;
-
-	node = n;
-	if (node)
-	{
-		free(node->str);
-		free(node);
-	}
-}

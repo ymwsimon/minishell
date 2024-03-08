@@ -1,7 +1,6 @@
 NAME = minishell
 
 SRCS = 	main \
-		get_next_line \
 		input_history \
 		tokenizer/is_type_str \
 		tokenizer/is_type_str2 \

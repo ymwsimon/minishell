@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 14:22:58 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/08 19:21:48 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/08 19:51:57 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	ft_init_get_user_input(char **old_line, int *parse_res)
 		*old_line = NULL;
 	if (parse_res)
 		*parse_res = NO_PARSE_RESULT;
-	ft_vars()->break_readline = 0;
+	ft_vars()->break_readline = FALSE;
 }
 
 void	ft_exit_shell(char **old_line)
@@ -29,7 +29,7 @@ void	ft_exit_shell(char **old_line)
 	if (old_line)
 		free(*old_line);
 	printf("exit\n");
-	ft_free_res(1);
+	ft_free_res(TRUE);
 	exit(ft_vars()->last_exe_res);
 }
 

@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 01:21:42 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/08 19:47:33 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/08 19:50:49 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,6 @@ int	main(int argc, char **argv)
 		if (!isatty(STDIN_FILENO))
 			break ;
 	}
-	ft_free_res(1);
-	return (0);
+	ft_free_res(TRUE);
+	return (EXE_SUCCESS);
 }

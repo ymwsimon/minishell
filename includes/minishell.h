@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 22:45:03 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/08 19:28:52 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/08 19:52:35 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,8 +140,6 @@ typedef struct s_err
 	char		*file;
 }	t_err;
 
-//get_next_line
-char	*get_next_line(int fd);
 //input_history
 int		ft_space_only(char *str);
 void	ft_import_history(void);

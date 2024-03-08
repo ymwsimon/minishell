@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_redir.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luyang <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 18:09:06 by luyang            #+#    #+#             */
-/*   Updated: 2024/03/05 18:09:08 by luyang           ###   ########.fr       */
+/*   Updated: 2024/03/08 19:56:36 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,6 @@ int	ft_append(char *redir)
 	if (fd == -1)
 		return (ft_err_msg(ft_check_write(redir)));
 	dup2(fd, STDOUT_FILENO);
-	close (fd);
+	close(fd);
 	return (0);
 }

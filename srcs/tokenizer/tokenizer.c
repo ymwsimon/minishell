@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 17:49:47 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/08 19:24:54 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/08 19:54:10 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	tokenize_helper2(t_list **stack, t_list **res)
 		((t_token *)ft_lstlast(*res)->content)->toktype = OPEN_SINGLE_QUOTE;
 	if (*stack)
 		ft_lstclear(stack, &free);
-	return (0);
+	return (EXE_SUCCESS);
 }
 
 int	tokenize_helper1(t_list **stack, size_t *j, size_t i, char *line)
@@ -51,7 +51,7 @@ int	tokenize_helper1(t_list **stack, size_t *j, size_t i, char *line)
 		else if (line[*j] == '"' || line[*j] == '\'')
 			(*j)++;
 	}
-	return (0);
+	return (EXE_SUCCESS);
 }
 
 t_list	*ft_tokenize(char *line)

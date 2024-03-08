@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 17:53:38 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/08 16:57:56 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/08 19:58:11 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,6 @@ int	ft_exit(char **args)
 		ft_putstr_fd("exit: numeric argument required\n", STDERR_FILENO);
 	}
 	printf("exit\n");
-	ft_free_res(1);
+	ft_free_res(TRUE);
 	exit(res);
 }
