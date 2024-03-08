@@ -46,5 +46,8 @@ int	ft_err_msg(t_err err)
 		return (ft_putstr_fd("minishell: export: `", 2),
 			ft_putstr_fd(err.file, 2),
 			ft_putstr_fd("': not a valid identifier\n", 2), err.fd);
+	if (err.msg ==ERR_SINGLE_DOT)
+		return (ft_putstr_fd("bash: .: filename argument required\n", 2),
+			ft_putstr_fd(".: usage: . filename [arguments]\n", 2), 2);
 	return (0);
 }
