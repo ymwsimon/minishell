@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 01:21:42 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/08 19:46:27 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/08 19:47:33 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int	main(int argc, char **argv)
 			ft_vars()->last_exe_res = ft_execute(ft_vars()->ast);
 		ft_free_ast(&ft_vars()->ast, TRUE);
 		ft_vars()->toklist = NULL;
-		printf("last execution result: %d\n", ft_vars()->last_exe_res);
 		if (!isatty(STDIN_FILENO))
 			break ;
 	}
