@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 14:22:58 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/08 13:49:36 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/08 14:13:26 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	ft_exit_shell(char **old_line)
 {
 	if (old_line)
 		free(*old_line);
-	ft_putstr_fd("exit\n", STDOUT_FILENO);
+	printf("exit\n");
 	ft_free_res(1);
 	exit(ft_vars()->last_exe_res);
 }
@@ -87,16 +87,15 @@ int	ft_get_user_input(void)
 		if (!line && parse_res == NO_PARSE_RESULT)
 			ft_exit_shell(&old_line);
 		if (!line && parse_res == IMCOMPELETE_CMD)
-			return (ft_default_signal(),
-				ft_putstr_fd("unexpected EOF\n", STDERR_FILENO), PARSE_FAIL);
+			return (ft_putstr_fd("unexpected EOF\n", STDERR_FILENO), PARSE_FAIL);
 		if ((!ft_space_only(line) || parse_res == IMCOMPELETE_CMD)
 			&& (ft_process_line(&line, &old_line, &parse_res)))
 			return (ALLOCATE_FAIL);
 		else if (ft_space_only(line) && parse_res == NO_PARSE_RESULT)
-			return (ft_default_signal(), free(line), EMPTY_INPUT);
+			return (free(line), EMPTY_INPUT);
 		if (parse_res == IMCOMPELETE_CMD)
 			line = readline(PROMPT_CON);
 	}
 	ft_cleanup(line, old_line, parse_res);
-	return (ft_default_signal(), parse_res);
+	return (parse_res);
 }

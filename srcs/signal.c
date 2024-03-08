@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 18:53:20 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/06 19:00:53 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/08 14:08:36 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,17 @@ void	ft_signal_handler_exe_child(int i)
 
 int	ft_setup_signal_handler_child(int using_readline)
 {
-	signal(SIGINT, &ft_signal_handler_exe_child);
+	if (signal(SIGINT, &ft_signal_handler_exe_child) == SIG_ERR)
+		return (SIGNAL_ERROR);
 	if (!using_readline)
-		signal(SIGQUIT, &ft_signal_handler_exe_child);
+	{
+		if (signal(SIGQUIT, &ft_signal_handler_exe_child) == SIG_ERR)
+			return (SIGNAL_ERROR);
+	}
 	else
-		signal(SIGQUIT, SIG_IGN);
-	return (0);
+	{
+		if (signal(SIGQUIT, SIG_IGN) == SIG_ERR)
+			return (SIGNAL_ERROR);
+	}
+	return (EXE_SUCCESS);
 }

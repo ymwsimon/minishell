@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 22:45:03 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/07 18:39:39 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/08 14:08:02 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@
 # define IMCOMPELETE_CMD 2
 # define INVALID_POINTER 3
 # define EMPTY_INPUT 4
+# define SIGNAL_ERROR 5
 # define EXE_SUCCESS 0
 # define EXE_FAILURE 1
 # define EXE_GENERAL 3
@@ -291,7 +292,7 @@ void	ft_signal_handler_exe_parent(int i);
 void	ft_signal_handler_exe_child(int i);
 int		ft_setup_signal_handler_child(int using_readline);
 //signal2
-void	ft_default_signal(void);
-void	ft_ignore_signal(void);
+int		ft_default_signal(void);
+int		ft_ignore_signal(void);
 
 #endif
