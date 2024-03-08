@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 14:22:58 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/06 18:41:30 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/08 13:49:36 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,12 @@ int	ft_process_line(char **line, char **old_line, int *parse_res)
 {
 	ft_trim_write_history(*line);
 	if (*old_line)
+	{
 		*line = ft_free_join_str(ft_strdup("\n"), *line);
-	*line = ft_free_join_str(*old_line, *line);
+		if (!(*line))
+			return (ALLOCATE_FAIL);
+		*line = ft_free_join_str(*old_line, *line);
+	}
 	if (!(*line))
 		return (ALLOCATE_FAIL);
 	ft_vars()->toklist = ft_tokenize(*line);

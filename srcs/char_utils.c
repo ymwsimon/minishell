@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 18:29:19 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/06 01:05:23 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/08 13:48:20 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,9 @@ char	*ft_free_join_str(char *str1, char *str2)
 {
 	char	*res;
 
-	res = ft_strjoin(str1, str2);
+	res = NULL;
+	if (str1 && str2)
+		res = ft_strjoin(str1, str2);
 	free(str1);
 	free(str2);
 	return (res);

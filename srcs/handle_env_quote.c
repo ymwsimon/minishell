@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 15:33:30 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/07 16:20:34 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/08 13:41:23 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ char	*ft_string_resolve(char *str, int is_deli)
 
 	i = 0;
 	res = ft_strdup("");
-	while (str[i])
+	while (res && str[i])
 	{
 		j = i;
 		if (str[i] == '"')
