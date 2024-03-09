@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 20:46:40 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/08 19:44:42 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/09 17:35:23 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,11 @@ void	ft_ast_process_node(t_list *iter, int *n_open_par,
 		if ((*n_open_par) == 0)
 			*symbol_to_check = OPENPAR_AND_OR_PIPE;
 	}
-	else if (ft_check_sym(iter, *symbol_to_check))
+	else if (ft_check_sym(iter, *symbol_to_check)
+		&& (ft_is_and_tok(iter->content)
+			|| ((!(*break_point) || !ft_is_and_tok((*break_point)->content))
+				&& ft_is_or_tok(iter->content))
+			|| (!(*break_point) && ft_is_pipe_tok(iter->content))))
 		*break_point = iter;
 }
 
