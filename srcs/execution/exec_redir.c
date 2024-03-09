@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 18:09:06 by luyang            #+#    #+#             */
-/*   Updated: 2024/03/08 19:56:36 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/09 20:15:33 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ int	ft_output(char *redir)
 {
 	int	fd;
 
+	if (ft_check_dir(redir, FALSE))
+		return (ft_err_msg((t_err){1, ERR_IS_DIR, redir}));
 	fd = open(redir, O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	if (fd == -1)
 		return (ft_err_msg(ft_check_write(redir)));
@@ -54,6 +56,8 @@ int	ft_append(char *redir)
 {
 	int	fd;
 
+	if (ft_check_dir(redir, FALSE))
+		return (ft_err_msg((t_err){1, ERR_IS_DIR, redir}));
 	fd = open(redir, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd == -1)
 		return (ft_err_msg(ft_check_write(redir)));

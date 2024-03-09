@@ -6,11 +6,33 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 15:06:31 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/06 18:48:47 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/09 20:28:04 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+void	ft_print_cd_error_message(char *dir)
+{
+	if (errno == ENOENT)
+	{
+		ft_putstr_fd("minishell: cd: ", STDERR_FILENO);
+		ft_putstr_fd(dir, STDERR_FILENO);
+		ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
+	}
+	else if (errno == ENOTDIR)
+	{
+		ft_putstr_fd("minishell: cd: ", STDERR_FILENO);
+		ft_putstr_fd(dir, STDERR_FILENO);
+		ft_putstr_fd(": Not a directory\n", STDERR_FILENO);
+	}
+	else if (errno == EACCES)
+	{
+		ft_putstr_fd("minishell: cd: ", STDERR_FILENO);
+		ft_putstr_fd(dir, STDERR_FILENO);
+		ft_putstr_fd(": Permission denied\n", STDERR_FILENO);
+	}
+}
 
 char	*ft_resolve_folder_path(char *path)
 {
@@ -43,7 +65,7 @@ int	ft_cd(char **args)
 
 	if (ft_char_arr_size(args) > 2)
 	{
-		ft_putstr_fd("cd: too many arguments\n", STDERR_FILENO);
+		ft_putstr_fd("minishell: cd: too many arguments\n", STDERR_FILENO);
 		return (1);
 	}
 	if (ft_char_arr_size(args) == 1)
@@ -55,9 +77,7 @@ int	ft_cd(char **args)
 	path = ft_resolve_folder_path(args[1]);
 	if (chdir(path))
 	{
-		ft_putstr_fd("minishell: cd: ", 2);
-		ft_putstr_fd(args[1], STDERR_FILENO);
-		ft_putstr_fd(": No such file or directory\n", 2);
+		ft_print_cd_error_message(args[1]);
 		return (free(path), 1);
 	}
 	return (free(path), 0);

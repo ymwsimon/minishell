@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 20:52:47 by luyang            #+#    #+#             */
-/*   Updated: 2024/03/07 01:16:21 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/09 22:39:14 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ int	ft_fill_hd_child_helper(t_ast **node, int i, int fd)
 		return (INVALID_POINTER);
 	line = readline(PROMPT_CON);
 	tmp = (*node)->cmd->redirs[i + 1];
-	while (line && ft_strncmp(line, tmp, ft_strlen(tmp) + 1))
+	while (!ft_vars()->break_readline && line
+		&& ft_strncmp(line, tmp, ft_strlen(tmp) + 1))
 	{
 		if (write(fd, line, ft_strlen(line)) == -1
 			|| write(fd, "\n", 1) == -1)
@@ -29,14 +30,15 @@ int	ft_fill_hd_child_helper(t_ast **node, int i, int fd)
 		free(line);
 		line = readline(PROMPT_CON);
 	}
-	free(line);
 	if (!line)
 	{
 		printf(HD_NULL_MSG);
 		printf(HD_NULL_MSG2, tmp);
 	}
 	close(fd);
-	return (EXE_SUCCESS);
+	if (ft_vars()->break_readline)
+		return (free(line), SIGINT_CODE);
+	return (free(line), EXE_SUCCESS);
 }
 
 int	ft_fill_hd_child(t_ast **node)
@@ -73,16 +75,13 @@ int	ft_fill_hd_simple_cmd(t_ast **node, int status)
 
 	if (!node)
 		return (INVALID_POINTER);
-	ft_setup_signal_handler_child(TRUE);
 	pid = fork();
 	if (pid == -1)
 		return (EXE_FAILURE);
 	else if (pid == 0)
 	{
 		status = ft_fill_hd_child(node);
-		if (status == EXE_FAILURE || status == INVALID_POINTER)
-			return (status);
-		(ft_free_res(FALSE), exit(EXE_SUCCESS));
+		(ft_free_res(FALSE), exit(status));
 	}
 	else
 	{
@@ -102,6 +101,11 @@ int	ft_fill_here_doc(t_ast *node)
 	status = EXE_SUCCESS;
 	if (!node)
 		return (INVALID_POINTER);
+	signal(SIGINT, &ft_signal_handler_waiting_input);
+	signal(SIGQUIT, SIG_IGN);
+	rl_event_hook = ft_event;
+	if (ft_vars()->break_readline)
+		return (SIGINT_CODE);
 	if (node->toktype == SIMPLE_CMD)
 		return (ft_fill_hd_simple_cmd(&node, status));
 	else

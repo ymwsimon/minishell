@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 22:45:03 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/09 15:13:56 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/09 21:06:46 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,33 +33,25 @@
 # define HD_NULL_MSG2 " (wanted `%s')\n"
 # define PROMPT "minishell>>> "
 # define PROMPT_CON "> "
-# define NO_REDIRECT 0 
-# define FROM_FILE 1
-# define FROM_HERE_DOC 2
-# define TO_FILE 3
-# define APPEND_FILE 4
-# define FROM_PIPE 5
-# define TO_PIPE 6
-# define CMD_NOT_FOUND 127
-# define SIGINT_CODE 130
-# define SIGQUIT_CODE 131
+# define FALSE 0
+# define TRUE 1
 # define ALLOCATE_FAIL -1
 # define PARSE_OK 0
 # define PARSE_FAIL 1
 # define NO_PARSE_RESULT 2
 # define IMCOMPELETE_CMD 3
 # define EMPTY_INPUT 4
-# define INVALID_POINTER 3
-# define SIGNAL_ERROR 5
 # define EXE_SUCCESS 0
 # define EXE_FAILURE 1
 # define EXE_GENERAL 3
 # define LEFT_CHILD 4
 # define RIGHT_CHILD 5
-# define FALSE 0
-# define TRUE 1
+# define SIGNAL_ERROR 6
+# define INVALID_POINTER 7
 # define OPENPAR_AND_OR_PIPE 1
 # define PAREN 2
+# define SIGINT_CODE 130
+# define SIGQUIT_CODE 131
 
 typedef enum e_token_type
 {
@@ -256,8 +248,8 @@ int	ft_count_args(char **args);*/
 //check_file
 t_err	ft_check_read(char *file);
 t_err	ft_check_write(char *file);
-t_err	ft_check_exec(char *path, char *file);
-int		ft_check_dir(char *file);
+t_err	ft_check_exec(char *path, char *file, int need_slash);
+int		ft_check_dir(char *file, int need_slash);
 //get_full_path
 char	*ft_getfullpath(char *pname, char *res);
 //handle_env_quote

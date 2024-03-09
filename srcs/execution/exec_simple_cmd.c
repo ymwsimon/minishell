@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 15:33:21 by luyang            #+#    #+#             */
-/*   Updated: 2024/03/08 17:03:16 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/09 20:12:39 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@ int	ft_exec_program(char **args)
 	else if (p_pid == 0)
 	{
 		full_path = ft_getfullpath(args[0], NULL);
-		status = ft_err_msg(ft_check_exec(full_path, args[0]));
+		status = ft_err_msg(ft_check_exec(full_path, args[0], TRUE));
 		if (status)
-			exit (status);
+			(ft_free_res(FALSE), exit(status));
 		if (execve(full_path, args, ft_vars()->env) == -1)
-			exit (EXE_FAILURE);
+			(ft_free_res(FALSE), exit(EXE_FAILURE));
 	}
 	else
 	{

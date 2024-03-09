@@ -50,7 +50,7 @@ OBJ_DIR = obj
 
 INC_DIR = includes
 
-FLAGS = -Wall -Werror -Wextra -g
+FLAGS = -Wall -Werror -Wextra
 
 LIBFT_DIR = lib/libft
 

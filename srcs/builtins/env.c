@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 17:47:31 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/06 01:22:07 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/09 20:49:36 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,10 @@ int	ft_print_env(void)
 int	ft_env(char **args)
 {
 	if (ft_char_arr_size(args) != 1)
+	{
+		ft_putstr_fd("minishell: env: too many arguments\n", STDERR_FILENO);
 		return (1);
+	}
 	ft_print_env();
 	return (0);
 }

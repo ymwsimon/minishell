@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_file.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luyang <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 18:08:37 by luyang            #+#    #+#             */
-/*   Updated: 2024/03/05 18:08:40 by luyang           ###   ########.fr       */
+/*   Updated: 2024/03/09 20:12:02 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_err	ft_check_write(char *file)
 	return ((t_err){EFD_NOT_FOUND, ERR_NO_SUCH_FILE, file});
 }
 
-int	ft_check_dir(char *file)
+int	ft_check_dir(char *file, int need_slash)
 {
 	DIR	*directory;
 	int	i;
@@ -45,7 +45,7 @@ int	ft_check_dir(char *file)
 		i++;
 	}
 	if (file[i - 1] == '/' || (file[0] == '.'
-			&& file[1] == '/'))
+			&& file[1] == '/') || !need_slash)
 	{
 		directory = opendir(file);
 		if (directory)
@@ -54,9 +54,9 @@ int	ft_check_dir(char *file)
 	return (0);
 }
 
-t_err	ft_check_exec(char *path, char *file)
+t_err	ft_check_exec(char *path, char *file, int need_slash)
 {
-	if (ft_check_dir(file))
+	if (ft_check_dir(file, need_slash))
 		return ((t_err){EFD_EXEC, ERR_IS_DIR, file});
 	if (!path || !ft_strncmp(path, "..", 3))
 		return ((t_err){EFD_NOT_FOUND, ERR_CMD_NOT_FOUND, file});
