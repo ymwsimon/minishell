@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 18:16:28 by mayeung           #+#    #+#             */
-/*   Updated: 2024/02/14 19:24:24 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/09 15:41:27 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,5 +67,6 @@ int	ft_valid_arg_tok(t_list *node, t_token *tok)
 		&& !ft_is_close_paren(((t_token *)node->content)->str)
 		&& ((t_token *)node->content)->toktype == RAW
 		&& (ft_is_raw_tok(tok) || !ft_is_redir_tok(tok))
+		&& !ft_is_close_paren_tok(tok)
 		&& !ft_invalid_tok(node));
 }

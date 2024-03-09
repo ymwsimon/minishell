@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 22:45:03 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/08 20:02:05 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/09 15:13:56 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -296,6 +296,7 @@ int		ft_setup_signal_handler_child(int using_readline);
 //signal2
 int		ft_default_signal(void);
 int		ft_ignore_signal(void);
+int		ft_setup_signal_handler_parent(void);
 //handle_non_terminal
 int		ft_redir_file_arg(int arc, char **argv);
 
