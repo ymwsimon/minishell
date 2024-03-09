@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 20:52:47 by luyang            #+#    #+#             */
-/*   Updated: 2024/03/09 22:39:14 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/09 22:41:44 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,10 @@ int	ft_fill_here_doc(t_ast *node)
 	signal(SIGQUIT, SIG_IGN);
 	rl_event_hook = ft_event;
 	if (ft_vars()->break_readline)
+	{
+		ft_vars()->last_exe_res = SIGINT_CODE;
 		return (SIGINT_CODE);
+	}
 	if (node->toktype == SIMPLE_CMD)
 		return (ft_fill_hd_simple_cmd(&node, status));
 	else
