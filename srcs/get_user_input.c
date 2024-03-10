@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 14:22:58 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/09 22:34:29 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/10 01:19:09 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	ft_exit_shell(char **old_line)
 
 int	ft_process_line(char **line, char **old_line, int *parse_res)
 {
-	ft_trim_write_history(*line);
+	ft_write_history(*line);
 	if (*old_line)
 	{
 		*line = ft_free_join_str(ft_strdup("\n"), *line);

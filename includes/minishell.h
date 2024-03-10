@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 22:45:03 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/10 00:34:33 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/10 01:16:20 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ char	*get_next_line(int fd);
 //input_history
 int		ft_space_only(char *str);
 void	ft_import_history(void);
-void	ft_trim_write_history(char *line);
+void	ft_write_history(char *line);
 //tokenizer
 t_list	*ft_tokenize(char *line);
 int		tokenize_helper1(t_list **stack, size_t *j, size_t i, char *line);

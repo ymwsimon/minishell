@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 18:23:15 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/06 18:43:48 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/10 01:16:02 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,16 +50,12 @@ void	ft_import_history(void)
 	free(path);
 }
 
-void	ft_trim_write_history(char *line)
+void	ft_write_history(char *line)
 {
 	int		fd;
 	char	*path;
 	char	*line_with_newline;
-	size_t	i;
 
-	i = 0;
-	while (line[i] && line[i] == ' ')
-		i++;
 	if (!(*line))
 		return ;
 	path = ft_strjoin(ft_getenv("HOME"), HISTORY_FILE_NAME);
