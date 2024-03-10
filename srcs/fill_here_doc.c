@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 20:52:47 by luyang            #+#    #+#             */
-/*   Updated: 2024/03/09 22:41:44 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/09 22:45:50 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,11 @@ int	ft_fill_hd_child_helper(t_ast **node, int i, int fd)
 	return (free(line), EXE_SUCCESS);
 }
 
-int	ft_fill_hd_child(t_ast **node)
+int	ft_fill_hd_simple_cmd(t_ast **node, int status)
 {
 	int	i;
 	int	j;
 	int	fd;
-	int	status;
 
 	if (!node)
 		return (INVALID_POINTER);
@@ -67,31 +66,6 @@ int	ft_fill_hd_child(t_ast **node)
 		i++;
 	}
 	return (EXE_SUCCESS);
-}
-
-int	ft_fill_hd_simple_cmd(t_ast **node, int status)
-{
-	pid_t	pid;
-
-	if (!node)
-		return (INVALID_POINTER);
-	pid = fork();
-	if (pid == -1)
-		return (EXE_FAILURE);
-	else if (pid == 0)
-	{
-		status = ft_fill_hd_child(node);
-		(ft_free_res(FALSE), exit(status));
-	}
-	else
-	{
-		signal(SIGINT, &ft_signal_handler_exe_parent);
-		signal(SIGQUIT, SIG_IGN);
-		waitpid(pid, &status, 0);
-		if (ft_get_exit_status(status))
-			ft_vars()->last_exe_res = ft_get_exit_status(status);
-		return (ft_get_exit_status(status));
-	}
 }
 
 int	ft_fill_here_doc(t_ast *node)
