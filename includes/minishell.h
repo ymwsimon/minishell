@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 22:45:03 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/09 21:06:46 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/10 00:34:33 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ typedef struct s_vars
 	char	**env;
 	int		last_exe_res;
 	int		break_readline;
+	int		exe_stop_by_sig;
 }				t_vars;
 
 typedef enum s_err_fd
