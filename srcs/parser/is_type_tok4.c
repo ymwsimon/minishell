@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 18:13:02 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/06 01:20:32 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/10 10:48:54 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,10 @@ int	ft_is_outfile_tok(t_token *t)
 int	ft_is_raw_tok(t_token *t)
 {
 	return (t->toktype == RAW);
+}
+
+int	ft_is_open_quote(t_token *t)
+{
+	return (ft_is_double_quote_tok(t)
+		|| ft_is_single_quote_tok(t));
 }

@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 14:22:58 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/10 09:59:22 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/10 11:00:46 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ int	ft_process_line(char **line, char **old_line, int *parse_res)
 	ft_write_history(*line);
 	if (*old_line)
 	{
-		*line = ft_free_join_str(ft_strdup("\n"), *line);
+		if (*parse_res == OPEN_QUOTE)
+			*line = ft_free_join_str(ft_strdup("\n"), *line);
 		if (!(*line))
 			return (ALLOCATE_FAIL);
 		*line = ft_free_join_str(*old_line, *line);
@@ -50,7 +51,7 @@ int	ft_process_line(char **line, char **old_line, int *parse_res)
 	if (!ft_vars()->toklist)
 		return (free(*old_line), free(*line), ALLOCATE_FAIL);
 	*parse_res = ft_parse_token(ft_vars()->toklist);
-	if (*parse_res == IMCOMPELETE_CMD)
+	if (*parse_res >= IMCOMPELETE_CMD)
 	{
 		*old_line = *line;
 		*line = NULL;
@@ -84,19 +85,19 @@ int	ft_get_user_input(void)
 	ft_init_get_user_input(&old_line, &parse_res);
 	line = readline(PROMPT);
 	while (!ft_vars()->break_readline
-		&& (parse_res == NO_PARSE_RESULT || parse_res == IMCOMPELETE_CMD))
+		&& (parse_res == NO_PARSE_RESULT || parse_res >= IMCOMPELETE_CMD))
 	{
 		if (!line && (parse_res == NO_PARSE_RESULT))
 			ft_exit_shell(&old_line);
-		if (!line && (parse_res == IMCOMPELETE_CMD))
+		if (!line && (parse_res >= IMCOMPELETE_CMD))
 			return (ft_putstr_fd("unexpected EOF\n", STDERR_FILENO),
 				PARSE_FAIL);
-		if ((!ft_space_only(line) || parse_res == IMCOMPELETE_CMD)
+		if ((!ft_space_only(line) || parse_res >= IMCOMPELETE_CMD)
 			&& (ft_process_line(&line, &old_line, &parse_res)))
 			return (ALLOCATE_FAIL);
 		else if (ft_space_only(line) && parse_res == NO_PARSE_RESULT)
 			return (free(line), EMPTY_INPUT);
-		if (parse_res == IMCOMPELETE_CMD)
+		if (parse_res >= IMCOMPELETE_CMD)
 			line = readline(PROMPT_CON);
 	}
 	ft_cleanup(line, old_line, parse_res);

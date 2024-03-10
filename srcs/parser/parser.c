@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 18:25:13 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/08 16:53:58 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/10 10:48:58 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,8 @@ int	ft_parse_token(t_list *node)
 		ft_vars()->last_exe_res = 2;
 		return (PARSE_FAIL);
 	}
+	if (ft_is_open_quote(&last))
+		return (OPEN_QUOTE);
 	if (ft_need_more_input(&last, open_paren))
 		return (IMCOMPELETE_CMD);
 	return (PARSE_OK);
