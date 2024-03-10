@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 18:53:20 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/10 01:37:45 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/10 10:02:02 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	ft_signal_handler_waiting_input(int i)
 	{
 		ft_vars()->break_readline = 1;
 		ft_vars()->last_exe_res = SIGINT_CODE;
-		ft_vars()->exe_stop_by_sig = FALSE;
 		rl_done = 1;
 	}
 }
