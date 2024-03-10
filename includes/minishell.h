@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 22:45:03 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/10 01:16:20 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/10 22:04:35 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@
 # define PARSE_FAIL 1
 # define NO_PARSE_RESULT 2
 # define IMCOMPELETE_CMD 3
-# define EMPTY_INPUT 4
+# define OPEN_QUOTE 4
+# define EMPTY_INPUT 5
 # define EXE_SUCCESS 0
 # define EXE_FAILURE 1
 # define EXE_GENERAL 3
@@ -181,6 +182,7 @@ int		ft_is_delimiter_tok(t_token *t);
 int		ft_is_infile_tok(t_token *t);
 int		ft_is_outfile_tok(t_token *t);
 int		ft_is_raw_tok(t_token *t);
+int		ft_is_open_quote(t_token *t);
 //is_valid_tok
 int		ft_valid_pipe_tok(t_list *node, t_token *tok);
 int		ft_valid_input_tok(t_list *node, t_token *tok);
@@ -292,5 +294,6 @@ int		ft_ignore_signal(void);
 int		ft_setup_signal_handler_parent(void);
 //handle_non_terminal
 int		ft_redir_file_arg(int arc, char **argv);
-
+//wildcard
+int		ft_arg_to_linkedlist(t_list **res, char *arg);
 #endif
