@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 20:18:39 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/06 18:44:54 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/11 18:10:27 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	ft_valid_export_args(char *arg)
 		return (ft_err_msg((t_err){0, ERR_INVALID_EXPORT, arg}));
 	while (arg[i] && (ft_isalnum(arg[i]) || arg[i] == '_'))
 		i++;
-	if (arg[i] != '=')
+	if (arg[i] && arg[i] != '=')
 		return (ft_err_msg((t_err){0, ERR_INVALID_EXPORT, arg}));
 	return (1);
 }
@@ -102,9 +102,10 @@ int	ft_export(char **args)
 	{
 		if (ft_valid_export_args(args[i]))
 		{
-			if (ft_search_string_arr_prefix(ft_vars()->env, args[i], 0) != -1)
+			if (ft_search_string_arr_prefix(ft_vars()->env, args[i], 0) != -1
+				&& ft_strchr(args[i], '='))
 				status = ft_update_env(args[i]);
-			else
+			else if (ft_strchr(args[i], '='))
 				status = ft_add_to_env(args[i]);
 		}
 		else
