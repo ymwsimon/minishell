@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 01:21:42 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/10 00:52:10 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/11 16:23:39 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ int	main(int argc, char **argv)
 			ft_vars()->last_exe_res = ft_execute(ft_vars()->ast);
 		if (ft_vars()->exe_stop_by_sig == SIGINT)
 			printf("\n");
-		if (ft_vars()->exe_stop_by_sig == SIGQUIT)
-			printf("\nQuit (core dumped)\n");
+		if (ft_vars()->exe_stop_by_sig == SIGQUIT && ft_vars()->last_exe_res)
+			printf("Quit (core dumped)\n");
 		ft_free_ast(&ft_vars()->ast, TRUE);
 		ft_vars()->toklist = NULL;
 		if (!isatty(STDIN_FILENO))

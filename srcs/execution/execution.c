@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 15:32:57 by luyang            #+#    #+#             */
-/*   Updated: 2024/03/10 00:38:09 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/11 17:04:53 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,10 @@ int	ft_execute(t_ast *ast)
 		status = ft_execute(ast->left);
 		if (ast->toktype == AND && status == EXE_SUCCESS)
 			return (ft_execute(ast->right));
-		if (ast->toktype == OR && status == EXE_FAILURE)
+		if (ast->toktype == OR && ft_vars()->exe_stop_by_sig == SIGQUIT)
+			printf("Quit (core dumped)\n");
+		if (ast->toktype == OR && status > EXE_SUCCESS
+			&& status != SIGINT_CODE)
 			return (ft_execute(ast->right));
 		return (status);
 	}
