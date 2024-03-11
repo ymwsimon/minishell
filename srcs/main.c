@@ -6,19 +6,18 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 01:21:42 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/11 16:23:39 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/11 17:40:22 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	main(int argc, char **argv)
+int	main(void)
 {
 	int				id;
 
 	ft_vars()->env = ft_cpy_env(__environ);
 	ft_import_history();
-	ft_redir_file_arg(argc, argv);
 	while (TRUE)
 	{
 		id = 0;

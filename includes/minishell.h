@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 22:45:03 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/10 22:04:35 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/11 17:43:49 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,8 +207,6 @@ int		ft_invalid_tok(t_list *n);
 int		ft_need_more_input(t_token *t, int open_paren);
 //token_utils
 int		ft_push_token_to_list(t_list **list, char *str);
-void	ft_print_enum(t_token_type tok);
-void	ft_print_tokens(t_list *tokens);
 void	ft_free_token_node(void *n);
 //char_utils
 void	*ft_clear_char_arr(char **arr);
@@ -217,7 +215,6 @@ size_t	ft_char_arr_size(char **arr);
 char	*ft_create_unexpected_message(char *str);
 //build_ast
 int		ft_build_ast(t_ast **ast, t_list *tokens);
-void	ft_print_ast(t_ast *node);
 //build_ast2
 int		ft_break_into_sc(t_ast **ast, t_list *tokens);
 void	ft_free_ast(t_ast **node, int del_hd);
@@ -243,11 +240,6 @@ int		ft_append(char *redir);
 void	ft_r_fd(int *original);
 int		ft_get_exit_status(int status);
 int		ft_err_msg(t_err err);
-/*//globber
-char	**ft_globber(char **args);
-char	**ft_globbing(char *arg);
-//globber_utils
-int	ft_count_args(char **args);*/
 //check_file
 t_err	ft_check_read(char *file);
 t_err	ft_check_write(char *file);
@@ -292,8 +284,5 @@ int		ft_setup_signal_handler_child(int using_readline);
 int		ft_default_signal(void);
 int		ft_ignore_signal(void);
 int		ft_setup_signal_handler_parent(void);
-//handle_non_terminal
-int		ft_redir_file_arg(int arc, char **argv);
-//wildcard
-int		ft_arg_to_linkedlist(t_list **res, char *arg);
+
 #endif
