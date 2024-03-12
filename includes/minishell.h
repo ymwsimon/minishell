@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 22:45:03 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/11 17:43:49 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/12 12:03:17 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -249,6 +249,7 @@ int		ft_check_dir(char *file, int need_slash);
 char	*ft_getfullpath(char *pname, char *res);
 //handle_env_quote
 char	*ft_string_resolve(char *str, int is_deli);
+char	*ft_convert_env_var(char *str, size_t i, size_t *j);
 //echo
 int		ft_echo(char **args);
 //cd
