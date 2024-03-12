@@ -27,6 +27,7 @@ SRCS = 	main \
 		get_user_input \
 		signal \
 		signal2 \
+		wildcard \
 		builtins/cd \
 		builtins/echo \
 		builtins/env \
@@ -57,7 +58,7 @@ LIBFT = libft.a
 
 LIBS = -lreadline -lft -L$(LIBFT_DIR)
 
-CC = cc
+CC = clang
 
 all : $(NAME)
 

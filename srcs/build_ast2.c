@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 19:35:30 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/08 19:45:48 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/12 20:03:44 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,11 @@ int	ft_init_sc_node(t_ast **ast, t_list *tokens)
 int	ft_process_making_sc_node(t_list *node, t_ast *res,
 	size_t *nredirs, size_t *narg)
 {
+	char	*env_resolved_str;
+	t_list	*args_linkedlist;
+	
+	ft_resolve_env_var_only(&env_resolved_str, ((t_token *)node->content)->str);
+	//printf("args: %s\n", resolved_str);
 	if (ft_is_arg_tok(node->content))
 		res->cmd->args[(*narg)++]
 			= ft_string_resolve(((t_token *)node->content)->str, 0);

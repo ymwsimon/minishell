@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 22:45:03 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/12 12:03:17 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/12 14:58:06 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -285,5 +285,6 @@ int		ft_setup_signal_handler_child(int using_readline);
 int		ft_default_signal(void);
 int		ft_ignore_signal(void);
 int		ft_setup_signal_handler_parent(void);
-
+//wildcard
+void	ft_resolve_env_var_only(char **res, char *str);
 #endif
