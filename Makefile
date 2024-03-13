@@ -82,8 +82,9 @@ clean :
 
 fclean : clean
 	make -C $(LIBFT_DIR) fclean
+	rm -rf $(OBJ_DIR)
 	rm -rf $(NAME)
 
 re : fclean all
 
-.PHONY : $(NAME) all clean fclean re
+.PHONY : all clean fclean re
