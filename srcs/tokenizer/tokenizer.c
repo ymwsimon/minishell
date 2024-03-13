@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 17:49:47 by mayeung           #+#    #+#             */
-/*   Updated: 2024/03/13 02:38:00 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/03/13 12:47:42 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,11 @@ int	tokenize_helper1(t_list **stack, size_t *j, size_t i, char *line)
 		ft_lstdelone(*stack, &free);
 		(*stack) = tmp;
 		if (i == *j && ft_strchr("<>&|()", line[*j])
-			&& line[*j] == line[*j + 1])
+			&& line[*j] == line[(*j) + 1])
 			(*j) += 2;
-		else if (i == *j && ft_strchr("'\"<>&|()", line[*j]))
+		else if (i == *j && ft_strchr("<>&|();\n", line[*j]))
 			(*j)++;
-		if (line[*j] && ft_strchr("\"'", line[i]))
+		else if (line[*j] && ft_strchr("\"'", line[*j]))
 			(*j)++;
 	}
 	return (EXE_SUCCESS);
